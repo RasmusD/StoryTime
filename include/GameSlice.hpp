@@ -16,14 +16,19 @@ class GameSlice
     // Constructor
     GameSlice();
 
+    // React to input
+    virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow) {};
+
     // Do a single frame update and return a pointer which is NULL if no change, else a pointer to a new slice
-    virtual GameSlice* update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow) { return NULL; };
+    virtual GameSlice* update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow) { return NULL; };
 
     // Draw the slice
     virtual void draw(sf::RenderWindow& renderWindow) {};
 
     // This ensures something something about pointers so a memory thing
     virtual ~GameSlice() {};
+  protected:
+    bool _changeSlice;
 };
 
 

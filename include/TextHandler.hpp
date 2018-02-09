@@ -25,8 +25,11 @@ class TextHandler
     // Destuctor
     ~TextHandler() {};
 
+    // React to input
+    void takeInput(sf::Event& curEvent);
+
     // Update the text handler
-    void update(sf::Event& curEvent, sf::Event& prevEvent, sf::Time& elapsedTime);
+    void update(sf::Time& elapsedTime);
 
     // Draw
     void draw(sf::RenderWindow& renderWindow);
@@ -41,7 +44,7 @@ class TextHandler
     // List of all choices to make, in order to make
     std::deque<ChoiceBox> _choices;
     // The core text to be displayed
-    TextSegment _coreText;
+    std::vector<TextSegment> _coreText;
     // Current choice
     ChoiceBox _currentChoice;
     // Are we currently making a choice?

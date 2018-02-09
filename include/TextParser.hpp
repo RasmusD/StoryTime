@@ -50,15 +50,15 @@ class TextParser
                                 std::deque<TextSegment>& segments, 
                                 std::deque<ChoiceBox>& choices,
                                 std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup);
-    // Find and apply a markup tag closing (</pitch>)
+    // Find and apply a markup tag closing (</colour>)
     // Returns false if no markup of type is currently open, type is not supported (</imaginary>) or is malformed (</imaginary stuff>)
     static bool closeMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
                             std::deque<TextSegment>& segments, 
                             std::deque<ChoiceBox>& choices,
                             std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup);
-    // Find and apply a markup tag opening (<pitch add="1.0">)
-    // Returns false if type is not supported (<imaginary stuff="bla">) or markup is malformed (<pitch add=="1.0">)
+    // Find and apply a markup tag opening (<colour val="black">)
+    // Returns false if type is not supported (<imaginary stuff="bla">) or markup is malformed (<colour val=="black">)
     static bool openMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
                             std::deque<TextSegment>& segments, 

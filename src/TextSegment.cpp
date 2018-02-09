@@ -29,6 +29,7 @@ void TextSegment::update(sf::Time& elapsedTime)
 {
   if (atEnd == false)
   {
+    //std::cout << "Not at end" << std::endl;
     // Will only occur once
     if (_drawSpeed < 0)
     {
@@ -70,6 +71,17 @@ sf::FloatRect TextSegment::getLocalBounds()
 void TextSegment::printTargetText()
 {
   std::cout << _targetText << std::endl;
+}
+
+void TextSegment::printVisibleText()
+{
+  std::cout << (std::string)_text.getString() << std::endl;
+}
+
+void TextSegment::addText(std::string& toAdd)
+{
+  _targetText += toAdd;
+  atEnd = false;
 }
 
 } // End namespace StoryTime

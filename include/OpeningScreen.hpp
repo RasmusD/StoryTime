@@ -21,8 +21,11 @@ class OpeningScreen: public GameSlice
     // Destructor
     ~OpeningScreen() {};
 
+    // React to input
+    virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow);
+
     // Do a single frame update and return a pointer which is NULL if no change, else a pointer to a new slice
-    virtual GameSlice* update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow);
+    virtual GameSlice* update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow);
 
     // Draw the screen
     virtual void draw(sf::RenderWindow& renderWindow);
@@ -31,6 +34,9 @@ class OpeningScreen: public GameSlice
     sf::Font _titleFont;
     sf::Text _titleText;
     sf::FloatRect _titleTextRect;
+
+    // Inhereted from parent
+    // bool _changeSlice;
 };
 
 

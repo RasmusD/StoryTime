@@ -37,8 +37,14 @@ class TextSegment
     // Print the target text. For debug.
     void printTargetText();
 
+    // Print the visible text. For debug.
+    void printVisibleText();
+
     // Access to the currently visible text
     sf::Text* getText();
+
+    // Add more text to the final target text
+    void addText(std::string& toAdd);
 
   private:
     // Private hidden constructor

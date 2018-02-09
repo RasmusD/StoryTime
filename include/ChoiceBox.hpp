@@ -10,6 +10,7 @@
 
 #include "GlobalSettings.hpp"
 #include "TextSegment.hpp"
+#include "Utils.hpp"
 
 namespace StoryTime {
 
@@ -23,6 +24,9 @@ class ChoiceBox
     // Destuctor
     ~ChoiceBox() {};
 
+    // React to input
+    void takeInput(sf::Event& curEvent);
+
     // Update the box
     void update(sf::Time& elapsedTime);
 
@@ -31,6 +35,10 @@ class ChoiceBox
 
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f& newPos);
+
+    // Returns the line of the next text segment if a choice has been made
+    // Else -1
+    int getChoice();
   private:
     // The choices which can be made
     std::vector<TextSegment> _choices;
@@ -40,6 +48,10 @@ class ChoiceBox
 
     // The bottom right corner position
     sf::Vector2f _bottomRight;
+
+    // The choice made
+    // -1 while no choice has been made
+    int _choice = -1;
 };
 
 

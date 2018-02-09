@@ -16,11 +16,27 @@ ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, int> >& 
   setPosition(pos);
 }
 
+void ChoiceBox::takeInput(sf::Event& curEvent)
+{
+  for (int i = 0; i < _choices.size(); i++)
+  {
+    if (curEvent.type == sf::Event::KeyPressed)
+    {
+      if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
+      {
+        std::cout << "Key pressed " << i+1 << std::endl;
+        _choice = i+1;
+        break;
+      }
+    }
+  }
+}
+
 void ChoiceBox::update(sf::Time& elapsedTime)
 {
-  for (TextSegment& choice : _choices)
+  for (int i = 0; i < _choices.size(); i++)
   {
-    choice.update(elapsedTime);
+    _choices[i].update(elapsedTime);
   }
 }
 
@@ -55,6 +71,11 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   }
   // Update lower rightt corner y
   _bottomRight.y = newPos.y - 10;
+}
+
+int ChoiceBox::getChoice()
+{
+  return _choice;
 }
 
 } // End namespace StoryTime

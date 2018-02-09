@@ -20,6 +20,36 @@ class Utils
             static_cast<TO>(other.x),
             static_cast<TO>(other.y));
     }
+
+    // Gets an sf::Keyboard::Key enum by number 0 - 9
+    static sf::Keyboard::Key getKeyByNumber(int num)
+    {
+      switch (num)
+      {
+        case 0:
+          return sf::Keyboard::Key::Num0;
+        case 1:
+          return sf::Keyboard::Key::Num1;
+        case 2:
+          return sf::Keyboard::Key::Num2;
+        case 3:
+          return sf::Keyboard::Key::Num3;
+        case 4:
+          return sf::Keyboard::Key::Num4;
+        case 5:
+          return sf::Keyboard::Key::Num5;
+        case 6:
+          return sf::Keyboard::Key::Num6;
+        case 7:
+          return sf::Keyboard::Key::Num7;
+        case 8:
+          return sf::Keyboard::Key::Num8;
+        case 9:
+          return sf::Keyboard::Key::Num9;
+        default:
+          return sf::Keyboard::Key::Unknown;
+      }
+    }
 };
 
 

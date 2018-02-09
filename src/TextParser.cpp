@@ -68,7 +68,7 @@ void TextParser::parseText(std::string& text,
   }
   if (chunk.empty() == false)
   {
-    //std::cout << "For sent (" << utterance << ") I'm adding:" << std::endl;
+    //std::cout << "For sent (" << text << ") I'm adding:" << std::endl;
     //std::cout << chunk << std::endl;
     segments.push_back(TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
     chunk.clear();
@@ -134,7 +134,6 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
             {
               if (std::get<1>(cMarkup) == "val")
               {
-                //std::cout << "setting pitch add to " << std::get<2>(cMarkup) << std::endl;
                 activeMarkup.test = std::get<2>(cMarkup);
               } else {
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
@@ -144,7 +143,6 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
             {
               if (std::get<1>(cMarkup) == "val")
               {
-                //std::cout << "setting pitch add to " << std::get<2>(cMarkup) << std::endl;
                 activeMarkup.test2 = std::stod(std::get<2>(cMarkup));
               } else {
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
@@ -213,7 +211,6 @@ bool TextParser::openMarkup(std::string possibleMarkup,
         // If this is a type and it should not take any subtype break the loop
         //std::cout << chunk << std::endl;
         // We lower case the chunk for case insensitivity
-        //Poco::toLowerInPlace(chunk);
         auto typeIt = validMarkup.find(chunk);
         if (typeIt != validMarkup.end() && typeIt->second.second == "")
         {
@@ -234,7 +231,6 @@ bool TextParser::openMarkup(std::string possibleMarkup,
       if (cChar == '=')
       {
         // We lower case the chunk for case insensitivity
-        //Poco::toLowerInPlace(chunk);
         subtype = chunk;
         if (type.second.first.count(subtype) > 0)
         {

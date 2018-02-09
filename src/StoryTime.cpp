@@ -23,7 +23,6 @@ struct Game
   GameSlice* changeSlice = NULL;
 
   sf::Event curEvent;
-  sf::Event prevEvent;
 
   Game()
   {
@@ -64,9 +63,12 @@ struct Game
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
           {
             running = false;
+          } else {
+            currentSlice->takeInput(curEvent, window);
           }
           break;
         default:
+          currentSlice->takeInput(curEvent, window);
           break;
       }
     }
@@ -75,7 +77,7 @@ struct Game
   void updatePhase()
   {
     // Logic Updates
-    changeSlice = currentSlice->update(elapsedTime, curEvent, prevEvent, window);
+    changeSlice = currentSlice->update(elapsedTime, window);
 
     // If changeSlice is not null delete the old and make that the new current
     if (changeSlice != NULL)
@@ -84,9 +86,6 @@ struct Game
       currentSlice = changeSlice;
       changeSlice = NULL;
     }
-
-    // Because of the way we do this - this is ok
-    prevEvent = curEvent;
   }
 
   void drawPhase()

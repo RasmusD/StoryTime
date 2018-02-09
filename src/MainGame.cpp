@@ -19,22 +19,23 @@ MainGame::~MainGame()
 
 }
 
-GameSlice* MainGame::update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow)
+void MainGame::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
 {
   //std::cout << "update" << std::endl;
   switch (curEvent.type)
   {
     case sf::Event::MouseButtonReleased:
-      if (prevEvent.type == sf::Event::MouseButtonPressed)
-      {
-        //return new MenuScreen();
-      }
+      _changeSlice = true;
       break;
     default:
+      _gameText->takeInput(curEvent);
       break;
   }
+}
 
-  _gameText->update(curEvent, prevEvent, elapsedTime);
+GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
+{
+  _gameText->update(elapsedTime);
   
   //std::cout << "update end" << std::endl;
   return NULL;

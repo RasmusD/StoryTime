@@ -10,6 +10,8 @@ MenuScreen::MenuScreen() : GameSlice()
     throw;
   }
 
+  _changeSlice = false;
+
   _titleText.setFont(_titleFont);
   _titleText.setString("Main Menu");
   _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / (GlobalSettings::CHARSIZE / 3));
@@ -29,21 +31,26 @@ MenuScreen::MenuScreen() : GameSlice()
   _newgameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.5f));
 }
 
-GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow)
+void MenuScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
 {
   switch (curEvent.type)
   {
     case sf::Event::MouseButtonReleased:
-      if (prevEvent.type == sf::Event::MouseButtonPressed)
+      if (_newgameText.getGlobalBounds().contains(Utils::toVector2<float>(sf::Mouse::getPosition(renderWindow))) )
       {
-        if (_newgameText.getGlobalBounds().contains(Utils::toVector2<float>(sf::Mouse::getPosition(renderWindow))) )
-        {
-          return new MainGame();
-        }
+        _changeSlice = true;
       }
       break;
     default:
       break;
+  }
+}
+
+GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
+{
+  if (_changeSlice == true)
+  {
+    return new MainGame();
   }
 
   return NULL;

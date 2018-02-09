@@ -10,6 +10,8 @@ OpeningScreen::OpeningScreen() : GameSlice()
     throw;
   }
 
+  _changeSlice = false;
+
   _titleText.setFont(_titleFont);
   _titleText.setString("StoryTime");
   _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / 10);
@@ -20,18 +22,23 @@ OpeningScreen::OpeningScreen() : GameSlice()
   _titleText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 2.0f));
 }
 
-GameSlice* OpeningScreen::update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow)
+void OpeningScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
 {
   switch (curEvent.type)
   {
     case sf::Event::MouseButtonReleased:
-      if (prevEvent.type == sf::Event::MouseButtonPressed)
-      {
-        return new MenuScreen();
-      }
+      _changeSlice = true;
       break;
     default:
       break;
+  }
+}
+
+GameSlice* OpeningScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
+{
+  if (_changeSlice == true)
+  {
+    return new MenuScreen();
   }
   
   return NULL;
