@@ -1,0 +1,51 @@
+#include "MainGame.hpp"
+
+namespace StoryTime {
+
+MainGame::MainGame() : GameSlice()
+{
+  // Set font
+  if (!GlobalSettings::DEFAULTFONT.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
+  {
+    std::cerr << "Cannot load Rosegarden font!" << std::endl;
+    throw;
+  }
+  std::string story = "This is the story of a <choice def=\"man/1-woman/2\"/>. It starts on the road...";
+  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));
+}
+
+MainGame::~MainGame()
+{
+
+}
+
+GameSlice* MainGame::update(sf::Time& elapsedTime, sf::Event& curEvent, sf::Event& prevEvent, sf::RenderWindow& renderWindow)
+{
+  //std::cout << "update" << std::endl;
+  switch (curEvent.type)
+  {
+    case sf::Event::MouseButtonReleased:
+      if (prevEvent.type == sf::Event::MouseButtonPressed)
+      {
+        //return new MenuScreen();
+      }
+      break;
+    default:
+      break;
+  }
+
+  _gameText->update(curEvent, prevEvent, elapsedTime);
+  
+  //std::cout << "update end" << std::endl;
+  return NULL;
+}
+
+void MainGame::draw(sf::RenderWindow& renderWindow)
+{
+  //std::cout << "drawing" << std::endl;
+  _gameText->draw(renderWindow);
+  //std::cout << "drawing end" << std::endl;
+}
+
+
+} // End namespace StoryTime
