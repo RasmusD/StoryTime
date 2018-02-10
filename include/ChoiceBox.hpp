@@ -39,6 +39,9 @@ class ChoiceBox
     // Returns the line of the next text segment if a choice has been made
     // Else -1
     int getChoice();
+
+    // Returns the chosen text
+    TextSegment& getChoiceText();
   private:
     // The choices which can be made
     std::vector<TextSegment> _choices;

@@ -37,6 +37,7 @@ class TextHandler
   private:
     // Methods
     void setNextSegment();
+    void setTextNext();
 
     // Variables
     // List of all text segments, in order to play
@@ -49,6 +50,8 @@ class TextHandler
     ChoiceBox _currentChoice;
     // Are we currently making a choice?
     bool _choiceActive;
+    // Should the next segment be a choice or text?
+    bool _isNextChoice;
 };
 
 

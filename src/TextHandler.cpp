@@ -16,6 +16,7 @@ TextHandler::TextHandler(std::string& text)
   _segments.pop_front();
   _coreText.back().getText()->setPosition(10, 10);
   _choiceActive = false;
+  _isNextChoice = true;
   /*
   _titleText = TextSegment(_titleFont, "This is the story of a ", 0.05);
   _titleText.getText()->setPosition(10, 10);
@@ -44,12 +45,15 @@ void TextHandler::update(sf::Time& elapsedTime)
     // If a choice has been made
     if (_currentChoice.getChoice() != -1)
     {
+      _segments.push_front(_currentChoice.getChoiceText());
       setNextSegment();
+      _isNextChoice = false;
     }
   } else if (_coreText.back().atEnd == true)
   {
     // Else if we're at the end of the current segment find the next (choice or segment)
     setNextSegment();
+    _isNextChoice = true;
   } else {
     //std::cout << "Updating text." << std::endl;
     // Else update the current segment
@@ -64,27 +68,37 @@ void TextHandler::setNextSegment()
 {
   if (_choiceActive == false)
   {
-    //std::cout << "Here." << std::endl;
-    // Activate next choice
-    _currentChoice = _choices.front();
-    _choices.pop_front();
-    _choiceActive = true;
-    // Place the next choice
-    sf::Vector2f nPos = _coreText.back().getText()->getPosition();
-    nPos.y += _coreText.back().getText()->getGlobalBounds().height * 2;
-    _currentChoice.setPosition(nPos);
-    //std::cout << "Here2." << std::endl;
+    if (_isNextChoice == true)
+    {
+      //std::cout << "Here." << std::endl;
+      // Activate next choice
+      _currentChoice = _choices.front();
+      _choices.pop_front();
+      _choiceActive = true;
+      // Place the next choice
+      sf::Vector2f nPos = _coreText.back().getText()->getPosition();
+      nPos.y += _coreText.back().getText()->getGlobalBounds().height * 2;
+      _currentChoice.setPosition(nPos);
+      //std::cout << "Here2." << std::endl;
+    } else {
+      setTextNext();
+    }
   } else if (_segments.size() > 0) {
-    // Set position of next segment
-    sf::Vector2f sPos = _coreText.back().getText()->getPosition();
-    sPos.x += _coreText.back().getText()->getLocalBounds().width + _coreText.back().getText()->getFont()->getGlyph(0020, _segments.front().getText()->getCharacterSize(), false).advance;
-    _segments.front().getText()->setPosition(sPos);
-    _coreText.push_back(_segments.front());
-    _segments.pop_front();
+    setTextNext();
     _choiceActive = false;
   } else {
     std::cout << "At end." << std::endl;
   }
+}
+
+void TextHandler::setTextNext()
+{ 
+  // Set position of next segment
+  sf::Vector2f sPos = _coreText.back().getText()->getPosition();
+  sPos.x += _coreText.back().getText()->getLocalBounds().width + _coreText.back().getText()->getFont()->getGlyph(0020, _segments.front().getText()->getCharacterSize(), false).advance;
+  _segments.front().getText()->setPosition(sPos);
+  _coreText.push_back(_segments.front());
+  _segments.pop_front();
 }
 
 void TextHandler::draw(sf::RenderWindow& renderWindow)

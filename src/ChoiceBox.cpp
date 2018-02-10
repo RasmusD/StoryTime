@@ -78,4 +78,9 @@ int ChoiceBox::getChoice()
   return _choice;
 }
 
+TextSegment& ChoiceBox::getChoiceText()
+{
+  return _choices[_choice-1];
+}
+
 } // End namespace StoryTime
