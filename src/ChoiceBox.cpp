@@ -7,10 +7,13 @@ ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, int> >& 
 {
   // Create choice strings
   _choices.reserve(choices.size());
+  _choiceNums.reserve(choices.size());
   for (int i = 0; i < choices.size(); i++)
   {
-    TextSegment choice(font, std::to_string(i+1) + ". " + choices[i].first, 0.02);
+    TextSegment choice(font, choices[i].first, 0.02);
     _choices.push_back(choice);
+    TextSegment choiceNum(font, std::to_string(i+1) + ".", 0.02);
+    _choiceNums.push_back(choiceNum);
   }
   // Set position of choices and box
   setPosition(pos);
@@ -37,6 +40,7 @@ void ChoiceBox::update(sf::Time& elapsedTime)
   for (int i = 0; i < _choices.size(); i++)
   {
     _choices[i].update(elapsedTime);
+    _choiceNums[i].update(elapsedTime);
   }
 }
 
@@ -50,12 +54,32 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow)
     renderWindow.draw(*choice.getText());
     //choice.printTargetText();
   }
+  for (TextSegment& number : _choiceNums)
+  {
+    //std::cout << "here" << std::endl;
+    //std::cout << (std::string)choice.getText()->getString() << std::endl;
+    //choice.printTargetText();
+    renderWindow.draw(*number.getText());
+    //choice.printTargetText();
+  }
 }
 
 void ChoiceBox::setPosition(sf::Vector2f& newPos)
 {
   _topLeft = newPos;
   _bottomRight = newPos;
+  float tHeight = _choiceNums.front().getLocalBounds().height * 1.5;
+  // Set the numbers
+  for (TextSegment& number : _choiceNums)
+  {
+    // Set the choice's position
+    number.getText()->setPosition(newPos);
+    // Update the height of the next choice
+    newPos.y += tHeight;
+  }
+  // Set the text
+  newPos.y -= tHeight * _choiceNums.size();
+  newPos.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
   for (TextSegment& choice : _choices)
   {
     // Check if this is the widest string for the box so far
@@ -67,10 +91,12 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
     // Set the choice's position
     choice.getText()->setPosition(newPos);
     // Update the height of the next choice
-    newPos.y += bounds.height + 10;
+    newPos.y += tHeight;
   }
   // Update lower rightt corner y
-  _bottomRight.y = newPos.y - 10;
+  _bottomRight.y = newPos.y;
+  _bottomRight.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
+  
 }
 
 int ChoiceBox::getChoice()

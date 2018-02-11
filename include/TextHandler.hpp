@@ -38,6 +38,7 @@ class TextHandler
     // Methods
     void setNextSegment();
     void setTextNext();
+    void setChoiceNext();
 
     // Variables
     // List of all text segments, in order to play

@@ -43,6 +43,7 @@ void TextHandler::update(sf::Time& elapsedTime)
   {
     _currentChoice.update(elapsedTime);
     // If a choice has been made
+    //std::cout << _currentChoice.getChoice() << std::endl;
     if (_currentChoice.getChoice() != -1)
     {
       _segments.push_front(_currentChoice.getChoiceText());
@@ -51,9 +52,13 @@ void TextHandler::update(sf::Time& elapsedTime)
     }
   } else if (_coreText.back().atEnd == true)
   {
+    //std::cout << "Setting segment..." << std::endl;
     // Else if we're at the end of the current segment find the next (choice or segment)
     setNextSegment();
-    _isNextChoice = true;
+    if (_choices.size() > 0)
+    {
+      _isNextChoice = true;
+    }
   } else {
     //std::cout << "Updating text." << std::endl;
     // Else update the current segment
@@ -66,23 +71,11 @@ void TextHandler::update(sf::Time& elapsedTime)
 
 void TextHandler::setNextSegment()
 {
-  if (_choiceActive == false)
+  //std::cout << "Setting segment." << std::endl;
+  if (_isNextChoice == true && _choices.size() > 0)
   {
-    if (_isNextChoice == true)
-    {
-      //std::cout << "Here." << std::endl;
-      // Activate next choice
-      _currentChoice = _choices.front();
-      _choices.pop_front();
-      _choiceActive = true;
-      // Place the next choice
-      sf::Vector2f nPos = _coreText.back().getText()->getPosition();
-      nPos.y += _coreText.back().getText()->getGlobalBounds().height * 2;
-      _currentChoice.setPosition(nPos);
-      //std::cout << "Here2." << std::endl;
-    } else {
-      setTextNext();
-    }
+    setChoiceNext();
+    _choiceActive = true;
   } else if (_segments.size() > 0) {
     setTextNext();
     _choiceActive = false;
@@ -95,10 +88,24 @@ void TextHandler::setTextNext()
 { 
   // Set position of next segment
   sf::Vector2f sPos = _coreText.back().getText()->getPosition();
-  sPos.x += _coreText.back().getText()->getLocalBounds().width + _coreText.back().getText()->getFont()->getGlyph(0020, _segments.front().getText()->getCharacterSize(), false).advance;
+  sPos.x += _coreText.back().getText()->getLocalBounds().width + _coreText.back().getText()->getFont()->getGlyph('\u0020', _segments.front().getText()->getCharacterSize(), false).advance;
   _segments.front().getText()->setPosition(sPos);
   _coreText.push_back(_segments.front());
   _segments.pop_front();
+}
+
+void TextHandler::setChoiceNext()
+{
+  //std::cout << "Here." << std::endl;
+  // Activate next choice
+  _currentChoice = _choices.front();
+  _choices.pop_front();
+  _choiceActive = true;
+  // Place the next choice
+  sf::Vector2f nPos = _coreText.back().getText()->getPosition();
+  nPos.y += _coreText.back().getText()->getGlobalBounds().height * 2;
+  _currentChoice.setPosition(nPos);
+  //std::cout << "Here2." << std::endl;
 }
 
 void TextHandler::draw(sf::RenderWindow& renderWindow)

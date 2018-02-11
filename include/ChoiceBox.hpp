@@ -46,6 +46,9 @@ class ChoiceBox
     // The choices which can be made
     std::vector<TextSegment> _choices;
 
+    // The choices numbers
+    std::vector<TextSegment> _choiceNums;
+
     // The top left corner position
     sf::Vector2f _topLeft;
 
