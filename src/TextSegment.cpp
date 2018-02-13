@@ -25,6 +25,17 @@ sf::Text* TextSegment::getText()
   return &_text;
 }
 
+TextSegment TextSegment::getRemainingTextSegment()
+{
+  // Find position of last " "
+  int spacePos = ((std::string)_text.getString()).find_last_of(" ") + 1;
+  TextSegment remainder = TextSegment(*_text.getFont(), _targetText.substr(spacePos, std::string::npos), _drawSpeed);
+  _targetText = _targetText.substr(0, spacePos);
+  _text.setString(_targetText);
+  atEnd = true;
+  return remainder;
+}
+
 void TextSegment::update(sf::Time& elapsedTime)
 {
   if (atEnd == false)

@@ -46,7 +46,7 @@ class TextHandler
     // List of all choices to make, in order to make
     std::deque<ChoiceBox> _choices;
     // The core text to be displayed
-    std::vector<TextSegment> _coreText;
+    std::vector<TextSegment> _screenText;
     // Current choice
     ChoiceBox _currentChoice;
     // Are we currently making a choice?

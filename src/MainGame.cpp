@@ -10,7 +10,7 @@ MainGame::MainGame() : GameSlice()
     std::cerr << "Cannot load Rosegarden font!" << std::endl;
     throw;
   }
-  std::string story = "This is the story of a <choice def=\"man/1-woman/2\"/>. It starts on the road...";
+  std::string story = "This is the story of a <choice def=\"man/1-woman/2\"/>. It starts on the road after a long long day...";
   _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));
 }
 

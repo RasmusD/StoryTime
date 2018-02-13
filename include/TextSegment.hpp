@@ -46,6 +46,9 @@ class TextSegment
     // Add more text to the final target text
     void addText(std::string& toAdd);
 
+    // Get the remaining text not currently shown
+    TextSegment getRemainingTextSegment();
+
   private:
     // Private hidden constructor
     sf::Text _text;

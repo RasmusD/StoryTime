@@ -11,10 +11,10 @@ TextHandler::TextHandler(std::string& text)
   //std::cout << _choices.size() << std::endl;
 
   // Set position of core text segment
-  _coreText.reserve(_segments.size() + _choices.size());
-  _coreText.push_back(_segments.front());  
+  _screenText.reserve(_segments.size() + _choices.size());
+  _screenText.push_back(_segments.front());  
   _segments.pop_front();
-  _coreText.back().getText()->setPosition(10, 10);
+  _screenText.back().getText()->setPosition(10, 10);
   _choiceActive = false;
   _isNextChoice = true;
   /*
@@ -50,7 +50,7 @@ void TextHandler::update(sf::Time& elapsedTime)
       setNextSegment();
       _isNextChoice = false;
     }
-  } else if (_coreText.back().atEnd == true)
+  } else if (_screenText.back().atEnd == true)
   {
     //std::cout << "Setting segment..." << std::endl;
     // Else if we're at the end of the current segment find the next (choice or segment)
@@ -61,11 +61,17 @@ void TextHandler::update(sf::Time& elapsedTime)
     }
   } else {
     //std::cout << "Updating text." << std::endl;
-    // Else update the current segment
-    for (auto& segment : _coreText)
+    // Check if the current segment is beyond the screen
+    sf::FloatRect bounds = _screenText.back().getText()->getGlobalBounds();
+    if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
     {
-      segment.update(elapsedTime);
+      // If it is
+      // Create a new segment. One line down
+      _screenText.push_back(_screenText.back().getRemainingTextSegment());
+      _screenText.back().getText()->setPosition(_screenText.front().getText()->getPosition().x, _screenText.front().getText()->getPosition().y + bounds.height * 2);
     }
+    // Else update the current segment
+    _screenText.back().update(elapsedTime);
   }
 }
 
@@ -87,10 +93,10 @@ void TextHandler::setNextSegment()
 void TextHandler::setTextNext()
 { 
   // Set position of next segment
-  sf::Vector2f sPos = _coreText.back().getText()->getPosition();
-  sPos.x += _coreText.back().getText()->getLocalBounds().width + _coreText.back().getText()->getFont()->getGlyph('\u0020', _segments.front().getText()->getCharacterSize(), false).advance;
+  sf::Vector2f sPos = _screenText.back().getText()->getPosition();
+  sPos.x += _screenText.back().getText()->getLocalBounds().width;
   _segments.front().getText()->setPosition(sPos);
-  _coreText.push_back(_segments.front());
+  _screenText.push_back(_segments.front());
   _segments.pop_front();
 }
 
@@ -102,15 +108,15 @@ void TextHandler::setChoiceNext()
   _choices.pop_front();
   _choiceActive = true;
   // Place the next choice
-  sf::Vector2f nPos = _coreText.back().getText()->getPosition();
-  nPos.y += _coreText.back().getText()->getGlobalBounds().height * 2;
+  sf::Vector2f nPos = _screenText.back().getText()->getPosition();
+  nPos.y += _screenText.back().getText()->getGlobalBounds().height * 2;
   _currentChoice.setPosition(nPos);
   //std::cout << "Here2." << std::endl;
 }
 
 void TextHandler::draw(sf::RenderWindow& renderWindow)
 {
-  for (auto& segment : _coreText)
+  for (auto& segment : _screenText)
   {
     //segment.printTargetText();
     //segment.printVisibleText();
