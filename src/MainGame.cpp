@@ -50,15 +50,15 @@ GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindo
 {
   _gameText->update(elapsedTime);
   
-  //std::cout << "update end" << std::endl;
+  std::cout << "update end" << std::endl;
   return NULL;
 }
 
 void MainGame::draw(sf::RenderWindow& renderWindow)
 {
-  //std::cout << "drawing" << std::endl;
+  std::cout << "drawing" << std::endl;
   _gameText->draw(renderWindow);
-  //std::cout << "drawing end" << std::endl;
+  std::cout << "drawing end" << std::endl;
 }
 
 

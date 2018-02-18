@@ -8,7 +8,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "TextSegment.hpp"
+#include "ChoiceBox.hpp"
+
 namespace StoryTime {
+
+class ChoiceBox;
 
 class Utils
 {
@@ -20,6 +25,21 @@ class Utils
             static_cast<TO>(other.x),
             static_cast<TO>(other.y));
     }
+
+    // A structure with a pointer to a text or choice
+    struct SegChoice
+    {
+      SegChoice(){};
+      // Move constructor
+      SegChoice(SegChoice&& move)
+      {
+        text = std::move(move.text);
+        choice = std::move(move.choice);
+      };
+      ~SegChoice(){};
+      std::unique_ptr<TextSegment> text;
+      std::unique_ptr<ChoiceBox> choice;
+    };
 
     // Gets an sf::Keyboard::Key enum by number 0 - 9
     static sf::Keyboard::Key getKeyByNumber(int num)

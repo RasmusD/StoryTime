@@ -3,8 +3,7 @@
 namespace StoryTime {
 
 void TextParser::parseText(std::string& text,
-                          std::deque<TextSegment>& segments, 
-                          std::deque<ChoiceBox>& choices)
+                          std::deque<Utils::SegChoice>& segments)
 {
   // Active markup settings
   Markup activeMarkup = Markup();
@@ -40,13 +39,15 @@ void TextParser::parseText(std::string& text,
       // we always split tokens at '>' anyway so this is safe
       //std::cout << "For sent (" << utterance << ") I'm adding:" << std::endl;
       //std::cout << chunk << std::endl;
-      segments.push_back(TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+      segments.push_back(Utils::SegChoice());
+      segments.back().text = std::move(seg);
       chunk.clear();
       // Identify markup will add the markup to the currently active markup
       // and ignore well-formed but unsupported markup
       // so we only need to do something if the markup is invalid
       // namely we assume this should be spoken
-      if (identifyMarkup(possibleMarkup, activeMarkup, segments, choices, validMarkup) != true)
+      if (identifyMarkup(possibleMarkup, activeMarkup, segments, validMarkup) != true)
       {
         chunk += possibleMarkup;
       }
@@ -70,7 +71,9 @@ void TextParser::parseText(std::string& text,
   {
     //std::cout << "For sent (" << text << ") I'm adding:" << std::endl;
     //std::cout << chunk << std::endl;
-    segments.push_back(TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+    std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+    segments.push_back(Utils::SegChoice());
+    segments.back().text = std::move(seg);
     chunk.clear();
   }
 }
@@ -78,8 +81,7 @@ void TextParser::parseText(std::string& text,
 
 bool TextParser::identifyMarkup(std::string possibleMarkup,
                                 Markup& activeMarkup,
-                                std::deque<TextSegment>& segments, 
-                                std::deque<ChoiceBox>& choices,
+                                std::deque<Utils::SegChoice>& segments,
                                 std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup)
 {
   // Is this an opening, closing or self-contained piece of markup?
@@ -89,14 +91,12 @@ bool TextParser::identifyMarkup(std::string possibleMarkup,
   {
     return closeMarkup(possibleMarkup,
                       activeMarkup,
-                      segments, 
-                      choices,
+                      segments,
                       validMarkup);
   } else {
     return openMarkup(possibleMarkup,
                       activeMarkup,
-                      segments, 
-                      choices,
+                      segments,
                       validMarkup);
   }
 }
@@ -104,8 +104,7 @@ bool TextParser::identifyMarkup(std::string possibleMarkup,
 
 bool TextParser::closeMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
-                            std::deque<TextSegment>& segments, 
-                            std::deque<ChoiceBox>& choices,
+                            std::deque<Utils::SegChoice>& segments,
                             std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup)
 {
   std::string type;
@@ -176,8 +175,7 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
 
 bool TextParser::openMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
-                            std::deque<TextSegment>& segments, 
-                            std::deque<ChoiceBox>& choices,
+                            std::deque<Utils::SegChoice>& segments,
                             std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup)
 {
   bool foundType = false;
@@ -291,7 +289,7 @@ bool TextParser::openMarkup(std::string possibleMarkup,
 
   if (foundValue == true)
   {
-    return applyMarkup(type, subtype, value, activeMarkup, segments, choices);
+    return applyMarkup(type, subtype, value, activeMarkup, segments);
   } else {
     std::cerr << "TextParser: " + possibleMarkup + " did not have a value (" + chunk + ")." << std::endl;
     return false;
@@ -303,8 +301,7 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
                                 std::string subtype,
                                 std::string value,
                                 Markup& activeMarkup,
-                                std::deque<TextSegment>& segments, 
-                                std::deque<ChoiceBox>& choices)
+                                std::deque<Utils::SegChoice>& segments)
 {
   //std::cout << value << std::endl;
   // Ready for use the activemarkup tuple
@@ -359,7 +356,7 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
       // Check if this is a self-contained tag or not
       if (subtype == "def")
       {
-        addChoice(choices, value);
+        addChoice(segments, value);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -390,7 +387,7 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
   }
 }
 
-void TextParser::addChoice(std::deque<ChoiceBox>& choices, std::string& value)
+void TextParser::addChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
 {
   std::vector<std::pair<std::string, int>> choiceVec;
 
@@ -422,8 +419,9 @@ void TextParser::addChoice(std::deque<ChoiceBox>& choices, std::string& value)
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    ChoiceBox cB(GlobalSettings::DEFAULTFONT, choiceVec, pos);
-    choices.push_back(cB);
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos));
+    segments.push_back(Utils::SegChoice());
+    segments.back().choice = std::move(cB);
   }
 }
 

@@ -79,6 +79,7 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   }
   // Set the text
   newPos.y -= tHeight * _choiceNums.size();
+  // Add whitespace
   newPos.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
   for (TextSegment& choice : _choices)
   {
@@ -95,6 +96,7 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   }
   // Update lower rightt corner y
   _bottomRight.y = newPos.y;
+  // Add whitespace
   _bottomRight.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
   
 }
@@ -104,9 +106,14 @@ int ChoiceBox::getChoice()
   return _choice;
 }
 
-TextSegment& ChoiceBox::getChoiceText()
+std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
 {
-  return _choices[_choice-1];
+  if (_choice < 0)
+  {
+    return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f));
+  } else {
+    return std::unique_ptr<TextSegment>(std::move(&_choices[_choice-1]));
+  }
 }
 
 } // End namespace StoryTime

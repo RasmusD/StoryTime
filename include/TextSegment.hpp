@@ -47,7 +47,7 @@ class TextSegment
     void addText(std::string& toAdd);
 
     // Get the remaining text not currently shown
-    TextSegment getRemainingTextSegment();
+    std::unique_ptr<TextSegment> getRemainingTextSegment();
 
   private:
     // Private hidden constructor
@@ -55,7 +55,7 @@ class TextSegment
     // The text segment once fully realised
     std::string _targetText;
     // The current position in the final text
-    uint _stringPos = 0;
+    unsigned int _stringPos = 0;
     // The speed in s with which the text renders
     // If set to -1.f it will render fully from the start.
     float _drawSpeed = -1.f;

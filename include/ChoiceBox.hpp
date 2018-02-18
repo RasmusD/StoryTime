@@ -8,9 +8,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Utils.hpp"
 #include "GlobalSettings.hpp"
 #include "TextSegment.hpp"
-#include "Utils.hpp"
 
 namespace StoryTime {
 
@@ -41,7 +41,7 @@ class ChoiceBox
     int getChoice();
 
     // Returns the chosen text
-    TextSegment& getChoiceText();
+    std::unique_ptr<TextSegment> getChoiceText();
   private:
     // The choices which can be made
     std::vector<TextSegment> _choices;

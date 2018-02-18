@@ -13,8 +13,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GlobalSettings.hpp"
-#include "TextSegment.hpp"
-#include "ChoiceBox.hpp"
+#include "Utils.hpp"
 
 namespace StoryTime {
 
@@ -42,27 +41,24 @@ class TextParser
     ~TextParser() {};
 
     // Parse
-    static void parseText(std::string& text, std::deque<TextSegment>& segments,  std::deque<ChoiceBox>& choices);
+    static void parseText(std::string& text, std::deque<Utils::SegChoice>& segments);
   private:
     // Find if possibleMarkup is valid markup and apply if it is supported
     static bool identifyMarkup(std::string possibleMarkup,
                                 Markup& activeMarkup,
-                                std::deque<TextSegment>& segments, 
-                                std::deque<ChoiceBox>& choices,
+                                std::deque<Utils::SegChoice>& segments, 
                                 std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup);
     // Find and apply a markup tag closing (</colour>)
     // Returns false if no markup of type is currently open, type is not supported (</imaginary>) or is malformed (</imaginary stuff>)
     static bool closeMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
-                            std::deque<TextSegment>& segments, 
-                            std::deque<ChoiceBox>& choices,
+                            std::deque<Utils::SegChoice>& segments, 
                             std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup);
     // Find and apply a markup tag opening (<colour val="black">)
     // Returns false if type is not supported (<imaginary stuff="bla">) or markup is malformed (<colour val=="black">)
     static bool openMarkup(std::string possibleMarkup,
                             Markup& activeMarkup,
-                            std::deque<TextSegment>& segments, 
-                            std::deque<ChoiceBox>& choices,
+                            std::deque<Utils::SegChoice>& segments,
                             std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> >& validMarkup);
     
     /*
@@ -73,11 +69,10 @@ class TextParser
                             std::string subtype,
                             std::string value,
                             Markup& activeMarkup,
-                            std::deque<TextSegment>& segments, 
-                            std::deque<ChoiceBox>& choices);
+                            std::deque<Utils::SegChoice>& segments);
     
     // Add a found choice
-    static void addChoice(std::deque<ChoiceBox>& choices, std::string& value);
+    static void addChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
 
     /*
     A map of valid markup types.
