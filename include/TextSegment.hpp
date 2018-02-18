@@ -5,6 +5,7 @@
 #define __TextSegment_H_INCLUDED__
 
 #include <iostream>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
