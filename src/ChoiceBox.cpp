@@ -49,17 +49,17 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow)
   for (TextSegment& choice : _choices)
   {
     //std::cout << "here" << std::endl;
-    //std::cout << (std::string)choice.getText()->getString() << std::endl;
+    //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
-    renderWindow.draw(*choice.getText());
+    renderWindow.draw(choice.getText());
     //choice.printTargetText();
   }
   for (TextSegment& number : _choiceNums)
   {
     //std::cout << "here" << std::endl;
-    //std::cout << (std::string)choice.getText()->getString() << std::endl;
+    //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
-    renderWindow.draw(*number.getText());
+    renderWindow.draw(number.getText());
     //choice.printTargetText();
   }
 }
@@ -73,14 +73,14 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   for (TextSegment& number : _choiceNums)
   {
     // Set the choice's position
-    number.getText()->setPosition(newPos);
+    number.getText().setPosition(newPos);
     // Update the height of the next choice
     newPos.y += tHeight;
   }
   // Set the text
   newPos.y -= tHeight * _choiceNums.size();
   // Add whitespace
-  newPos.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
+  newPos.x += 2 * _choices.front().getText().getFont()->getGlyph('\u0009', _choices.front().getText().getCharacterSize(), false).advance;
   for (TextSegment& choice : _choices)
   {
     // Check if this is the widest string for the box so far
@@ -90,14 +90,14 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
       _bottomRight.x = bounds.width;
     }
     // Set the choice's position
-    choice.getText()->setPosition(newPos);
+    choice.getText().setPosition(newPos);
     // Update the height of the next choice
     newPos.y += tHeight;
   }
   // Update lower rightt corner y
   _bottomRight.y = newPos.y;
   // Add whitespace
-  _bottomRight.x += 2 * _choices.front().getText()->getFont()->getGlyph('\u0009', _choices.front().getText()->getCharacterSize(), false).advance;
+  _bottomRight.x += 2 * _choices.front().getText().getFont()->getGlyph('\u0009', _choices.front().getText().getCharacterSize(), false).advance;
   
 }
 

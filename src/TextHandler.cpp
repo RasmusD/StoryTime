@@ -15,7 +15,7 @@ TextHandler::TextHandler(std::string& text)
   if (_segmentQueue.front().text)
   {
     _screenText.push_back(std::move(_segmentQueue.front().text));
-    _screenText.back()->getText()->setPosition(10, 10);
+    _screenText.back()->getText().setPosition(10, 10);
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
@@ -29,9 +29,9 @@ TextHandler::TextHandler(std::string& text)
   _nLines = 1;
   /*
   _titleText = TextSegment(_titleFont, "This is the story of a ", 0.05);
-  _titleText.getText()->setPosition(10, 10);
+  _titleText.getText().setPosition(10, 10);
   std::vector<std::string> choices = {"man", "woman"};
-  _choiceText.getText()->setFillColor(sf::Color::Red);
+  _choiceText.getText().setFillColor(sf::Color::Red);
   sf::Vector2f choicePos = {50, 50};
   //std::cout << "Creating choicebox..." << std::endl;
   _choice = ChoiceBox(_titleFont, choices, choicePos);
@@ -72,13 +72,13 @@ void TextHandler::update(sf::Time& elapsedTime)
   } else {
     std::cout << "Updating text." << std::endl;
     // Check if the current segment is beyond the screen
-    sf::FloatRect bounds = _screenText.back()->getText()->getGlobalBounds();
+    sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
     if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
     {
       // If it is
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-      _screenText.back()->getText()->setPosition(_screenText.front()->getText()->getPosition().x, _screenText.front()->getText()->getPosition().y + bounds.height * (_nLines * 2));
+      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.front()->getText().getPosition().y + bounds.height * (_nLines * 2));
       _nLines++;
     }
     // Else update the current segment
@@ -111,9 +111,9 @@ void TextHandler::setNextSegment()
 void TextHandler::setTextNext()
 { 
   // Set position of next segment
-  sf::Vector2f sPos = _screenText.back()->getText()->getPosition();
-  sPos.x += _screenText.back()->getText()->getLocalBounds().width;
-  _segmentQueue.front().text->getText()->setPosition(sPos);
+  sf::Vector2f sPos = _screenText.back()->getText().getPosition();
+  sPos.x += _screenText.back()->getText().getLocalBounds().width;
+  _segmentQueue.front().text->getText().setPosition(sPos);
   _screenText.push_back(std::move(_segmentQueue.front().text));
   _segmentQueue.pop_front();
   std::cout << "push" << std::endl;
@@ -125,19 +125,19 @@ void TextHandler::setChoiceNext()
   std::cout << "here" << std::endl;
   /*if (_screenText.size() > 1)
   {
-    std::cout << (std::string)_screenText[1]->getText()->getString() << std::endl;
+    std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
   }*/
   _currentChoice = std::move(_segmentQueue.front().choice);
   /*if (_screenText.size() > 1)
   {
-    std::cout << (std::string)_screenText[1]->getText()->getString() << std::endl;
+    std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
   }*/
   std::cout << "here" << std::endl;
   _segmentQueue.pop_front();
   std::cout << "here" << std::endl;
   // Place the next choice
-  sf::Vector2f nPos = _screenText.back()->getText()->getPosition();
-  nPos.y += _screenText.back()->getText()->getGlobalBounds().height * 2;
+  sf::Vector2f nPos = _screenText.back()->getText().getPosition();
+  nPos.y += _screenText.back()->getText().getGlobalBounds().height * 2;
   _currentChoice->setPosition(nPos);
   std::cout << "here" << std::endl;
 }

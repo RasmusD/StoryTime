@@ -41,7 +41,7 @@ class TextSegment
     void printVisibleText();
 
     // Access to the currently visible text
-    sf::Text* getText();
+    sf::Text& getText();
 
     // Add more text to the final target text
     void addText(std::string& toAdd);
@@ -50,7 +50,7 @@ class TextSegment
     std::unique_ptr<TextSegment> getRemainingTextSegment();
 
   private:
-    // Private hidden constructor
+    // The currently visible text
     sf::Text _text;
     // The text segment once fully realised
     std::string _targetText;

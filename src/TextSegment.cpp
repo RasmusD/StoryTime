@@ -20,9 +20,9 @@ TextSegment::TextSegment()
   // Do nothing
 }
 
-sf::Text* TextSegment::getText()
+sf::Text& TextSegment::getText()
 {
-  return &_text;
+  return _text;
 }
 
 std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
