@@ -52,25 +52,25 @@ void TextHandler::update(sf::Time& elapsedTime)
   //std::cout << "update" << std::endl;
   if (_choiceActive == true)
   {
-    std::cout << "Updating Choice..." << std::endl;
+    //std::cout << "Updating Choice..." << std::endl;
     _currentChoice->update(elapsedTime);
     // If a choice has been made - add the text to screen
     //std::cout << _currentChoice->getChoice() << std::endl;
     if (_currentChoice->getChoice() != -1)
     {
       _segmentQueue.push_front(Utils::SegChoice());
-      std::cout << "check" << std::endl;
+      //std::cout << "check" << std::endl;
       _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
-      std::cout << "check" << std::endl;
+      //std::cout << "check" << std::endl;
       setNextSegment();
-      std::cout << "check" << std::endl;
+      //std::cout << "check" << std::endl;
     }
   } else if (_screenText.back()->atEnd == true)
   {
-    std::cout << "Setting next segmetn." << std::endl;
+    //std::cout << "Setting next segmetn." << std::endl;
     setNextSegment();
   } else {
-    std::cout << "Updating text." << std::endl;
+    //std::cout << "Updating text." << std::endl;
     // Check if the current segment is beyond the screen
     sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
     if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
@@ -91,15 +91,15 @@ void TextHandler::setNextSegment()
   if (_segmentQueue.size() == 0)
   {
     // If we are done
-    std::cout << "At end." << std::endl;
+    //std::cout << "At end." << std::endl;
   } else if (_segmentQueue.front().text)
   {
     // If we have text in the next segment
-    std::cout << "Setting text..." << std::endl;
+    //std::cout << "Setting text..." << std::endl;
     setTextNext();
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
-    std::cout << "Setting choice..." << std::endl;
+    //std::cout << "Setting choice..." << std::endl;
     // If we have a choice in the next segment
     setChoiceNext();
     _choiceActive = true;
@@ -116,46 +116,46 @@ void TextHandler::setTextNext()
   _segmentQueue.front().text->getText().setPosition(sPos);
   _screenText.push_back(std::move(_segmentQueue.front().text));
   _segmentQueue.pop_front();
-  std::cout << "push" << std::endl;
+  //std::cout << "push" << std::endl;
 }
 
 void TextHandler::setChoiceNext()
 {
   // Activate next choice
-  std::cout << "here" << std::endl;
+  //std::cout << "here" << std::endl;
   /*if (_screenText.size() > 1)
   {
-    std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
+    //std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
   }*/
   _currentChoice = std::move(_segmentQueue.front().choice);
   /*if (_screenText.size() > 1)
   {
-    std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
+    //std::cout << (std::string)_screenText[1]->getText().getString() << std::endl;
   }*/
-  std::cout << "here" << std::endl;
+  //std::cout << "here" << std::endl;
   _segmentQueue.pop_front();
-  std::cout << "here" << std::endl;
+  //std::cout << "here" << std::endl;
   // Place the next choice
   sf::Vector2f nPos = _screenText.back()->getText().getPosition();
   nPos.y += _screenText.back()->getText().getGlobalBounds().height * 2;
   _currentChoice->setPosition(nPos);
-  std::cout << "here" << std::endl;
+  //std::cout << "here" << std::endl;
 }
 
 void TextHandler::draw(sf::RenderWindow& renderWindow)
 {
-  std::cout << "Drwaing..." << std::endl;
+  //std::cout << "Drwaing..." << std::endl;
   for (auto& segment : _screenText)
   {
-    std::cout << "Drwaing seg..." << std::endl;
+    //std::cout << "Drwaing seg..." << std::endl;
     segment->printTargetText();
     segment->printVisibleText();
     segment->draw(renderWindow);
-    std::cout << "Done." << std::endl;
+    //std::cout << "Done." << std::endl;
   }
   if (_choiceActive == true)
   {
-    std::cout << "Drwaing choice..." << std::endl;
+    //std::cout << "Drwaing choice..." << std::endl;
     _currentChoice->draw(renderWindow);
   }
 }

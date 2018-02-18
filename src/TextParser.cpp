@@ -123,9 +123,9 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
         {
           std::tuple<std::string, std::string, std::string> cMarkup = activeMarkup.activeMarkup.at(i);
           /*std::cout << type << std::endl;
-          std::cout << std::get<0>(cMarkup) << std::endl;
-          std::cout << std::get<1>(cMarkup) << std::endl;
-          std::cout << std::get<2>(cMarkup) << std::endl;*/
+          //std::cout << std::get<0>(cMarkup) << std::endl;
+          //std::cout << std::get<1>(cMarkup) << std::endl;
+          //std::cout << std::get<2>(cMarkup) << std::endl;*/
           if (std::get<0>(cMarkup) == type)
           {
             // Set the markup to its previous value

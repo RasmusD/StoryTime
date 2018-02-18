@@ -27,7 +27,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent)
     {
       if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
       {
-        std::cout << "Key pressed " << i+1 << std::endl;
+        //std::cout << "Key pressed " << i+1 << std::endl;
         _choice = i+1;
         break;
       }
