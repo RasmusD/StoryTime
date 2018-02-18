@@ -112,7 +112,7 @@ std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
   {
     return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f));
   } else {
-    return std::unique_ptr<TextSegment>(std::move(&_choices[_choice-1]));
+    return std::unique_ptr<TextSegment>(new TextSegment(_choices[_choice-1]));
   }
 }
 
