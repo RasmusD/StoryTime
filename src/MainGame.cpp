@@ -16,11 +16,17 @@ MainGame::MainGame() : GameSlice()
   {
     throw("File doesn't exist!"); 
   }
-  std::string story;
+  std::unordered_map<std::string, std::string> story;
   std::string line;
   for(std::string line; getline(input, line); )
   {
-    story += line;
+    // Ready entry
+    std::pair<std::string, std::string> segment;
+    // Split once on first whitespace
+    size_t wPos = line.find_first_of(' ');
+    segment.first = line.substr(0, wPos);
+    segment.second = line.substr(wPos+1, std::string::npos);
+    story.insert(segment);
   }
   
   input.close();

@@ -3,9 +3,11 @@
 namespace StoryTime {
 
 // Constructor
-TextHandler::TextHandler(std::string& text)
+TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData)
 {
-  TextParser::parseText(text, _segmentQueue);
+  _storyData = storyData;
+  //std::cout << _storyData["[begin]"] << std::endl;
+  TextParser::parseText(_storyData["[begin]"], _segmentQueue);
 
   //std::cout << text << std::endl;
   //std::cout << _choices.size() << std::endl;

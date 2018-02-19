@@ -22,7 +22,7 @@ class TextHandler
 {
   public:
     // Constructor
-    TextHandler(std::string& inTxt);
+    TextHandler(std::unordered_map<std::string, std::string>& storyData);
 
     // Destuctor
     ~TextHandler() {};
@@ -43,6 +43,8 @@ class TextHandler
     void setChoiceNext();
 
     // Variables
+    // Dictionary of branching story segments
+    std::unordered_map<std::string, std::string> _storyData;
     // Ordered list of TextSegments and ChoiceBoxes to go through
     std::deque<Utils::SegChoice> _segmentQueue;
     // The text to currently be displayed
