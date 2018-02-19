@@ -42,6 +42,9 @@ class TextHandler
     void setTextNext();
     void setChoiceNext();
 
+    // Add a new branch
+    void addBranch(std::string& id);
+
     // Variables
     // Dictionary of branching story segments
     std::unordered_map<std::string, std::string> _storyData;

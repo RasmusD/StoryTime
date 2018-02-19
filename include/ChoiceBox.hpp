@@ -18,7 +18,7 @@ class ChoiceBox
 {
   public:
     // Constructor
-    ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, int>>& choices, sf::Vector2f& pos);
+    ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string>>& choices, sf::Vector2f& pos);
     ChoiceBox() {};
 
     // Destuctor
@@ -36,15 +36,16 @@ class ChoiceBox
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f& newPos);
 
-    // Returns the line of the next text segment if a choice has been made
-    // Else -1
-    int getChoice();
+    // Returns the identifier of the next text segment if a choice has been made
+    // Returns "<continue>" if not a branching choice
+    // Returns "" if no choice has been made
+    std::string& getChoiceId();
 
-    // Returns the chosen text
+    // Returns the chosen textsegment
     std::unique_ptr<TextSegment> getChoiceText();
   private:
     // The choices which can be made
-    std::vector<TextSegment> _choices;
+    std::vector<std::pair<TextSegment, std::string>> _choices;
 
     // The choices numbers
     std::vector<TextSegment> _choiceNums;
@@ -56,8 +57,8 @@ class ChoiceBox
     sf::Vector2f _bottomRight;
 
     // The choice made
-    // -1 while no choice has been made
-    int _choice = -1;
+    // "" while no choice has been made
+    std::pair<TextSegment, std::string> _choice = {TextSegment(), ""};
 };
 
 

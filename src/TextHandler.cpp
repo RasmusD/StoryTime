@@ -57,15 +57,27 @@ void TextHandler::update(sf::Time& elapsedTime)
     //std::cout << "Updating Choice..." << std::endl;
     _currentChoice->update(elapsedTime);
     // If a choice has been made - add the text to screen
-    //std::cout << _currentChoice->getChoice() << std::endl;
-    if (_currentChoice->getChoice() != -1)
+    //std::cout << _currentChoice->getChoiceId() << std::endl;
+    if (_currentChoice->getChoiceId() != "")
     {
-      _segmentQueue.push_front(Utils::SegChoice());
-      //std::cout << "check" << std::endl;
-      _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
-      //std::cout << "check" << std::endl;
-      setNextSegment();
-      //std::cout << "check" << std::endl;
+      // If this is a simple continue choice - continue
+      if (_currentChoice->getChoiceId() == "<continue>")
+      {
+        _segmentQueue.push_front(Utils::SegChoice());
+        //std::cout << "check" << std::endl;
+        _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
+        //std::cout << "check" << std::endl;
+        setNextSegment();
+        //std::cout << "check" << std::endl;
+      } else {
+        _segmentQueue.push_front(Utils::SegChoice());
+        //std::cout << "check" << std::endl;
+        _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
+        //std::cout << "check" << std::endl;
+        // Expand the queue with the chosen branch
+        addBranch(_currentChoice->getChoiceId());
+        setNextSegment();
+      }
     }
   } else if (_screenText.back()->atEnd == true)
   {
@@ -159,6 +171,18 @@ void TextHandler::draw(sf::RenderWindow& renderWindow)
   {
     //std::cout << "Drwaing choice..." << std::endl;
     _currentChoice->draw(renderWindow);
+  }
+}
+
+void TextHandler::addBranch(std::string& id)
+{
+  // Check id exists
+  auto it = _storyData.find(id);
+  if (it != _storyData.end())
+  {
+    TextParser::parseText(it->second, _segmentQueue);
+  } else {
+    throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
   }
 }
 

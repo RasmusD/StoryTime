@@ -394,19 +394,19 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
 
 void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
 {
-  std::vector<std::pair<std::string, int>> choiceVec;
+  std::vector<std::pair<std::string, std::string>> choiceVec;
 
   // Split on /
   std::stringstream stream(value);
   std::string segment;
   while (std::getline(stream, segment, '/'))
   {
-    std::pair<std::string, int> choice;
+    std::pair<std::string, std::string> choice;
     
     // Add the choice text
     choice.first = segment;
-    // Fake the number (for now)
-    choice.second = 1;
+    // This is not a branching choice
+    choice.second = "<continue>";
 
     choiceVec.push_back(choice);
   }
@@ -424,14 +424,14 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
 
 void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
 {
-  std::vector<std::pair<std::string, int>> choiceVec;
+  std::vector<std::pair<std::string, std::string>> choiceVec;
 
   // Split on /
   std::stringstream stream(value);
   std::string segment;
   while (std::getline(stream, segment, '/'))
   {
-    std::pair<std::string, int> choice;
+    std::pair<std::string, std::string> choice;
     // Split on -
     std::stringstream cStream;
     cStream << segment;
@@ -440,12 +440,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::st
     std::getline(cStream, choiceText, '-');
     choice.first = choiceText;
     std::getline(cStream, choiceText, '-');
-    try
-    {
-      choice.second = std::stoi(choiceText);
-    } catch(...) {
-      throw std::runtime_error("TextParser: Cannot convert " + choiceText + " to int.");
-    }
+    choice.second = choiceText;
     choiceVec.push_back(choice);
   }
 
