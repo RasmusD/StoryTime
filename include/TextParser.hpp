@@ -72,7 +72,8 @@ class TextParser
                             std::deque<Utils::SegChoice>& segments);
     
     // Add a found choice
-    static void addChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
+    static void addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
+    static void addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
 
     /*
     A map of valid markup types.

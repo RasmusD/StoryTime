@@ -46,7 +46,7 @@ void TextParser::parseText(std::string& text,
       // Identify markup will add the markup to the currently active markup
       // and ignore well-formed but unsupported markup
       // so we only need to do something if the markup is invalid
-      // namely we assume this should be spoken
+      //std::cout << possibleMarkup << std::endl;
       if (identifyMarkup(possibleMarkup, activeMarkup, segments, validMarkup) != true)
       {
         chunk += possibleMarkup;
@@ -204,7 +204,7 @@ bool TextParser::openMarkup(std::string possibleMarkup,
           std::cerr << "TextParser: " + possibleMarkup + " has an unsupported type (" + chunk + ")." << std::endl;
           return false;
         }
-      }  else if (cChar == '>')
+      } else if (cChar == '>')
       {
         // If this is a type and it should not take any subtype break the loop
         //std::cout << chunk << std::endl;
@@ -226,6 +226,7 @@ bool TextParser::openMarkup(std::string possibleMarkup,
         chunk += cChar;
       }
     } else if (foundSubtype == false) {
+      //std::cout << "check - " << chunk << std::endl;
       if (cChar == '=')
       {
         // We lower case the chunk for case insensitivity
@@ -289,6 +290,7 @@ bool TextParser::openMarkup(std::string possibleMarkup,
 
   if (foundValue == true)
   {
+    //std::cout << value << std::endl;
     return applyMarkup(type, subtype, value, activeMarkup, segments);
   } else {
     std::cerr << "TextParser: " + possibleMarkup + " did not have a value (" + chunk + ")." << std::endl;
@@ -354,9 +356,12 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
     } else if (type.first == "choice")
     {
       // Check if this is a self-contained tag or not
-      if (subtype == "def")
+      if (subtype == "val")
       {
-        addChoice(segments, value);
+        addValueChoice(segments, value);
+      } else if (subtype == "branch")
+      {
+        addBranchChoice(segments, value);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -387,24 +392,54 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
   }
 }
 
-void TextParser::addChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
+void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
 {
   std::vector<std::pair<std::string, int>> choiceVec;
 
-  // Split on -
+  // Split on /
   std::stringstream stream(value);
   std::string segment;
-  while (std::getline(stream, segment, '-'))
+  while (std::getline(stream, segment, '/'))
   {
     std::pair<std::string, int> choice;
-    // Split on /
+    
+    // Add the choice text
+    choice.first = segment;
+    // Fake the number (for now)
+    choice.second = 1;
+
+    choiceVec.push_back(choice);
+  }
+
+  if (choiceVec.size() == 0)
+  {
+    throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
+  } else {
+    sf::Vector2f pos(0.f, 0.f);
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos));
+    segments.push_back(Utils::SegChoice());
+    segments.back().choice = std::move(cB);
+  }
+}
+
+void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
+{
+  std::vector<std::pair<std::string, int>> choiceVec;
+
+  // Split on /
+  std::stringstream stream(value);
+  std::string segment;
+  while (std::getline(stream, segment, '/'))
+  {
+    std::pair<std::string, int> choice;
+    // Split on -
     std::stringstream cStream;
     cStream << segment;
     // Should have exactly two things to look at
     std::string choiceText;
-    std::getline(cStream, choiceText, '/');
+    std::getline(cStream, choiceText, '-');
     choice.first = choiceText;
-    std::getline(cStream, choiceText, '/');
+    std::getline(cStream, choiceText, '-');
     try
     {
       choice.second = std::stoi(choiceText);
@@ -445,7 +480,7 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
   tag = {"test2", {{"val"}, "double"}};
   validMarkup.insert(tag);
   // A standard choice
-  tag = {"choice", {{"def"}, "string"}};
+  tag = {"choice", {{"val", "branch"}, "string"}};
   validMarkup.insert(tag);
   // A tag to be ignored
   tag = {"ignore", {{""}, ""}};
