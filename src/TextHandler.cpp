@@ -73,6 +73,13 @@ void TextHandler::update(sf::Time& elapsedTime)
         _segmentQueue.push_front(Utils::SegChoice());
         //std::cout << "check" << std::endl;
         _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
+        // Add a whitespace at the end of this if necessary
+        std::cout << (std::string)_segmentQueue.back().text->getText().getString() << std::endl;
+        if (std::string(_segmentQueue.back().text->getText().getString()).back() != ' ')
+        {
+          std::string space(" ");
+          _segmentQueue.back().text->addText(space);
+        }
         //std::cout << "check" << std::endl;
         // Expand the queue with the chosen branch
         addBranch(_currentChoice->getChoiceId());

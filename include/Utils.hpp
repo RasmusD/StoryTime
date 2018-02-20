@@ -37,6 +37,10 @@ class Utils
         choice = std::move(move.choice);
       };
       ~SegChoice(){};
+      bool operator==(const SegChoice& other) 
+      {
+        return (text == other.text && choice == other.choice);
+      };
       std::unique_ptr<TextSegment> text;
       std::unique_ptr<ChoiceBox> choice;
     };
