@@ -13,7 +13,6 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
   //std::cout << _choices.size() << std::endl;
 
   // Set position of core text segment
-  _screenText.reserve(_segmentQueue.size());
   if (_segmentQueue.front().text)
   {
     _screenText.push_back(std::move(_segmentQueue.front().text));
@@ -93,6 +92,12 @@ void TextHandler::update(sf::Time& elapsedTime)
     //std::cout << "Updating text." << std::endl;
     // Check if the current segment is beyond the screen
     sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
+    // Check if lines should move up
+    if (bounds.top + bounds.height >= GlobalSettings::WINDOWHEIGHT)
+    {
+      moveTextLineUp();
+    }
+    // Check if new line should be made
     if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
     {
       // If it is
@@ -188,6 +193,25 @@ void TextHandler::addBranch(std::string& id)
     TextParser::parseText(it->second, _segmentQueue);
   } else {
     throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
+  }
+}
+
+void TextHandler::moveTextLineUp()
+{
+  // Current top
+  sf::FloatRect bounds = _screenText.front()->getText().getLocalBounds();
+  // Move elements up by height
+  sf::Vector2f pos;
+  for (auto& seg : _screenText)
+  {
+    pos = seg->getText().getPosition();
+    seg->getText().setPosition(pos.x, pos.y - bounds.height);
+  }
+  // Get rid of all the obsolete elements
+  // We assume height is valid
+  while (_screenText.front()->getText().getGlobalBounds().top + bounds.height <= 0)
+  {
+    _screenText.pop_front();
   }
 }
 

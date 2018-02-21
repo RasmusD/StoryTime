@@ -45,13 +45,16 @@ class TextHandler
     // Add a new branch
     void addBranch(std::string& id);
 
+    // Move screen text one line up
+    void moveTextLineUp();
+
     // Variables
     // Dictionary of branching story segments
     std::unordered_map<std::string, std::string> _storyData;
     // Ordered list of TextSegments and ChoiceBoxes to go through
     std::deque<Utils::SegChoice> _segmentQueue;
     // The text to currently be displayed
-    std::vector<std::unique_ptr<TextSegment>> _screenText;
+    std::deque<std::unique_ptr<TextSegment>> _screenText;
     // Current choice
     std::unique_ptr<ChoiceBox> _currentChoice;
     // Are we currently making a choice?

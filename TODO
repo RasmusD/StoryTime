@@ -1,6 +1,6 @@
-Top Things
+Top Things/Currently Working On
 
-- Line movement when screen full
+- Colour markup
 
 Bugs
 
@@ -9,8 +9,10 @@ Nice Things
 
 - Work with \n in text properly
 - Add new line when new story segment goes in.
+- Screen resolution scaleability
 
 Features
 
-- Colour markup
+- Story verification tool
 - Rumble effect (vary pos for draw)
+- Setting defaults in story script
