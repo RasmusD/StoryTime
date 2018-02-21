@@ -28,7 +28,6 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
     throw std::runtime_error("Segment does not have choice or text. What to do?");
   }
   _segmentQueue.pop_front();
-  _nLines = 1;
   /*
   _titleText = TextSegment(_titleFont, "This is the story of a ", 0.05);
   _titleText.getText().setPosition(10, 10);
@@ -99,8 +98,7 @@ void TextHandler::update(sf::Time& elapsedTime)
       // If it is
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.front()->getText().getPosition().y + bounds.height * (_nLines * 2));
-      _nLines++;
+      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, bounds.top + bounds.height * 2);
     }
     // Else update the current segment
     _screenText.back()->update(elapsedTime);

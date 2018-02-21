@@ -2,8 +2,15 @@ Top Things
 
 - Line movement when screen full
 
+Bugs
+
+
 Nice Things
+
+- Work with \n in text properly
+- Add new line when new story segment goes in.
+
+Features
 
 - Colour markup
 - Rumble effect (vary pos for draw)
-- Work with \n in text properly

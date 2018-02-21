@@ -58,8 +58,6 @@ class TextHandler
     bool _choiceActive;
     // Should the next segment be a choice or text?
     bool _isNextChoice;
-    // Number of lines displayed
-    unsigned int _nLines;
 };
 
 
