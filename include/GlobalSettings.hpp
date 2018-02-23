@@ -9,6 +9,20 @@
 
 namespace StoryTime {
 
+typedef struct _Markup
+{
+  /*
+  A list of currently active markup and its previous value as a string
+  */
+  std::vector<std::tuple<std::string, std::string, std::string> > activeMarkup;
+
+  // Current text colour
+  sf::Color colour = sf::Color::White;
+
+  // Another test markup
+  double test2 = 0.0;
+} Markup;
+
 class GlobalSettings
 {
   public:

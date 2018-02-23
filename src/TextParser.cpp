@@ -39,7 +39,7 @@ void TextParser::parseText(std::string& text,
       // we always split tokens at '>' anyway so this is safe
       //std::cout << "For sent (" << utterance << ") I'm adding:" << std::endl;
       //std::cout << chunk << std::endl;
-      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
       segments.push_back(Utils::SegChoice());
       segments.back().text = std::move(seg);
       chunk.clear();
@@ -71,7 +71,7 @@ void TextParser::parseText(std::string& text,
   {
     //std::cout << "For sent (" << text << ") I'm adding:" << std::endl;
     //std::cout << chunk << std::endl;
-    std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED));
+    std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
     segments.push_back(Utils::SegChoice());
     segments.back().text = std::move(seg);
     chunk.clear();
@@ -123,17 +123,17 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
         {
           std::tuple<std::string, std::string, std::string> cMarkup = activeMarkup.activeMarkup.at(i);
           /*std::cout << type << std::endl;
-          //std::cout << std::get<0>(cMarkup) << std::endl;
-          //std::cout << std::get<1>(cMarkup) << std::endl;
-          //std::cout << std::get<2>(cMarkup) << std::endl;*/
+          std::cout << std::get<0>(cMarkup) << std::endl;
+          std::cout << std::get<1>(cMarkup) << std::endl;
+          std::cout << std::get<2>(cMarkup) << std::endl;*/
           if (std::get<0>(cMarkup) == type)
           {
             // Set the markup to its previous value
-            if (type == "test")
+            if (type == "font")
             {
-              if (std::get<1>(cMarkup) == "val")
+              if (std::get<1>(cMarkup) == "colour")
               {
-                activeMarkup.test = std::get<2>(cMarkup);
+                activeMarkup.colour = getColourFromString(std::get<2>(cMarkup));
               } else {
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
                 return false;
@@ -340,14 +340,16 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
       return false;
     }
   } else if (type.second.second == "string") {
-    if (type.first == "test")
+    if (type.first == "font")
     {
       // Check if this is a self-contained tag or not
-      if (subtype == "val")
+      if (subtype == "colour")
       {
-        std::get<2>(cMark) = activeMarkup.test;
-        activeMarkup.test = value;
+        // Store previous value
+        std::get<2>(cMark) = getColourStringFromSFColor(activeMarkup.colour);
         activeMarkup.activeMarkup.push_back(cMark);
+        // Set new value
+        activeMarkup.colour = getColourFromString(value);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -358,10 +360,10 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
       // Check if this is a self-contained tag or not
       if (subtype == "val")
       {
-        addValueChoice(segments, value);
+        addValueChoice(segments, value, activeMarkup);
       } else if (subtype == "branch")
       {
-        addBranchChoice(segments, value);
+        addBranchChoice(segments, value, activeMarkup);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -392,7 +394,7 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
   }
 }
 
-void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
+void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup)
 {
   std::vector<std::pair<std::string, std::string>> choiceVec;
 
@@ -416,13 +418,13 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }
 }
 
-void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value)
+void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup)
 {
   std::vector<std::pair<std::string, std::string>> choiceVec;
 
@@ -449,7 +451,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::st
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }
@@ -475,7 +477,14 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
   tag = {"test2", {{"val"}, "double"}};
   validMarkup.insert(tag);
   // A standard choice
+  // val = store a value and potentially change shown text
+  // branch = a branching choice - TODO be different depending on previous choices
   tag = {"choice", {{"val", "branch"}, "string"}};
+  validMarkup.insert(tag);
+  // Change something with the font
+  // colour = change the colour of the font. Both fill and outline. The format should be 4 numbers corresponding to the Uint8 values for RGBA (red, green, blue, alpha (opacity)) - in that order.
+  // TODO support the SFML presets.
+  tag = {"font", {{"colour"}, "string"}};
   validMarkup.insert(tag);
   // A tag to be ignored
   tag = {"ignore", {{""}, ""}};
@@ -483,6 +492,68 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
   tag.second.first.clear();
   validMarkup.insert(tag);
   return validMarkup;
+}
+
+sf::Color TextParser::getColourFromString(std::string& rgbaString)
+{
+  // There should be four values
+  uint8_t red = 0;
+  uint8_t green = 0;
+  uint8_t blue = 0;
+  uint8_t alpha = 0;
+
+  // We assume there is four comma seperated values and will warn if not.
+  size_t pos = 0;
+  pos = rgbaString.find(',');
+  try
+  {
+    red = std::stoul(rgbaString.substr(0, pos));
+  } catch (...) {
+    std::cerr << "Warning! Couldn't identify red in rgbaString. Setting to 0." << std::endl;
+    red = 0;
+  }
+  rgbaString = rgbaString.substr(pos+1);
+  pos = rgbaString.find(',');
+  try
+  {
+    green = std::stoul(rgbaString.substr(0, pos));
+  } catch (...) {
+    std::cerr << "Warning! Couldn't identify green in rgbaString. Setting to 0." << std::endl;
+    green = 0;
+  }
+  rgbaString = rgbaString.substr(pos+1);
+  pos = rgbaString.find(',');
+  try
+  {
+    blue = std::stoul(rgbaString.substr(0, pos));
+  } catch (...) {
+    std::cerr << "Warning! Couldn't identify blue in rgbaString. Setting to 0." << std::endl;
+    blue = 0;
+  }
+  rgbaString = rgbaString.substr(pos+1);
+  pos = rgbaString.find(',');
+  try
+  {
+    alpha = std::stoul(rgbaString.substr(0, pos));
+  } catch (...) {
+    std::cerr << "Warning! Couldn't identify alpha in rgbaString. Setting to 0." << std::endl;
+    alpha = 0;
+  }
+
+  return sf::Color(red, green, blue, alpha);
+}
+
+std::string TextParser::getColourStringFromSFColor(sf::Color& colour)
+{
+  std::string rgbaString;
+  rgbaString += std::to_string(colour.r);
+  rgbaString += ",";
+  rgbaString += std::to_string(colour.g);
+  rgbaString += ",";
+  rgbaString += std::to_string(colour.b);
+  rgbaString += ",";
+  rgbaString += std::to_string(colour.a);
+  return rgbaString;
 }
 
 } // End namespace StoryTime

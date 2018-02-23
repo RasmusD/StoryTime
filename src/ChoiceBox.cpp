@@ -3,7 +3,7 @@
 namespace StoryTime {
 
 // Constructor
-ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string> >& choices, sf::Vector2f& pos)
+ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string> >& choices, sf::Vector2f& pos, Markup& settings)
 {
   // Create choice strings
   _choices.reserve(choices.size());
@@ -11,10 +11,10 @@ ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::str
   for (int i = 0; i < choices.size(); i++)
   {
     std::pair<TextSegment, std::string> choice;
-    choice.first = TextSegment(font, choices[i].first, 0.02);
+    choice.first = TextSegment(font, choices[i].first, 0.02, settings);
     choice.second = choices[i].second;
     _choices.push_back(choice);
-    TextSegment choiceNum(font, std::to_string(i+1) + ".", 0.02);
+    TextSegment choiceNum(font, std::to_string(i+1) + ".", 0.02, settings);
     _choiceNums.push_back(choiceNum);
   }
   // Set position of choices and box
@@ -116,7 +116,8 @@ std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
 {
   if (_choice.second == "")
   {
-    return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f));
+    Markup markup{};
+    return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f, markup));
   } else {
     return std::unique_ptr<TextSegment>(new TextSegment(_choice.first));
   }

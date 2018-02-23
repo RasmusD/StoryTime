@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- Colour markup
+- Add new line when new story segment goes in.
 
 Bugs
 
@@ -8,11 +8,14 @@ Bugs
 Nice Things
 
 - Work with \n in text properly
-- Add new line when new story segment goes in.
 - Screen resolution scaleability
+- Support preset colour values of sfml
 
 Features
 
+- Val markup should also store a value based on choice
 - Story verification tool
 - Rumble effect (vary pos for draw)
 - Setting defaults in story script
+- Enable choices to be different depending on previous choices
+- Text speed markup

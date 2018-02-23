@@ -17,20 +17,6 @@
 
 namespace StoryTime {
 
-typedef struct _Markup
-{
-  /*
-  A list of currently active markup and its previous value as a string
-  */
-  std::vector<std::tuple<std::string, std::string, std::string> > activeMarkup;
-
-  // A test markup
-  std::string test = "";
-
-  // Another test markup
-  double test2 = 0.0;
-} Markup;
-
 class TextParser
 {
   public:
@@ -72,8 +58,12 @@ class TextParser
                             std::deque<Utils::SegChoice>& segments);
     
     // Add a found choice
-    static void addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
-    static void addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value);
+    static void addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup);
+    static void addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup);
+
+    // Get a colour from a markup string
+    static sf::Color getColourFromString(std::string& rgbaString);
+    static std::string getColourStringFromSFColor(sf::Color& colour);
 
     /*
     A map of valid markup types.

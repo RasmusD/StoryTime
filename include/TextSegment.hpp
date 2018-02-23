@@ -17,7 +17,7 @@ class TextSegment
 {
   public:
     // Constructor
-    TextSegment(const sf::Font& font, std::string text, float drawSpeed);
+    TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings);
     TextSegment();
 
     // Destuctor
@@ -62,6 +62,8 @@ class TextSegment
     float _drawSpeed = -1.f;
     // A counter to keep track of drawing speed
     float _timeCount = 0.f;
+    // Saving the settings
+    Markup _settings;
 };
 
 

@@ -18,7 +18,7 @@ class ChoiceBox
 {
   public:
     // Constructor
-    ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string>>& choices, sf::Vector2f& pos);
+    ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string>>& choices, sf::Vector2f& pos, Markup& settings);
     ChoiceBox() {};
 
     // Destuctor
