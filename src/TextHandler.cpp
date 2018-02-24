@@ -135,8 +135,15 @@ void TextHandler::setNextSegment()
 void TextHandler::setTextNext()
 { 
   // Set position of next segment
-  sf::Vector2f sPos = _screenText.back()->getText().getPosition();
-  sPos.x += _screenText.back()->getText().getLocalBounds().width;
+  sf::Vector2f sPos;
+  if (((std::string)_screenText.back()->getText().getString()).back() == '\n')
+  {
+    sPos = _screenText.front()->getText().getPosition();
+    sPos.y += _screenText.back()->getText().getLocalBounds().height;
+  } else {
+    sPos = _screenText.back()->getText().getPosition();
+    sPos.x += _screenText.back()->getText().getLocalBounds().width;
+  }
   _segmentQueue.front().text->getText().setPosition(sPos);
   _screenText.push_back(std::move(_segmentQueue.front().text));
   _segmentQueue.pop_front();

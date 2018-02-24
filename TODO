@@ -7,7 +7,7 @@ Bugs
 
 Nice Things
 
-- Work with \n in text properly
+- Scroll bar to look at previous text
 - Screen resolution scaleability
 - Support preset colour values of sfml
 

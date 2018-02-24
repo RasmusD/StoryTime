@@ -57,6 +57,13 @@ void TextParser::parseText(std::string& text,
       parsingMarkup = false;
     } else if (parsingMarkup == true) {
       possibleMarkup += c;
+    } else if (c == '\n') {
+      chunk += c;
+      // Separate on new line
+      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
+      segments.push_back(Utils::SegChoice());
+      segments.back().text = std::move(seg);
+      chunk.clear();
     } else {
       chunk += c;
     }
