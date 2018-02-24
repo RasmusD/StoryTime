@@ -135,13 +135,13 @@ void TextHandler::setNextSegment()
 void TextHandler::setTextNext()
 { 
   // Set position of next segment
-  sf::Vector2f sPos;
+  sf::Vector2f sPos = _screenText.back()->getText().getPosition();;
   if (((std::string)_screenText.back()->getText().getString()).back() == '\n')
   {
-    sPos = _screenText.front()->getText().getPosition();
-    sPos.y += _screenText.back()->getText().getLocalBounds().height;
+    // Front segment guaranteed to have correct x
+    sPos.x = _screenText.front()->getText().getPosition().x;
+    sPos.y += _screenText.back()->getText().getLocalBounds().height * 2;
   } else {
-    sPos = _screenText.back()->getText().getPosition();
     sPos.x += _screenText.back()->getText().getLocalBounds().width;
   }
   _segmentQueue.front().text->getText().setPosition(sPos);
@@ -197,6 +197,8 @@ void TextHandler::addBranch(std::string& id)
   auto it = _storyData.find(id);
   if (it != _storyData.end())
   {
+    // Add a new line
+    it->second = '\n' + it->second;
     TextParser::parseText(it->second, _segmentQueue);
   } else {
     throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
