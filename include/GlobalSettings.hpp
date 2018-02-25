@@ -32,6 +32,8 @@ class GlobalSettings
     static unsigned int WINDOWHEIGHT;
     // The character size relative to the game window
     static unsigned int CHARSIZE;
+    // The line spacing relative to the charsize
+    static unsigned int LINESPACE;
 
     // The default text speed
     static float DEFAULTTEXTSPEED;

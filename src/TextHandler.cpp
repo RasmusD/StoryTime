@@ -103,7 +103,7 @@ void TextHandler::update(sf::Time& elapsedTime)
       // If it is
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, bounds.top + bounds.height * 2);
+      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.back()->getText().getPosition().y + GlobalSettings::LINESPACE);
     }
     // Else update the current segment
     _screenText.back()->update(elapsedTime);
@@ -140,7 +140,7 @@ void TextHandler::setTextNext()
   {
     // Front segment guaranteed to have correct x
     sPos.x = _screenText.front()->getText().getPosition().x;
-    sPos.y += _screenText.back()->getText().getLocalBounds().height * 2;
+    sPos.y += GlobalSettings::LINESPACE;
   } else {
     sPos.x += _screenText.back()->getText().getLocalBounds().width;
   }
@@ -168,7 +168,7 @@ void TextHandler::setChoiceNext()
   //std::cout << "here" << std::endl;
   // Place the next choice
   sf::Vector2f nPos = _screenText.back()->getText().getPosition();
-  nPos.y += _screenText.back()->getText().getGlobalBounds().height * 2;
+  nPos.y += GlobalSettings::LINESPACE;
   _currentChoice->setPosition(nPos);
   //std::cout << "here" << std::endl;
 }
@@ -214,7 +214,7 @@ void TextHandler::moveTextLineUp()
   for (auto& seg : _screenText)
   {
     pos = seg->getText().getPosition();
-    seg->getText().setPosition(pos.x, pos.y - bounds.height);
+    seg->getText().setPosition(pos.x, pos.y - GlobalSettings::LINESPACE);
   }
   // Get rid of all the obsolete elements
   // We assume height is valid

@@ -7,12 +7,13 @@ Bugs
 - Newline inconsistent in size - create default addition
 - Second choice in second choice in test story segfaults
 
-
 Nice Things
 
 - Scroll bar to look at previous text
 - Screen resolution scaleability
 - Support preset colour values of sfml
+- LINESPACE should change automatically if CHARSIZE changes
+- CHARSIZE should change automatically if screen resolution is changed (maybe...)
 
 Features
 

@@ -31,6 +31,7 @@ std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
   // Find position of last " "
   int spacePos = ((std::string)_text.getString()).find_last_of(" ") + 1;
   std::unique_ptr<TextSegment> remainder = std::unique_ptr<TextSegment>(new TextSegment(*_text.getFont(), _targetText.substr(spacePos, std::string::npos), _drawSpeed, _settings));
+  remainder->getText().setPosition(_text.getPosition());
   _targetText = _targetText.substr(0, spacePos);
   _text.setString(_targetText);
   atEnd = true;
