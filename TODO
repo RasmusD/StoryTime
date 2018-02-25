@@ -1,10 +1,9 @@
 Top Things/Currently Working On
 
-- Bugs
+- Val markup should also store a value based on choice
+- Enable choices to be different depending on previous choices
 
-Bugs
-
-- Second choice in second choice in test story segfaults
+Known Bugs
 
 Nice Things
 
@@ -13,12 +12,11 @@ Nice Things
 - Support preset colour values of sfml
 - LINESPACE should change automatically if CHARSIZE changes
 - CHARSIZE should change automatically if screen resolution is changed (maybe...)
+- GlobalSettings should probably be reworked to some object and contain methods etc to do default settings.
 
 Features
 
-- Val markup should also store a value based on choice
 - Story verification tool
 - Rumble effect (vary pos for draw)
 - Setting defaults in story script
-- Enable choices to be different depending on previous choices
 - Text speed markup

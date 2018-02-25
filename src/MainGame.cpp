@@ -35,6 +35,9 @@ MainGame::MainGame() : GameSlice()
       segment.second += '\n' + line;
     }
   }
+
+  // Add the last segment
+  story.insert(segment);
   
   input.close();
   _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));

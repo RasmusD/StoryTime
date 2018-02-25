@@ -72,7 +72,7 @@ void TextHandler::update(sf::Time& elapsedTime)
         //std::cout << "check" << std::endl;
         _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
         // Add a whitespace at the end of this if necessary
-        std::cout << (std::string)_segmentQueue.back().text->getText().getString() << std::endl;
+        //std::cout << (std::string)_segmentQueue.back().text->getText().getString() << std::endl;
         if (std::string(_segmentQueue.back().text->getText().getString()).back() != ' ')
         {
           std::string space(" ");
