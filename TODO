@@ -5,6 +5,9 @@ Top Things/Currently Working On
 
 Known Bugs
 
+- Text written for a choice tht has been made does not check for screen width/if newline should be made
+- Escaped " " show up with escape character
+
 Nice Things
 
 - Scroll bar to look at previous text
@@ -16,6 +19,7 @@ Nice Things
 
 Features
 
+- Markup for showing (not choosing) different text based on previous choice
 - Story verification tool
 - Rumble effect (vary pos for draw)
 - Setting defaults in story script
