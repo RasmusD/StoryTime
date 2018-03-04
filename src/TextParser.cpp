@@ -411,11 +411,15 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
   while (std::getline(stream, segment, '/'))
   {
     std::pair<std::string, std::string> choice;
-    
-    // Add the choice text
-    choice.first = segment;
-    // This is not a branching choice
-    choice.second = "<continue>";
+    // Split on -
+    std::stringstream cStream;
+    cStream << segment;
+    // Should have exactly two things to look at
+    std::string choiceText;
+    std::getline(cStream, choiceText, '-');
+    choice.first = choiceText;
+    std::getline(cStream, choiceText, '-');
+    choice.second = choiceText;
 
     choiceVec.push_back(choice);
   }
@@ -425,7 +429,7 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup, ChoiceType::VALUE));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }
@@ -458,7 +462,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::st
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup, ChoiceType::BRANCH));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }

@@ -3,7 +3,7 @@
 namespace StoryTime {
 
 // Constructor
-ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string> >& choices, sf::Vector2f& pos, Markup& settings)
+ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string> >& choices, sf::Vector2f& pos, Markup& settings, ChoiceType type)
 {
   // Create choice strings
   _choices.reserve(choices.size());
@@ -17,11 +17,13 @@ ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::str
     TextSegment choiceNum(font, std::to_string(i+1) + ".", 0.02, settings);
     _choiceNums.push_back(choiceNum);
   }
+  // Set choice type
+  _type = type;
   // Set position of choices and box
   setPosition(pos);
 }
 
-void ChoiceBox::takeInput(sf::Event& curEvent)
+void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory)
 {
   for (int i = 0; i < _choices.size(); i++)
   {
@@ -31,6 +33,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent)
       {
         //std::cout << "Key pressed " << i+1 << std::endl;
         _choice = _choices[i];
+        choiceHistory.insert(_choice.second);
         break;
       }
     }
@@ -107,9 +110,14 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
 // <continue> for a non-branching choice
 // "" if no choice has been made
 // And the id for the next story segment if a choice has been made
-std::string& ChoiceBox::getChoiceId()
+std::string ChoiceBox::getChoiceId()
 {
-  return _choice.second;
+  if (_choice.second != "" and _type == ChoiceType::VALUE)
+  {
+    return "<continue>";
+  } else {
+    return _choice.second;
+  }
 }
 
 std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
@@ -121,6 +129,11 @@ std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
   } else {
     return std::unique_ptr<TextSegment>(new TextSegment(_choice.first));
   }
+}
+
+ChoiceType ChoiceBox::getChoiceType()
+{
+  return _type;
 }
 
 } // End namespace StoryTime

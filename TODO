@@ -6,7 +6,7 @@ Top Things/Currently Working On
 Known Bugs
 
 - Text written for a choice tht has been made does not check for screen width/if newline should be made
-- Escaped " " show up with escape character
+- Escaped in markup " " show up with escape character
 
 Nice Things
 

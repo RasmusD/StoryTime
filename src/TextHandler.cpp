@@ -42,7 +42,7 @@ void TextHandler::takeInput(sf::Event& curEvent)
 {
   if (_choiceActive == true)
   {
-    _currentChoice->takeInput(curEvent);
+    _currentChoice->takeInput(curEvent, _choiceHistory);
   }
 }
 
@@ -80,7 +80,8 @@ void TextHandler::update(sf::Time& elapsedTime)
         }
         //std::cout << "check" << std::endl;
         // Expand the queue with the chosen branch
-        addBranch(_currentChoice->getChoiceId());
+        std::string cId = _currentChoice->getChoiceId();
+        addBranch(cId);
         setNextSegment();
       }
     }

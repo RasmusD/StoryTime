@@ -7,6 +7,8 @@
 #include <iostream>
 #include <deque>
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 
 #include <SFML/Graphics.hpp>
 
@@ -49,6 +51,7 @@ class TextHandler
     void moveTextLineUp();
 
     // Variables
+
     // Dictionary of branching story segments
     std::unordered_map<std::string, std::string> _storyData;
     // Ordered list of TextSegments and ChoiceBoxes to go through
@@ -57,6 +60,8 @@ class TextHandler
     std::deque<std::unique_ptr<TextSegment>> _screenText;
     // Current choice
     std::unique_ptr<ChoiceBox> _currentChoice;
+    // List of previously made choices
+    std::unordered_set<std::string> _choiceHistory;
     // Are we currently making a choice?
     bool _choiceActive;
     // Should the next segment be a choice or text?
