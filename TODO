@@ -1,6 +1,7 @@
 Top Things/Currently Working On
 
-- Enable choices to be different depending on previous choices
+- Markup for showing (not choosing) different text based on previous choice
+- GlobalSettings should probably be reworked to some object and contain methods etc to do default settings.
 
 Known Bugs
 
@@ -9,16 +10,18 @@ Known Bugs
 
 Nice Things
 
+- TEST FRAMEWORK
 - Scroll bar to look at previous text
 - Screen resolution scaleability
 - Support preset colour values of sfml
 - LINESPACE should change automatically if CHARSIZE changes
 - CHARSIZE should change automatically if screen resolution is changed (maybe...)
-- GlobalSettings should probably be reworked to some object and contain methods etc to do default settings.
+- It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
+- Unify addBranch and addValue
+- Rename texthandler to storyhandler
 
 Features
 
-- Markup for showing (not choosing) different text based on previous choice
 - Story verification tool
 - Rumble effect (vary pos for draw)
 - Setting defaults in story script

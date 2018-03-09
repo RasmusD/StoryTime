@@ -18,15 +18,25 @@ namespace StoryTime {
 // Enum for types of choices
 enum class ChoiceType
 {
-    BRANCH,
-    VALUE
+  BRANCH,
+  VALUE
+};
+
+struct Choice
+{
+  TextSegment text;
+  std::string id = "";
+  std::string prereq = "";
 };
 
 class ChoiceBox
 {
   public:
     // Constructor
-    ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string>>& choices, sf::Vector2f& pos, Markup& settings, ChoiceType type);
+    ChoiceBox(std::vector<Choice>& choices,
+              sf::Vector2f& pos,
+              Markup& settings,
+              ChoiceType type);
     ChoiceBox() {};
 
     // Destuctor
@@ -36,10 +46,10 @@ class ChoiceBox
     void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory);
 
     // Update the box
-    void update(sf::Time& elapsedTime);
+    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
 
     // Draw the box
-    void draw(sf::RenderWindow& renderWindow);
+    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory);
 
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f& newPos);
@@ -57,7 +67,7 @@ class ChoiceBox
 
   private:
     // The choices which can be made
-    std::vector<std::pair<TextSegment, std::string>> _choices;
+    std::vector<Choice> _choices;
 
     // The type of choice
     ChoiceType _type;
@@ -72,8 +82,8 @@ class ChoiceBox
     sf::Vector2f _bottomRight;
 
     // The choice made
-    // "" while no choice has been made
-    std::pair<TextSegment, std::string> _choice = {TextSegment(), ""};
+    // Default while no choice has been made
+    Choice _choice;
 };
 
 

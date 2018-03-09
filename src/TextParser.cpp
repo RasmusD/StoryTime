@@ -367,9 +367,11 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
       // Check if this is a self-contained tag or not
       if (subtype == "val")
       {
+        //std::cout << "val" << std::endl;
         addValueChoice(segments, value, activeMarkup);
       } else if (subtype == "branch")
       {
+        //std::cout << "branch" << std::endl;
         addBranchChoice(segments, value, activeMarkup);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
@@ -403,23 +405,27 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
 
 void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup)
 {
-  std::vector<std::pair<std::string, std::string>> choiceVec;
+  std::vector<Choice> choiceVec;
 
   // Split on /
   std::stringstream stream(value);
   std::string segment;
   while (std::getline(stream, segment, '/'))
   {
-    std::pair<std::string, std::string> choice;
+    Choice choice;
     // Split on -
     std::stringstream cStream;
     cStream << segment;
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.first = choiceText;
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, 0.02, activeMarkup);
     std::getline(cStream, choiceText, '-');
-    choice.second = choiceText;
+    choice.id = choiceText;
+    // If there is a third, then this is optional
+    choiceText.clear();
+    std::getline(cStream, choiceText, '-');
+    choice.prereq = choiceText;
 
     choiceVec.push_back(choice);
   }
@@ -429,31 +435,38 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup, ChoiceType::VALUE));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, pos, activeMarkup, ChoiceType::VALUE));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }
 }
 
-void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup)
+void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup)
 {
-  std::vector<std::pair<std::string, std::string>> choiceVec;
+  std::vector<Choice> choiceVec;
 
   // Split on /
   std::stringstream stream(value);
   std::string segment;
   while (std::getline(stream, segment, '/'))
   {
-    std::pair<std::string, std::string> choice;
+    Choice choice;
     // Split on -
     std::stringstream cStream;
     cStream << segment;
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.first = choiceText;
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, 0.02, activeMarkup);
     std::getline(cStream, choiceText, '-');
-    choice.second = choiceText;
+    choice.id = choiceText;
+    // If there is a third, then this is optional
+    choiceText.clear();
+    std::getline(cStream, choiceText, '-');
+    choice.prereq = choiceText;
+
     choiceVec.push_back(choice);
   }
 
@@ -462,7 +475,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments, std::st
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
     sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(GlobalSettings::DEFAULTFONT, choiceVec, pos, activeMarkup, ChoiceType::BRANCH));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, pos, activeMarkup, ChoiceType::BRANCH));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }

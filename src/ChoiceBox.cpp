@@ -3,18 +3,18 @@
 namespace StoryTime {
 
 // Constructor
-ChoiceBox::ChoiceBox(sf::Font& font, std::vector<std::pair<std::string, std::string> >& choices, sf::Vector2f& pos, Markup& settings, ChoiceType type)
+ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
+                    sf::Vector2f& pos,
+                    Markup& settings,
+                    ChoiceType type)
 {
   // Create choice strings
   _choices.reserve(choices.size());
   _choiceNums.reserve(choices.size());
   for (int i = 0; i < choices.size(); i++)
   {
-    std::pair<TextSegment, std::string> choice;
-    choice.first = TextSegment(font, choices[i].first, 0.02, settings);
-    choice.second = choices[i].second;
-    _choices.push_back(choice);
-    TextSegment choiceNum(font, std::to_string(i+1) + ".", 0.02, settings);
+    _choices.push_back(choices[i]);
+    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", 0.02, settings);
     _choiceNums.push_back(choiceNum);
   }
   // Set choice type
@@ -27,36 +27,60 @@ void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& 
 {
   for (int i = 0; i < _choices.size(); i++)
   {
+    if (_choices[i].prereq != "")
+    {
+      if (choiceHistory.count(_choices[i].prereq) == 0)
+      {
+        // Skip
+        continue;
+      }
+    }
     if (curEvent.type == sf::Event::KeyPressed)
     {
       if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
       {
         //std::cout << "Key pressed " << i+1 << std::endl;
         _choice = _choices[i];
-        choiceHistory.insert(_choice.second);
+        choiceHistory.insert(_choice.id);
         break;
       }
     }
   }
 }
 
-void ChoiceBox::update(sf::Time& elapsedTime)
+void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
 {
   for (int i = 0; i < _choices.size(); i++)
   {
-    _choices[i].first.update(elapsedTime);
+    if (_choices[i].prereq != "")
+    {
+      if (choiceHistory.count(_choices[i].prereq) == 0)
+      {
+        // Skip
+        continue;
+      }
+    }
+    _choices[i].text.update(elapsedTime);
     _choiceNums[i].update(elapsedTime);
   }
 }
 
-void ChoiceBox::draw(sf::RenderWindow& renderWindow)
+void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
 {
-  for (std::pair<TextSegment, std::string>& choice : _choices)
+  for (Choice& choice : _choices)
   {
+    if (choice.prereq != "")
+    {
+      if (choiceHistory.count(choice.prereq) == 0)
+      {
+        // Skip
+        continue;
+      }
+    }
     //std::cout << "here" << std::endl;
     //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
-    renderWindow.draw(choice.first.getText());
+    renderWindow.draw(choice.text.getText());
     //choice.printTargetText();
   }
   for (TextSegment& number : _choiceNums)
@@ -85,24 +109,24 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   // Set the text
   newPos.y -= tHeight * _choiceNums.size();
   // Add whitespace
-  newPos.x += 2 * _choices.front().first.getText().getFont()->getGlyph('\u0009', _choices.front().first.getText().getCharacterSize(), false).advance;
-  for (std::pair<TextSegment, std::string>& choice : _choices)
+  newPos.x += 2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance;
+  for (Choice& choice : _choices)
   {
     // Check if this is the widest string for the box so far
-    sf::FloatRect bounds = choice.first.getLocalBounds();
+    sf::FloatRect bounds = choice.text.getLocalBounds();
     if (bounds.width > _bottomRight.x)
     {
       _bottomRight.x = bounds.width;
     }
     // Set the choice's position
-    choice.first.getText().setPosition(newPos);
+    choice.text.getText().setPosition(newPos);
     // Update the height of the next choice
     newPos.y += tHeight;
   }
   // Update lower rightt corner y
   _bottomRight.y = newPos.y;
   // Add whitespace
-  _bottomRight.x += 2 * _choices.front().first.getText().getFont()->getGlyph('\u0009', _choices.front().first.getText().getCharacterSize(), false).advance;
+  _bottomRight.x += 2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance;
   
 }
 
@@ -112,22 +136,22 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
 // And the id for the next story segment if a choice has been made
 std::string ChoiceBox::getChoiceId()
 {
-  if (_choice.second != "" and _type == ChoiceType::VALUE)
+  if (_choice.id != "" and _type == ChoiceType::VALUE)
   {
     return "<continue>";
   } else {
-    return _choice.second;
+    return _choice.id;
   }
 }
 
 std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
 {
-  if (_choice.second == "")
+  if (_choice.id == "")
   {
     Markup markup{};
     return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f, markup));
   } else {
-    return std::unique_ptr<TextSegment>(new TextSegment(_choice.first));
+    return std::unique_ptr<TextSegment>(new TextSegment(_choice.text));
   }
 }
 

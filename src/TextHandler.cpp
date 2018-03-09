@@ -53,7 +53,7 @@ void TextHandler::update(sf::Time& elapsedTime)
   if (_choiceActive == true)
   {
     //std::cout << "Updating Choice..." << std::endl;
-    _currentChoice->update(elapsedTime);
+    _currentChoice->update(elapsedTime, _choiceHistory);
     // If a choice has been made - add the text to screen
     //std::cout << _currentChoice->getChoiceId() << std::endl;
     if (_currentChoice->getChoiceId() != "")
@@ -188,7 +188,7 @@ void TextHandler::draw(sf::RenderWindow& renderWindow)
   if (_choiceActive == true)
   {
     //std::cout << "Drwaing choice..." << std::endl;
-    _currentChoice->draw(renderWindow);
+    _currentChoice->draw(renderWindow, _choiceHistory);
   }
 }
 
