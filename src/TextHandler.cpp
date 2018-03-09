@@ -107,7 +107,7 @@ void TextHandler::update(sf::Time& elapsedTime)
       _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.back()->getText().getPosition().y + GlobalSettings::LINESPACE);
     }
     // Else update the current segment
-    _screenText.back()->update(elapsedTime);
+    _screenText.back()->update(elapsedTime, _choiceHistory);
   }
 }
 

@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <memory>
+#include <unordered_set>
 
 #include <SFML/Graphics.hpp>
 
@@ -18,13 +19,14 @@ class TextSegment
   public:
     // Constructor
     TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings);
+    TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives);
     TextSegment();
 
     // Destuctor
     ~TextSegment() {};
 
     // Update the text
-    void update(sf::Time& elapsedTime);
+    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
 
     // Draw the text
     void draw(sf::RenderWindow& renderWindow);
@@ -64,8 +66,15 @@ class TextSegment
     float _timeCount = 0.f;
     // Saving the settings
     Markup _settings;
-};
+    // Alternative text to display, depending on previous choices
+    std::vector<std::pair<std::string, std::string> > _alternatives;
+    // Shows if this segment has ever had update called on it (sets variables)
+    bool updated = false;
 
+    // Methods
+    // Change the text - e.g. if alternative should be used
+    void _changeText(std::string& text);
+};
 
 } // End namespace StoryTime
 

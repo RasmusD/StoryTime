@@ -16,6 +16,12 @@ TextSegment::TextSegment(const sf::Font& font, std::string text, float drawSpeed
   atEnd = false;
 }
 
+TextSegment::TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives) :
+                        TextSegment(font, text, drawSpeed, settings)
+{
+  _alternatives = alternatives;
+}
+
 TextSegment::TextSegment()
 {
   // Do nothing
@@ -38,8 +44,26 @@ std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
   return remainder;
 }
 
-void TextSegment::update(sf::Time& elapsedTime)
+void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
 {
+  // Check if we should switch what this segment shows
+  // Only do first time this is updated
+  if (updated == false)
+  {
+    for (auto& variant : _alternatives)
+    {
+      if (choiceHistory.count(variant.second) > 0)
+      {
+        _changeText(variant.first);
+        break;
+      }
+    }
+    if (_targetText == "")
+    {
+      atEnd = true;
+    }
+    updated = true;
+  }
   if (atEnd == false)
   {
     //std::cout << "Not at end" << std::endl;
@@ -95,6 +119,12 @@ void TextSegment::addText(std::string& toAdd)
 {
   _targetText += toAdd;
   atEnd = false;
+}
+
+void TextSegment::_changeText(std::string& text)
+{
+  _targetText = text;
+  _text.setString("");
 }
 
 } // End namespace StoryTime

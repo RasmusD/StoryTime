@@ -58,9 +58,19 @@ class TextParser
                             std::deque<Utils::SegChoice>& segments);
     
     // Add a found choice
-    static void addBranchChoice(std::deque<Utils::SegChoice>& segments, std::string& value,
+    static void addBranchChoice(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
                                 Markup& activeMarkup);
-    static void addValueChoice(std::deque<Utils::SegChoice>& segments, std::string& value, Markup& activeMarkup);
+    static void addValueChoice(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup);
+    // Add a text variant
+    static void addOptionalText(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup);
+    static void addVariantText(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup);
 
     // Get a colour from a markup string
     static sf::Color getColourFromString(std::string& rgbaString);

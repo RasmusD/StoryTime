@@ -1,6 +1,5 @@
 Top Things/Currently Working On
 
-- Markup for showing (not choosing) different text based on previous choice
 - GlobalSettings should probably be reworked to some object and contain methods etc to do default settings.
 
 Known Bugs
@@ -26,3 +25,7 @@ Features
 - Rumble effect (vary pos for draw)
 - Setting defaults in story script
 - Text speed markup
+
+Questions
+
+- Is there a benefit to just-in-time parsing an dhaving the parser own optional stuff depending on previous choices?

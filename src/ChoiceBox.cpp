@@ -60,8 +60,8 @@ void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& c
         continue;
       }
     }
-    _choices[i].text.update(elapsedTime);
-    _choiceNums[i].update(elapsedTime);
+    _choices[i].text.update(elapsedTime, choiceHistory);
+    _choiceNums[i].update(elapsedTime, choiceHistory);
   }
 }
 

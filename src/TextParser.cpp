@@ -378,6 +378,19 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
         return false;
       }
       return true;
+    } else if (type.first == "text")
+    {
+      if (subtype == "option")
+      {
+        addOptionalText(segments, value, activeMarkup);
+      } else if (subtype == "variant")
+      {
+        addVariantText(segments, value, activeMarkup);
+      } else {
+        std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
+        return false;
+      }
+      return true;
     } else {
       std::cerr << "TextParser: I somehow got markup of type (" + type.first + ") but it's unsupported!" << std::endl;
       return false;
@@ -481,6 +494,69 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments,
   }
 }
 
+void TextParser::addOptionalText(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup)
+{
+  std::vector<std::pair<std::string, std::string> > alternatives;
+  std::pair<std::string, std::string> alternative;
+  // Split on -
+  std::stringstream cStream(value);
+  // Should have exactly two things to look at
+  std::string text;
+  std::getline(cStream, text, '-');
+  alternative.first = text;
+  text.clear();
+  std::getline(cStream, text, '-');
+  if (text == "")
+  {
+    std::cout << "Warning! Text option seems misformed, unlikely to be used: " << value << std::endl;
+  }
+  alternative.second = text;
+  alternatives.push_back(alternative);
+  std::unique_ptr<TextSegment> option(new TextSegment(GlobalSettings::DEFAULTFONT, "", 0.02, activeMarkup, alternatives));
+
+  segments.push_back(Utils::SegChoice());
+  segments.back().text = std::move(option);
+}
+
+void TextParser::addVariantText(std::deque<Utils::SegChoice>& segments,
+                                std::string& value,
+                                Markup& activeMarkup)
+{
+  std::vector<std::pair<std::string, std::string> > alternatives;
+  std::string defaultString;
+  // Split on /
+  std::stringstream stream(value);
+  std::string segment;
+  while (std::getline(stream, segment, '/'))
+  {
+    std::pair<std::string, std::string> alternative;
+    // Split on -
+    std::stringstream cStream;
+    cStream << segment;
+    // Should have exactly two things to look at
+    std::string text;
+    std::getline(cStream, text, '-');
+    alternative.first = text;
+    text.clear();
+    std::getline(cStream, text, '-');
+    alternative.second = text;
+    if (alternative.second != "")
+    {
+      alternatives.push_back(alternative);
+    } else {
+      defaultString = alternative.first;
+    }
+  }
+
+  std::cout << "Adding variant with default: " << defaultString << std::endl;
+  std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, 0.02, activeMarkup, alternatives));
+  
+  segments.push_back(Utils::SegChoice());
+  segments.back().text = std::move(tS);
+}
+
 /*
 A map of valid markup types.
 The key is the markup type name.
@@ -494,21 +570,23 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
 {
   std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> > validMarkup;
   std::pair<std::string, std::pair<std::unordered_set<std::string>, std::string> > tag;
-  // A tag for demonstrating a sstring
-  tag = {"test", {{"val"}, "string"}};
-  validMarkup.insert(tag);
   // A tag demonstrating a double
   tag = {"test2", {{"val"}, "double"}};
   validMarkup.insert(tag);
   // A standard choice
   // val = store a value and potentially change shown text
-  // branch = a branching choice - TODO be different depending on previous choices
+  // branch = a branching choice.
   tag = {"choice", {{"val", "branch"}, "string"}};
   validMarkup.insert(tag);
   // Change something with the font
   // colour = change the colour of the font. Both fill and outline. The format should be 4 numbers corresponding to the Uint8 values for RGBA (red, green, blue, alpha (opacity)) - in that order.
   // TODO support the SFML presets.
   tag = {"font", {{"colour"}, "string"}};
+  validMarkup.insert(tag);
+  // Do something with text
+  // option = optional text depending on previous choices.
+  // variant = text which varies depending on previous choices.
+  tag = {"text", {{"option", "variant"}, "string"}};
   validMarkup.insert(tag);
   // A tag to be ignored
   tag = {"ignore", {{""}, ""}};
