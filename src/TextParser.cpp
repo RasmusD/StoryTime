@@ -268,6 +268,8 @@ bool TextParser::openMarkup(std::string possibleMarkup,
             foundValue = true;
             chunk.clear();
           } else {
+            // Add character, but remove escape
+            chunk.pop_back();
             chunk += cChar;
           }
         } else {
@@ -550,7 +552,7 @@ void TextParser::addVariantText(std::deque<Utils::SegChoice>& segments,
     }
   }
 
-  std::cout << "Adding variant with default: " << defaultString << std::endl;
+  //std::cout << "Adding variant with default: " << defaultString << std::endl;
   std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, 0.02, activeMarkup, alternatives));
   
   segments.push_back(Utils::SegChoice());
