@@ -14,7 +14,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   for (int i = 0; i < choices.size(); i++)
   {
     _choices.push_back(choices[i]);
-    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", 0.02, settings);
+    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", GlobalSettings::DEFAULTTEXTSPEED, settings);
     _choiceNums.push_back(choiceNum);
   }
   // Set choice type

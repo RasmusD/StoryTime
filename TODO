@@ -1,7 +1,7 @@
 Top Things/Currently Working On
 
 - Text speed markup
-- Ensure, default text sped is used
+- Ensure, default text speed is used
 
 Known Bugs
 
@@ -22,6 +22,7 @@ Nice Things
 
 Features
 
+- GlobalSettings should probably be reworked to some static object and contain methods etc to do default settings.
 - Story verification tool
 - Rumble effect (vary pos for draw)
 - Colour effect
@@ -35,5 +36,4 @@ A Little Bit Far Of Features
 
 Questions
 
-- GlobalSettings should probably be reworked to some static object and contain methods etc to do default settings.
 - Is there a benefit to just-in-time parsing an dhaving the parser own optional stuff depending on previous choices?

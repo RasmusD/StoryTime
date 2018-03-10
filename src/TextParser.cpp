@@ -434,7 +434,7 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, 0.02, activeMarkup);
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup);
     std::getline(cStream, choiceText, '-');
     choice.id = choiceText;
     // If there is a third, then this is optional
@@ -474,7 +474,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments,
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, 0.02, activeMarkup);
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup);
     std::getline(cStream, choiceText, '-');
     choice.id = choiceText;
     // If there is a third, then this is optional
@@ -516,7 +516,7 @@ void TextParser::addOptionalText(std::deque<Utils::SegChoice>& segments,
   }
   alternative.second = text;
   alternatives.push_back(alternative);
-  std::unique_ptr<TextSegment> option(new TextSegment(GlobalSettings::DEFAULTFONT, "", 0.02, activeMarkup, alternatives));
+  std::unique_ptr<TextSegment> option(new TextSegment(GlobalSettings::DEFAULTFONT, "", GlobalSettings::DEFAULTTEXTSPEED, activeMarkup, alternatives));
 
   segments.push_back(Utils::SegChoice());
   segments.back().text = std::move(option);
@@ -553,7 +553,7 @@ void TextParser::addVariantText(std::deque<Utils::SegChoice>& segments,
   }
 
   //std::cout << "Adding variant with default: " << defaultString << std::endl;
-  std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, 0.02, activeMarkup, alternatives));
+  std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup, alternatives));
   
   segments.push_back(Utils::SegChoice());
   segments.back().text = std::move(tS);

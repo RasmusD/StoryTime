@@ -4,6 +4,7 @@ namespace StoryTime {
 
 sf::Font GlobalSettings::DEFAULTFONT = sf::Font();
 // Default text speed
+// Lower is faster
 float GlobalSettings::DEFAULTTEXTSPEED = 0.01;
 
 // Set the game window size
