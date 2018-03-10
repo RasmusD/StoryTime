@@ -1,6 +1,7 @@
 Top Things/Currently Working On
 
-- GlobalSettings should probably be reworked to some object and contain methods etc to do default settings.
+- Text speed markup
+- Ensure, default text sped is used
 
 Known Bugs
 
@@ -17,14 +18,22 @@ Nice Things
 - It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
 - Unify addBranch and addValue
 - Rename texthandler to storyhandler
+- Border for text
 
 Features
 
 - Story verification tool
 - Rumble effect (vary pos for draw)
+- Colour effect
 - Setting defaults in story script
-- Text speed markup
+- Text appearance method markup
+
+A Little Bit Far Of Features
+
+- TTS
+- Ability to add images to text (markup)
 
 Questions
 
+- GlobalSettings should probably be reworked to some static object and contain methods etc to do default settings.
 - Is there a benefit to just-in-time parsing an dhaving the parser own optional stuff depending on previous choices?
