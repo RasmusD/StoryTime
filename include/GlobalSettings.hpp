@@ -19,8 +19,8 @@ typedef struct _Markup
   // Current text colour
   sf::Color colour = sf::Color::White;
 
-  // Another test markup
-  double test2 = 0.0;
+  // Current text speed
+  float speed = 0.01;
 } Markup;
 
 class GlobalSettings
@@ -34,9 +34,8 @@ class GlobalSettings
     static unsigned int CHARSIZE;
     // The line spacing relative to the charsize
     static unsigned int LINESPACE;
-
-    // The default text speed
-    static float DEFAULTTEXTSPEED;
+    // Default settings
+    static Markup currentSettings;
     // The default font
     static sf::Font DEFAULTFONT;
 };

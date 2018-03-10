@@ -39,7 +39,7 @@ void TextParser::parseText(std::string& text,
       // we always split tokens at '>' anyway so this is safe
       //std::cout << "For sent (" << utterance << ") I'm adding:" << std::endl;
       //std::cout << chunk << std::endl;
-      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
+      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, activeMarkup));
       segments.push_back(Utils::SegChoice());
       segments.back().text = std::move(seg);
       chunk.clear();
@@ -60,7 +60,7 @@ void TextParser::parseText(std::string& text,
     } else if (c == '\n') {
       chunk += c;
       // Separate on new line
-      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
+      std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, activeMarkup));
       segments.push_back(Utils::SegChoice());
       segments.back().text = std::move(seg);
       chunk.clear();
@@ -78,7 +78,7 @@ void TextParser::parseText(std::string& text,
   {
     //std::cout << "For sent (" << text << ") I'm adding:" << std::endl;
     //std::cout << chunk << std::endl;
-    std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup));
+    std::unique_ptr<TextSegment> seg(new TextSegment(GlobalSettings::DEFAULTFONT, chunk, activeMarkup));
     segments.push_back(Utils::SegChoice());
     segments.back().text = std::move(seg);
     chunk.clear();
@@ -145,11 +145,11 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
                 return false;
               }
-            } else if (type == "test2")
+            } else if (type == "set")
             {
-              if (std::get<1>(cMarkup) == "val")
+              if (std::get<1>(cMarkup) == "speed")
               {
-                activeMarkup.test2 = std::stod(std::get<2>(cMarkup));
+                activeMarkup.speed = std::stof(std::get<2>(cMarkup));
               } else {
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
                 return false;
@@ -324,14 +324,14 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
   std::get<2>(cMark) = "";
   if (type.second.second == "double")
   {
-    if (type.first == "test2")
+    if (type.first == "set")
     {
-      if (subtype == "val")
+      if (subtype == "speed")
       {
         try
         {
-          std::get<2>(cMark) = std::to_string(activeMarkup.test2);
-          activeMarkup.test2 = std::stod(value);
+          std::get<2>(cMark) = std::to_string(activeMarkup.speed);
+          activeMarkup.speed = std::stof(value);
         }
         catch (...)
         {
@@ -434,7 +434,7 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup);
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, activeMarkup);
     std::getline(cStream, choiceText, '-');
     choice.id = choiceText;
     // If there is a third, then this is optional
@@ -474,7 +474,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments,
     // Should have exactly two things to look at
     std::string choiceText;
     std::getline(cStream, choiceText, '-');
-    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup);
+    choice.text = TextSegment(GlobalSettings::DEFAULTFONT, choiceText, activeMarkup);
     std::getline(cStream, choiceText, '-');
     choice.id = choiceText;
     // If there is a third, then this is optional
@@ -516,7 +516,7 @@ void TextParser::addOptionalText(std::deque<Utils::SegChoice>& segments,
   }
   alternative.second = text;
   alternatives.push_back(alternative);
-  std::unique_ptr<TextSegment> option(new TextSegment(GlobalSettings::DEFAULTFONT, "", GlobalSettings::DEFAULTTEXTSPEED, activeMarkup, alternatives));
+  std::unique_ptr<TextSegment> option(new TextSegment(GlobalSettings::DEFAULTFONT, "", activeMarkup, alternatives));
 
   segments.push_back(Utils::SegChoice());
   segments.back().text = std::move(option);
@@ -553,7 +553,7 @@ void TextParser::addVariantText(std::deque<Utils::SegChoice>& segments,
   }
 
   //std::cout << "Adding variant with default: " << defaultString << std::endl;
-  std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, GlobalSettings::DEFAULTTEXTSPEED, activeMarkup, alternatives));
+  std::unique_ptr<TextSegment> tS(new TextSegment(GlobalSettings::DEFAULTFONT, defaultString, activeMarkup, alternatives));
   
   segments.push_back(Utils::SegChoice());
   segments.back().text = std::move(tS);
@@ -572,8 +572,9 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
 {
   std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::string> > validMarkup;
   std::pair<std::string, std::pair<std::unordered_set<std::string>, std::string> > tag;
-  // A tag demonstrating a double
-  tag = {"test2", {{"val"}, "double"}};
+  // Change settings
+  // speed = change the speed at which text is displayed.
+  tag = {"set", {{"speed"}, "double"}};
   validMarkup.insert(tag);
   // A standard choice
   // val = store a value and potentially change shown text

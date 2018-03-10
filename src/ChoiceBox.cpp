@@ -14,7 +14,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   for (int i = 0; i < choices.size(); i++)
   {
     _choices.push_back(choices[i]);
-    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", GlobalSettings::DEFAULTTEXTSPEED, settings);
+    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", settings);
     _choiceNums.push_back(choiceNum);
   }
   // Set choice type
@@ -148,8 +148,9 @@ std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
 {
   if (_choice.id == "")
   {
-    Markup markup{};
-    return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", -1.f, markup));
+    Markup settings = GlobalSettings::currentSettings;
+    settings.speed = -1.f;
+    return std::unique_ptr<TextSegment>(new TextSegment(GlobalSettings::DEFAULTFONT, "Choice not made!", GlobalSettings::currentSettings));
   } else {
     return std::unique_ptr<TextSegment>(new TextSegment(_choice.text));
   }

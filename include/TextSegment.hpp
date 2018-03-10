@@ -18,8 +18,8 @@ class TextSegment
 {
   public:
     // Constructor
-    TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings);
-    TextSegment(const sf::Font& font, std::string text, float drawSpeed, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives);
+    TextSegment(const sf::Font& font, std::string text, Markup& settings);
+    TextSegment(const sf::Font& font, std::string text, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives);
     TextSegment();
 
     // Destuctor
