@@ -6,7 +6,7 @@ namespace StoryTime {
 TextSegment::TextSegment(const sf::Font& font, std::string text, Markup& settings)
 {
   _text.setString("");
-  _text.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::CHARSIZE);
+  _text.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize());
   _text.setFillColor(settings.colour);
   _text.setFont(font);
 

@@ -30,14 +30,24 @@ class GlobalSettings
     static unsigned int WINDOWWIDTH;
     // Height of the game window
     static unsigned int WINDOWHEIGHT;
-    // The character size relative to the game window
-    static unsigned int CHARSIZE;
-    // The line spacing relative to the charsize
-    static unsigned int LINESPACE;
     // Default settings
     static Markup currentSettings;
     // The default font
     static sf::Font DEFAULTFONT;
+    // Change CHARSIZE
+    static void setCharSize(unsigned int newSize);
+    // Change LINESPACE
+    static void setLineSpacing(unsigned int newSize);
+    // Get CHARSIZE
+    static int getCharSize();
+    // Get LINESPACE
+    static int getLineSpacing();
+  private:
+    // The character size relative to the game window
+    static unsigned int CHARSIZE;
+    // The line spacing relative to the charsize
+    static unsigned int LINESPACE;
+
 };
 
 } // end namespace StoryTime
