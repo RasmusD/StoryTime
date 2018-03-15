@@ -40,6 +40,9 @@ class MainGame: public GameSlice
     std::unique_ptr<TextHandler> _gameText;
     ChoiceBox _choice;
 
+    sf::Sprite _windowBorder;
+    sf::Texture _borderTexture;
+
     float _timeCount;
     
     // Inhereted from parent

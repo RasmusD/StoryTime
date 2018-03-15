@@ -16,11 +16,11 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
   if (_segmentQueue.front().text)
   {
     _screenText.push_back(std::move(_segmentQueue.front().text));
-    _screenText.back()->getText().setPosition(10, 10);
+    _screenText.back()->getText().setPosition(GlobalSettings::WINDOWWIDTH / 50, GlobalSettings::WINDOWHEIGHT / 50);
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
-    sf::Vector2f pos(10,10);
+    sf::Vector2f pos(GlobalSettings::WINDOWWIDTH / 50, GlobalSettings::WINDOWHEIGHT / 50);
     _currentChoice->setPosition(pos);
     _choiceActive = true;
   } else {

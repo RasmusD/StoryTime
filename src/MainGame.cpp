@@ -11,6 +11,17 @@ MainGame::MainGame() : GameSlice()
     throw;
   }
 
+  // Set border
+  if (!_borderTexture.loadFromFile("../resources/textures/border1.png"))
+  {
+    std::cerr << "Cannot load border texture!" << std::endl;
+    throw;
+  }
+  _windowBorder = sf::Sprite(_borderTexture);
+  _windowBorder.setPosition(0, 0);
+  sf::Vector2f orgSize = (sf::Vector2f)_borderTexture.getSize();
+  _windowBorder.setScale(GlobalSettings::WINDOWWIDTH / orgSize.x, GlobalSettings::WINDOWHEIGHT / orgSize.y);
+
   std::ifstream input("../stories/test.story", std::ios::in);
   if (!input)
   {
@@ -72,6 +83,7 @@ GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindo
 
 void MainGame::draw(sf::RenderWindow& renderWindow)
 {
+  renderWindow.draw(_windowBorder);
   //std::cout << "drawing" << std::endl;
   _gameText->draw(renderWindow);
   //std::cout << "drawing end" << std::endl;
