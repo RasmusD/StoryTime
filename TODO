@@ -2,6 +2,15 @@ Top Things/Currently Working On
 
 - Story verification tool
 
+Things Targeted For 1.0 Release:
+
+- Setting defaults in story script (font, colours, background, etc.)
+- Story verification tool
+- Support preset colour values of sfml
+- Documentation/Tutorial
+- Ability to add images to text (markup)
+- Ability to change background image/colour
+
 Known Bugs
 
 - Text written for a choice that has been made does not check for screen width/if newline should be made
@@ -13,23 +22,20 @@ Nice Things
 - TEST FRAMEWORK
 - Scroll bar to look at previous text
 - Screen resolution scaleability (settings menu in general)
-- Support preset colour values of sfml
 - It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
 - Unify addBranch and addValue
 - Rename texthandler to storyhandler
-- Documentation/Tutorial
 
 Features
-- Story verification tool
 - Rumble effect (vary pos for draw)
 - Colour effect
-- Setting defaults in story script
+- Ability to change background
 - Text appearance method markup
+- Speech bubble use
 
 A Little Bit Far Of Features
 
 - TTS
-- Ability to add images to text (markup)
 - Graphical Story Writing Tool (drag and drop diagram style)
 
 Questions
