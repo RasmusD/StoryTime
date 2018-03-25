@@ -1,14 +1,17 @@
 Top Things/Currently Working On
 
-- Story verification tool
+- Story verification binary
 
 Things Targeted For 1.0 Release:
 
 - Setting defaults in story script (font, colours, background, etc.)
-- Story verification tool
+- Story verification binary
 - Documentation/Tutorial
 - Ability to add images to text (markup)
 - Ability to change background image/colour
+- Loading stories
+- Save files
+- Ability to add "choices" that only have one option
 
 Known Bugs
 

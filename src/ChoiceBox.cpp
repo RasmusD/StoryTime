@@ -144,6 +144,16 @@ std::string ChoiceBox::getChoiceId()
   }
 }
 
+std::vector<Choice> ChoiceBox::getChoices()
+{
+  return _choices;
+}
+
+int ChoiceBox::getNumChoices()
+{
+  return _choices.size();
+}
+
 std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
 {
   if (_choice.id == "")

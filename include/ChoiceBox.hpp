@@ -59,6 +59,12 @@ class ChoiceBox
     // Returns "" if no choice has been made
     std::string getChoiceId();
 
+    // Returns the possible choices
+    std::vector<Choice> getChoices();
+
+    // Returns the number of possible choices
+    int getNumChoices();
+
     // Returns the chosen textsegment
     std::unique_ptr<TextSegment> getChoiceText();
 

@@ -16,6 +16,7 @@
 #include "TextHandler.hpp"
 #include "TextSegment.hpp"
 #include "ChoiceBox.hpp"
+#include "StoryVerifier.hpp"
 
 namespace StoryTime {
 

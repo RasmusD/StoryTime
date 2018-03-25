@@ -51,6 +51,12 @@ MainGame::MainGame() : GameSlice()
   story.insert(segment);
   
   input.close();
+  // Verify the story
+  if (StoryVerifier::verifyStory(story) == false)
+  {
+    // TMP
+    throw;
+  }
   _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));
 }
 
