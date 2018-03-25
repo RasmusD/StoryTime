@@ -601,6 +601,36 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
 
 sf::Color TextParser::getColourFromString(std::string& rgbaString)
 {
+  // First check for SFML presets
+  if (rgbaString == "black")
+  {
+    return sf::Color::Black; 
+  } else if (rgbaString == "white")
+  {
+    return sf::Color::White;
+  } else if (rgbaString == "red")
+  {
+    return sf::Color::Red;
+  } else if (rgbaString == "green")
+  {
+    return sf::Color::Green;
+  } else if (rgbaString == "blue")
+  {
+    return sf::Color::Blue;
+  } else if (rgbaString == "yellow")
+  {
+    return sf::Color::Yellow;
+  } else if (rgbaString == "magenta")
+  {
+    return sf::Color::Magenta;
+  } else if (rgbaString == "cyan")
+  {
+    return sf::Color::Cyan;
+  } else if (rgbaString == "transparent")
+  {
+    return sf::Color::Transparent;
+  }
+  // Else look for rgba values.
   // There should be four values
   uint8_t red = 0;
   uint8_t green = 0;
