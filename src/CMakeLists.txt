@@ -13,9 +13,11 @@ set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp Mai
 
 # Executables
 add_executable(StoryTime StoryTime.cpp ${SOURCE})
+add_executable(StoryVerifier VerifyStory.cpp StoryVerifier.cpp TextParser.cpp ChoiceBox.cpp TextSegment.cpp GlobalSettings.cpp)
 
 # Libraries groups
 set(SFML sfml-audio sfml-graphics sfml-network sfml-system sfml-window)
 
 # Linking
 target_link_libraries(StoryTime ${SFML})
+target_link_libraries(StoryVerifier ${SFML})

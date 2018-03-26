@@ -1,11 +1,10 @@
 Top Things/Currently Working On
 
-- Story verification binary
+- Story verification should check for duplicate branch names
 
 Things Targeted For 1.0 Release:
 
 - Setting defaults in story script (font, colours, background, etc.)
-- Story verification binary
 - Documentation/Tutorial
 - Ability to add images to text (markup)
 - Ability to change background image/colour
