@@ -12,6 +12,10 @@ Things Targeted For 1.0 Release:
 - Save files
 - Ability to add "choices" that only have one option
 
+Things Targeted For 2.0 Release:
+
+- Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
+
 Known Bugs
 
 - Text written for a choice that has been made does not check for screen width/if newline should be made

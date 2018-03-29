@@ -22,37 +22,10 @@ MainGame::MainGame() : GameSlice()
   sf::Vector2f orgSize = (sf::Vector2f)_borderTexture.getSize();
   _windowBorder.setScale(GlobalSettings::WINDOWWIDTH / orgSize.x, GlobalSettings::WINDOWHEIGHT / orgSize.y);
 
-  std::ifstream input("../stories/test.story", std::ios::in);
-  if (!input)
-  {
-    throw("File doesn't exist!"); 
-  }
-  std::unordered_map<std::string, std::string> story;
-  std::pair<std::string, std::string> segment = {"" ,""};
-  for(std::string line; getline(input, line); )
-  {
-    if (line.front() == '[')
-    {
-      // Split once on first whitespace
-      if (segment.first != "")
-      {
-        story.insert(segment);
-        segment = {"", ""};
-      }
-      size_t wPos = line.find_first_of(' ');
-      segment.first = line.substr(0, wPos);
-      segment.second = line.substr(wPos+1, std::string::npos);
-    } else {
-      segment.second += '\n' + line;
-    }
-  }
 
-  // Add the last segment
-  story.insert(segment);
-  
-  input.close();
-  // Verify the story
-  if (StoryVerifier::verifyStory(story) == false)
+  // Load and verify the story
+  std::unordered_map<std::string, std::string> story;
+  if (StoryVerifier::loadAndVerifyStory("../stories/test.story", story, false) == false)
   {
     // TMP
     throw;

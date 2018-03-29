@@ -9,39 +9,10 @@ int main(int argc, char *argv[])
     std::cerr << "Usage: verifyStory storyPath" << std::endl;
     return 1;
   }
-  std::ifstream input(argv[1], std::ios::in);
-  if (!input)
-  {
-    std::cerr << "File " + std::string(argv[1]) + " doesn't exist!" << std::endl;
-    return 1; 
-  }
 
   std::unordered_map<std::string, std::string> story;
-  std::pair<std::string, std::string> segment = {"" ,""};
-  for(std::string line; getline(input, line); )
-  {
-    if (line.front() == '[')
-    {
-      // Split once on first whitespace
-      if (segment.first != "")
-      {
-        story.insert(segment);
-        segment = {"", ""};
-      }
-      size_t wPos = line.find_first_of(' ');
-      segment.first = line.substr(0, wPos);
-      segment.second = line.substr(wPos+1, std::string::npos);
-    } else {
-      segment.second += '\n' + line;
-    }
-  }
-
-  // Add the last segment
-  story.insert(segment);
-  
-  input.close();
   // Verify the story
-  if (StoryTime::StoryVerifier::verifyStory(story) == false)
+  if (StoryTime::StoryVerifier::loadAndVerifyStory(std::string(argv[1]), story, true) == false)
   {
     std::cout << "\nStory (" + std::string(argv[1]) + ") not valid!" << std::endl;
   } else {

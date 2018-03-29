@@ -4,8 +4,6 @@
 #ifndef __MainGame_H_INCLUDED__
 #define __MainGame_H_INCLUDED__
 
-#include <iostream>
-#include <fstream>
 #include <memory>
 
 #include <SFML/Graphics.hpp>

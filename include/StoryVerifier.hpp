@@ -4,6 +4,9 @@
 #ifndef __StoryVerifier_H_INCLUDED__
 #define __StoryVerifier_H_INCLUDED__
 
+#include <iostream>
+#include <fstream>
+
 #include "TextParser.hpp"
 
 namespace StoryTime {
@@ -11,13 +14,14 @@ namespace StoryTime {
 class StoryVerifier
 {
   public:
-    // Verify if a story is valid
-    static bool verifyStory(std::unordered_map<std::string, std::string>& storyData);
+    // Load a story and verify if it is valid
+    static bool loadAndVerifyStory(std::string storyPath, std::unordered_map<std::string, std::string>& storyData, bool print);
   private:
     // Verify if a set of paths all lead to [end]
     static bool verifyPaths(std::unordered_map<std::string, std::vector<std::string>>& paths,
                             std::string& startKey,
-                            std::unordered_set<std::string> history);
+                            std::unordered_set<std::string> history,
+                            bool print);
 };
 
 
