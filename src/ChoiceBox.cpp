@@ -8,6 +8,13 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
                     Markup& settings,
                     ChoiceType type)
 {
+  // If there are no choices - throw
+  // TMP - should not throw
+  if (choices.size() == 0)
+  {
+    std::cerr << "ChoiceBox: No choices for choicebox!" << std::endl;
+    throw;
+  }
   // Create choice strings
   _choices.reserve(choices.size());
   _choiceNums.reserve(choices.size());
@@ -21,28 +28,37 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   _type = type;
   // Set position of choices and box
   setPosition(pos);
+  // If there is only one choice - mark it as already chosen
+  if (choices.size() == 1)
+  {
+    _choice = _choices[0];
+  }
 }
 
 void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory)
 {
-  for (int i = 0; i < _choices.size(); i++)
+  // If no choice has been made - check if one is made now
+  if (_choice.id == "")
   {
-    if (_choices[i].prereq != "")
+    for (int i = 0; i < _choices.size(); i++)
     {
-      if (choiceHistory.count(_choices[i].prereq) == 0)
+      if (_choices[i].prereq != "")
       {
-        // Skip
-        continue;
+        if (choiceHistory.count(_choices[i].prereq) == 0)
+        {
+          // Skip
+          continue;
+        }
       }
-    }
-    if (curEvent.type == sf::Event::KeyPressed)
-    {
-      if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
+      if (curEvent.type == sf::Event::KeyPressed)
       {
-        //std::cout << "Key pressed " << i+1 << std::endl;
-        _choice = _choices[i];
-        choiceHistory.insert(_choice.id);
-        break;
+        if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
+        {
+          //std::cout << "Key pressed " << i+1 << std::endl;
+          _choice = _choices[i];
+          choiceHistory.insert(_choice.id);
+          break;
+        }
       }
     }
   }
