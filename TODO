@@ -1,10 +1,9 @@
 Top Things/Currently Working On
 
-- Ability to add "choices" that only have one option
+- Setting defaults in story script (font, colours, background, etc.)
 
 Things Targeted For 1.0 Release:
 
-- Setting defaults in story script (font, colours, background, etc.)
 - Documentation/Tutorial
 - Ability to add images to text (markup)
 - Ability to change background image/colour
