@@ -6,8 +6,7 @@ MenuScreen::MenuScreen() : GameSlice()
 {
   if (!_titleFont.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
   {
-    std::cerr << "Cannot load Rosegarden font!" << std::endl;
-    throw;
+    throw std::runtime_error("Cannot load Rosegarden font!");
   }
 
   _changeSlice = false;

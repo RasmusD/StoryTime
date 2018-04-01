@@ -7,15 +7,13 @@ MainGame::MainGame() : GameSlice()
   // Set font
   if (!GlobalSettings::DEFAULTFONT.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
   {
-    std::cerr << "Cannot load Rosegarden font!" << std::endl;
-    throw;
+    throw std::runtime_error("Cannot load Rosegarden font!");
   }
 
   // Set border
   if (!_borderTexture.loadFromFile("../resources/textures/border1.png"))
   {
-    std::cerr << "Cannot load border texture!" << std::endl;
-    throw;
+    throw std::runtime_error("Cannot load border texture!");
   }
   _windowBorder = sf::Sprite(_borderTexture);
   _windowBorder.setPosition(0, 0);
@@ -28,7 +26,7 @@ MainGame::MainGame() : GameSlice()
   if (StoryVerifier::loadAndVerifyStory("../stories/test.story", story, false) == false)
   {
     // TMP
-    throw;
+    throw std::runtime_error("Story not valid!");
   }
   _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));
 }

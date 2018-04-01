@@ -12,8 +12,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   // TMP - should not throw
   if (choices.size() == 0)
   {
-    std::cerr << "ChoiceBox: No choices for choicebox!" << std::endl;
-    throw;
+    throw std::runtime_error("ChoiceBox: No choices for choicebox!");
   }
   // Create choice strings
   _choices.reserve(choices.size());
