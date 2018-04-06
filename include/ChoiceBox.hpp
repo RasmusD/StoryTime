@@ -51,6 +51,9 @@ class ChoiceBox
     // Draw the box
     void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory);
 
+    // Get the background color of the choice
+    sf::Color& getBackgroundColour();
+
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f& newPos);
 

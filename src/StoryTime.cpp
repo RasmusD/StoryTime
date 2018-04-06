@@ -92,7 +92,8 @@ struct Game
   {
     // Draw things
     // "Clear" window from previous frame
-    window.clear(sf::Color::Black);
+    // Each slice should know it's background colour and we do it here to avoid forgetting to do the clearing in the slice drawing
+    window.clear(currentSlice->getBackgroundColour());
 
     // Do drawing
     currentSlice->draw(window);

@@ -58,8 +58,13 @@ GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindo
   return NULL;
 }
 
-void MainGame::draw(sf::RenderWindow& renderWindow)
+sf::Color& MainGame::getBackgroundColour()
 {
+  return _gameText->getBackgroundColour();
+}
+
+void MainGame::draw(sf::RenderWindow& renderWindow)
+{  
   renderWindow.draw(_windowBorder);
   //std::cout << "drawing" << std::endl;
   _gameText->draw(renderWindow);

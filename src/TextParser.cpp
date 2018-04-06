@@ -145,6 +145,16 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
                 return false;
               }
+            } else if (type == "image")
+            {
+              if (std::get<1>(cMarkup) == "background")
+              {
+                //std::cout << "Setting to " << std::get<2>(cMarkup) << std::endl;
+                activeMarkup.backgroundColour = getColourFromString(std::get<2>(cMarkup));
+              } else {
+                std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
+                return false;
+              }
             } else if (type == "set")
             {
               if (std::get<1>(cMarkup) == "speed")
@@ -359,6 +369,21 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
         activeMarkup.activeMarkup.push_back(cMark);
         // Set new value
         activeMarkup.colour = getColourFromString(value);
+      } else {
+        std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
+        return false;
+      }
+      return true;
+    } else if (type.first == "image")
+    {
+      // Check if this is a self-contained tag or not
+      if (subtype == "background")
+      {
+        // Store previous value
+        std::get<2>(cMark) = getColourStringFromSFColor(activeMarkup.backgroundColour);
+        activeMarkup.activeMarkup.push_back(cMark);
+        // Set new value
+        activeMarkup.backgroundColour = getColourFromString(value);
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -590,6 +615,10 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
   // option = optional text depending on previous choices.
   // variant = text which varies depending on previous choices.
   tag = {"text", {{"option", "variant"}, "string"}};
+  validMarkup.insert(tag);
+  // Do something with images
+  // background = change the background color
+  tag = {"image", {{"background"}, "string"}};
   validMarkup.insert(tag);
   // A tag to be ignored
   tag = {"ignore", {{""}, ""}};

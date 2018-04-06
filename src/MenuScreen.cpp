@@ -28,6 +28,8 @@ MenuScreen::MenuScreen() : GameSlice()
   _textRect = _newgameText.getLocalBounds();
   _newgameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
   _newgameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.5f));
+
+  _backgroundColour = sf::Color::Black;
 }
 
 void MenuScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
@@ -59,6 +61,11 @@ void MenuScreen::draw(sf::RenderWindow& renderWindow)
 {
   renderWindow.draw(_titleText);
   renderWindow.draw(_newgameText);
+}
+
+sf::Color& MenuScreen::getBackgroundColour()
+{
+  return _backgroundColour;
 }
 
 } // End namespace Story

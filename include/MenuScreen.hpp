@@ -31,6 +31,9 @@ class MenuScreen: public GameSlice
     // Draw the screen
     virtual void draw(sf::RenderWindow& renderWindow);
 
+    // Get the background colour
+    virtual sf::Color& getBackgroundColour();
+
   private:
     sf::Font _titleFont;
     sf::Text _titleText;

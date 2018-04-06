@@ -206,6 +206,16 @@ void TextHandler::addBranch(std::string& id)
   }
 }
 
+sf::Color& TextHandler::getBackgroundColour()
+{
+  if (_choiceActive == true)
+  {
+    return _currentChoice->getBackgroundColour();
+  } else {
+    return _screenText.back()->getBackgroundColour();
+  }
+}
+
 void TextHandler::moveTextLineUp()
 {
   // Current top

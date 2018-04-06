@@ -38,6 +38,9 @@ class TextHandler
     // Draw
     void draw(sf::RenderWindow& renderWindow);
 
+    // Get the background colour of the current segment
+    sf::Color& getBackgroundColour();
+
   private:
     // Methods
     void setNextSegment();

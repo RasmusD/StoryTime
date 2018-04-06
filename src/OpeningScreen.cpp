@@ -11,6 +11,8 @@ OpeningScreen::OpeningScreen() : GameSlice()
 
   _changeSlice = false;
 
+  _backgroundColour = sf::Color::Black;
+
   _titleText.setFont(_titleFont);
   _titleText.setString("StoryTime");
   _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / 10);
@@ -47,5 +49,12 @@ void OpeningScreen::draw(sf::RenderWindow& renderWindow)
 {
   renderWindow.draw(_titleText);
 }
+
+sf::Color& OpeningScreen::getBackgroundColour()
+{
+  return _backgroundColour;
+}
+
+
 
 } // End namespace StoryTime

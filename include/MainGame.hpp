@@ -33,6 +33,9 @@ class MainGame: public GameSlice
     // Draw the slice
     virtual void draw(sf::RenderWindow& renderWindow);
 
+    // Get the background colour
+    virtual sf::Color& getBackgroundColour();
+
     // This ensures something something about pointers so a memory thing
     virtual ~MainGame();
   private:

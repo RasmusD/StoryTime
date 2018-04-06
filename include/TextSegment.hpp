@@ -31,6 +31,10 @@ class TextSegment
     // Draw the text
     void draw(sf::RenderWindow& renderWindow);
 
+    // Get the background colour for this segment
+    // Note this is the background for the full screen
+    sf::Color& getBackgroundColour();
+
     // Returns the local bounds of the text once the full target text has been rendered
     sf::FloatRect getLocalBounds();
 

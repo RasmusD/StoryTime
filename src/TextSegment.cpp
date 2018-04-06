@@ -127,4 +127,9 @@ void TextSegment::_changeText(std::string& text)
   _text.setString("");
 }
 
+sf::Color& TextSegment::getBackgroundColour()
+{
+  return _settings.backgroundColour;
+}
+
 } // End namespace StoryTime

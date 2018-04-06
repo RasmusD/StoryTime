@@ -30,6 +30,8 @@ class OpeningScreen: public GameSlice
     // Draw the screen
     virtual void draw(sf::RenderWindow& renderWindow);
 
+    virtual sf::Color& getBackgroundColour();
+
   private:
     sf::Font _titleFont;
     sf::Text _titleText;

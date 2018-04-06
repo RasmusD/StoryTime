@@ -2,6 +2,7 @@
 
 namespace StoryTime {
 
+// Default font
 sf::Font GlobalSettings::DEFAULTFONT = sf::Font();
 // Default settings
 Markup GlobalSettings::currentSettings = Markup();
