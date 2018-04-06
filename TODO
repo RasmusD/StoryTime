@@ -13,6 +13,8 @@ Things Targeted For 1.0 Release:
 Things Targeted For 2.0 Release:
 
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
+- TEST FRAMEWORK
+- Screen resolution scaleability (settings menu in general)
 
 Known Bugs
 
@@ -20,16 +22,14 @@ Known Bugs
 - If speed is too high sometimes issues seem to appear around newlines.
 - Text can go across the border of the window
 
-Nice Things
+Nice Things With No Current Release Version
 
-- TEST FRAMEWORK
 - Scroll bar to look at previous text
-- Screen resolution scaleability (settings menu in general)
 - It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
 - Unify addBranch and addValue
 - Rename texthandler to storyhandler
 
-Features
+Features With No Current Release Version
 - Rumble effect (vary pos for draw)
 - Colour effect
 - Ability to change background

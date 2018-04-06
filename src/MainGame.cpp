@@ -23,7 +23,7 @@ MainGame::MainGame() : GameSlice()
 
   // Load and verify the story
   std::unordered_map<std::string, std::string> story;
-  if (StoryVerifier::loadAndVerifyStory("../stories/test.story", story, false) == false)
+  if (StoryVerifier::loadAndVerifyStory("../stories/test.story", story, false, false) == false)
   {
     // TMP
     throw std::runtime_error("Story not valid!");

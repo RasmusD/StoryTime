@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
   std::unordered_map<std::string, std::string> story;
   // Verify the story
-  if (StoryTime::StoryVerifier::loadAndVerifyStory(std::string(argv[1]), story, true) == false)
+  if (StoryTime::StoryVerifier::loadAndVerifyStory(std::string(argv[1]), story, true, true) == false)
   {
     std::cout << "\nStory (" + std::string(argv[1]) + ") not valid!" << std::endl;
   } else {

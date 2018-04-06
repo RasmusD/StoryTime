@@ -4,7 +4,10 @@
 
 namespace StoryTime {
 
-bool StoryVerifier::loadAndVerifyStory(std::string storyPath, std::unordered_map<std::string, std::string>& storyData, bool print)
+bool StoryVerifier::loadAndVerifyStory(std::string storyPath,
+                                      std::unordered_map<std::string, std::string>& storyData,
+                                      bool print,
+                                      bool strictVerification)
 {
   // Open story and find segments
   std::ifstream input(storyPath, std::ios::in);
@@ -105,25 +108,57 @@ bool StoryVerifier::loadAndVerifyStory(std::string storyPath, std::unordered_map
 
   // Verify that all paths eventually lead to [end]
   // This is a depth first search
+  // The history of each path token
+  // Passed as copy for each token to have individual history
   std::unordered_set<std::string> history = {};
+  // A set of paths which have 
+  std::unordered_set<std::string> pathsTouched = {"[begin]"};
   std::string beg = "[begin]";
-  return verifyPaths(paths, beg, history, print);
+  if (strictVerification)
+  {
+    if (verifyPaths(paths, beg, history, pathsTouched, print))
+    {
+      // Check if all paths have been touched
+      for (auto storyPair : storyData)
+      {
+        // We ignore settings
+        if (storyPair.first != "[settings]")
+        {
+          if (pathsTouched.count(storyPair.first) == 0)
+          {
+            if (print)
+            {
+              std::cout << "StoryVerifier: " << storyPair.first << " is an unreachable segment!" << std::endl;
+            }
+            return false;
+          }
+        }
+      }
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return verifyPaths(paths, beg, history, pathsTouched, print);
+  }
 }
 
 bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std::string>>& paths,
                                 std::string& startKey,
                                 std::unordered_set<std::string> history,
+                                std::unordered_set<std::string>& pathsTouched,
                                 bool print)
 {
   history.insert(startKey);
   for (auto& pathEnds : paths[startKey])
   {
+    pathsTouched.insert(pathEnds);
     if (pathEnds == "[end]")
     {
       continue;
     } else if (paths.count(pathEnds) == 0)
     {
-      std::cerr << "StoryVerifier: Branch (" + pathEnds + ") not found!" << std::endl;
+      std::cout << "StoryVerifier: Branch (" + pathEnds + ") not found!" << std::endl;
       return false;
     } else
     {
@@ -134,7 +169,7 @@ bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std:
         {
           std::cout << "From (" + startKey + ") to (" + pathEnds + ") is a loop." << std::endl;
         }
-      } else if (verifyPaths(paths, pathEnds, history, print) == false)
+      } else if (verifyPaths(paths, pathEnds, history, pathsTouched, print) == false)
       {
         return false;
       }
@@ -143,7 +178,7 @@ bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std:
   // Woop!
   if (print)
   {
-    std::cerr << "StoryVerifier: All branches from (" + startKey + ") reach [end]!" << std::endl;
+    std::cout << "StoryVerifier: All branches from (" + startKey + ") reach [end]!" << std::endl;
   }
   return true;
 }
