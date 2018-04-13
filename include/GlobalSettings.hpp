@@ -20,7 +20,7 @@ typedef struct _Markup
   sf::Color colour = sf::Color::White;
 
   // Current background colour
-  // This is only releveant for text segments and will define the background colour while a segment is active
+  // This is only relevant for text segments and will define the background colour while a segment is active
   sf::Color backgroundColour = sf::Color::Black;
 
   // Current text speed

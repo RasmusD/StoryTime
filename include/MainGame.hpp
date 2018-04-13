@@ -46,6 +46,8 @@ class MainGame: public GameSlice
     sf::Texture _borderTexture;
 
     float _timeCount;
+
+    Markup _gameDefaults;
     
     // Inhereted from parent
     // bool _changeSlice;

@@ -1,4 +1,4 @@
-[settings] should ignore
+[settings] backgroundColour=green textColour=blue textSpeed=0.1
 [notsettings] should not ignore
 [begin] This is the story of a <choice val="man-man/woman-woman"/>. It starts on the road after a long long day... What happens if we have multiple choices? <choice branch="it crashes-[branch1]/things are fine-[branch2]/we deviate for women\'s sake-[option1]-woman"/>. We'll find out! Filling the screen. <font colour="255,0,0,255"> Filling the screen. </font> Filling the screen.
 

@@ -3,10 +3,9 @@
 namespace StoryTime {
 
 void TextParser::parseText(std::string& text,
-                          std::deque<Utils::SegChoice>& segments)
+                          std::deque<Utils::SegChoice>& segments,
+                          Markup& activeMarkup)
 {
-  // Active markup settings
-  Markup activeMarkup = Markup();
   // Are we parsing a markup tag? Not whether one is open, but whether we're parsing one.
   bool parsingMarkup = false;
   // Current chunk of text parsed before any markup detection
@@ -718,6 +717,48 @@ std::string TextParser::getColourStringFromSFColor(sf::Color& colour)
   rgbaString += ",";
   rgbaString += std::to_string(colour.a);
   return rgbaString;
+}
+
+void TextParser::parseSettings(Markup& currentSettings, std::string& settingsString)
+{
+  size_t pos = 0;
+  size_t cpos = 0;
+  while (pos != std::string::npos)
+  {
+    // Get whitespace pos
+    cpos = settingsString.find(" ", pos);
+    std::string setting = settingsString.substr(pos, cpos - pos);
+    // Save whitespace pos
+    if (cpos != std::string::npos)
+    {
+      pos = cpos + 1;
+    } else {
+      pos = cpos;
+    }
+    // Get = pos
+    cpos = setting.find("=");
+    if (cpos == std::string::npos)
+    {
+      std::cerr << "TextParser: Invalid setting string \"" << setting << "\"!" << std::endl;
+    } else {
+      // Get the setting id
+      std::string settingType = setting.substr(0, cpos);
+      std::string settingValue = setting.substr(cpos+1);
+      // Find if this is a setting we recognise
+      if (settingType == "textColour")
+      {
+        currentSettings.colour = getColourFromString(settingValue);
+      } else if (settingType == "backgroundColour")
+      {
+        currentSettings.backgroundColour = getColourFromString(settingValue);
+      } else if (settingType == "textSpeed")
+      {
+        currentSettings.speed = std::stof(settingValue);
+      } else {
+        std::cerr << "TextParser: Invalid setting type \"" << settingType << "\"!" << std::endl;
+      }
+    }
+  }
 }
 
 } // End namespace StoryTime

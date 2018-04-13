@@ -28,7 +28,13 @@ MainGame::MainGame() : GameSlice()
     // TMP
     throw std::runtime_error("Story not valid!");
   }
-  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story));
+  // Get defaults for this story
+  _gameDefaults = Markup();
+  if (story.count("[settings]") > 0)
+  {
+    TextParser::parseSettings(_gameDefaults, story["[settings]"]);
+  }
+  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story, _gameDefaults));
 }
 
 MainGame::~MainGame()

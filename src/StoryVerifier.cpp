@@ -61,10 +61,11 @@ bool StoryVerifier::loadAndVerifyStory(std::string storyPath,
   }
   // Now make a set of paths and verify that they all lead to [end]
   std::unordered_map<std::string, std::vector<std::string> > paths;
+  Markup defaultMarkup = Markup();
   for (auto& segment : storyData)
   {
     std::deque<Utils::SegChoice> segmentQueue;
-    TextParser::parseText(segment.second, segmentQueue);
+    TextParser::parseText(segment.second, segmentQueue, defaultMarkup);
     // A bool to check if a branching choice has already been found in segment
     bool branchFound = false;
     // Find the branching choice of this segment

@@ -26,8 +26,11 @@ class TextParser
     // Destuctor
     ~TextParser() {};
 
-    // Parse
-    static void parseText(std::string& text, std::deque<Utils::SegChoice>& segments);
+    // Parse a story segment
+    static void parseText(std::string& text, std::deque<Utils::SegChoice>& segments, Markup& activeMarkup);
+
+    // Parse a settings string
+    static void parseSettings(Markup& currentSettings, std::string& settingsString);
   private:
     // Find if possibleMarkup is valid markup and apply if it is supported
     static bool identifyMarkup(std::string possibleMarkup,

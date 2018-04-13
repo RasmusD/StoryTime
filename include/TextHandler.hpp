@@ -24,7 +24,7 @@ class TextHandler
 {
   public:
     // Constructor
-    TextHandler(std::unordered_map<std::string, std::string>& storyData);
+    TextHandler(std::unordered_map<std::string, std::string>& storyData, Markup& defaultMarkup);
 
     // Destuctor
     ~TextHandler() {};
@@ -69,6 +69,8 @@ class TextHandler
     bool _choiceActive;
     // Should the next segment be a choice or text?
     bool _isNextChoice;
+    // The default markup for text parsing
+    Markup _defaultMarkup;
 };
 
 

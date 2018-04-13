@@ -3,11 +3,12 @@
 namespace StoryTime {
 
 // Constructor
-TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData)
+TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData, Markup& defaultMarkup)
 {
   _storyData = storyData;
+  _defaultMarkup = defaultMarkup;
   //std::cout << _storyData["[begin]"] << std::endl;
-  TextParser::parseText(_storyData["[begin]"], _segmentQueue);
+  TextParser::parseText(_storyData["[begin]"], _segmentQueue, _defaultMarkup);
 
   //std::cout << text << std::endl;
   //std::cout << _choices.size() << std::endl;
@@ -200,7 +201,7 @@ void TextHandler::addBranch(std::string& id)
   {
     // Add a new line
     it->second = '\n' + it->second;
-    TextParser::parseText(it->second, _segmentQueue);
+    TextParser::parseText(it->second, _segmentQueue, _defaultMarkup);
   } else {
     throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
   }
