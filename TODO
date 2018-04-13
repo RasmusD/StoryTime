@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- Setting defaults in story script (font, colours, background, etc.)
+- Error messages
 
 Things Targeted For 1.0 Release:
 
@@ -8,7 +8,6 @@ Things Targeted For 1.0 Release:
 - Ability to add images to text (markup)
 - Loading stories
 - Save files
-- Error messages
 
 Things Targeted For 2.0 Release:
 
