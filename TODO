@@ -1,12 +1,11 @@
 Top Things/Currently Working On
 
-- Error messages
+- Loading stories
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
 - Ability to add images to text (markup)
-- Loading stories
 - Save files
 - A bug fix round
 - Text centering
@@ -14,6 +13,7 @@ Things Targeted For 1.0 Release:
 
 Things Targeted For 2.0 Release:
 
+- Error messages
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
 - TEST FRAMEWORK
 - Screen resolution scaleability (settings menu in general)
