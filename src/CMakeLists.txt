@@ -9,15 +9,17 @@ include_directories(${StoryTime_SOURCE_DIR}/include)
 link_directories(${StoryTime_SOURCE_DIR}/lib)
 
 # Source files
-set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp MainGame.cpp TextHandler.cpp ChoiceBox.cpp TextSegment.cpp TextParser.cpp StoryVerifier.cpp)
+set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp MainGame.cpp TextHandler.cpp ChoiceBox.cpp TextSegment.cpp TextParser.cpp StoryVerifier.cpp IO.cpp)
 
 # Executables
 add_executable(StoryTime StoryTime.cpp ${SOURCE})
+add_executable(Test test.cpp IO.cpp)
 add_executable(StoryVerifier VerifyStory.cpp StoryVerifier.cpp TextParser.cpp ChoiceBox.cpp TextSegment.cpp GlobalSettings.cpp)
 
 # Libraries groups
 set(SFML sfml-audio sfml-graphics sfml-network sfml-system sfml-window)
 
 # Linking
-target_link_libraries(StoryTime ${SFML})
+target_link_libraries(StoryTime ${SFML} stdc++fs)
+target_link_libraries(Test ${SFML} stdc++fs)
 target_link_libraries(StoryVerifier ${SFML})
