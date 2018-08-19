@@ -43,6 +43,7 @@ class MenuScreen: public GameSlice
 
     // Inhereted from parent
     // bool _changeSlice;
+    // sf::Color _backgroundColour;
 };
 
 

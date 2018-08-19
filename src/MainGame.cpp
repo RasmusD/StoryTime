@@ -2,7 +2,7 @@
 
 namespace StoryTime {
 
-MainGame::MainGame() : GameSlice()
+MainGame::MainGame(std::filesystem::path& storyPath) : GameSlice()
 {
   // Set border
   std::filesystem::path borderPath = GlobalSettings::ROOTDIR;
@@ -19,7 +19,7 @@ MainGame::MainGame() : GameSlice()
 
   // Load and verify the story
   std::unordered_map<std::string, std::string> story;
-  if (StoryVerifier::loadAndVerifyStory("../stories/test.story", story, false, false) == false)
+  if (StoryVerifier::loadAndVerifyStory(storyPath.string(), story, false, false) == false)
   {
     // TMP
     throw std::runtime_error("Story not valid!");

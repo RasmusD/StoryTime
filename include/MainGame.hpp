@@ -5,6 +5,7 @@
 #define __MainGame_H_INCLUDED__
 
 #include <memory>
+#include <filesystem>
 
 #include <SFML/Graphics.hpp>
 
@@ -22,7 +23,7 @@ class MainGame: public GameSlice
 {
   public:
     // Constructor
-    MainGame();
+    MainGame(std::filesystem::path& storyPath);
 
     // React to input
     virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow);
