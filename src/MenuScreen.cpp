@@ -4,10 +4,7 @@ namespace StoryTime {
 
 MenuScreen::MenuScreen() : GameSlice()
 {
-  if (!_titleFont.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
-  {
-    throw std::runtime_error("Cannot load Rosegarden font!");
-  }
+  _titleFont = GlobalSettings::DEFAULTFONT;
 
   _changeSlice = false;
 
@@ -51,7 +48,7 @@ GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWin
 {
   if (_changeSlice == true)
   {
-    return new MainGame();
+    return new SelectStory();
   }
 
   return NULL;

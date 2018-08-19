@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "Utils.hpp"
-#include "MainGame.hpp"
+#include "SelectStory.hpp"
 #include "GameSlice.hpp"
 #include "GlobalSettings.hpp"
 

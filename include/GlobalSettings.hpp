@@ -2,6 +2,7 @@
 #ifndef __GlobalSettings_H_INCLUDED__
 #define __GlobalSettings_H_INCLUDED__
 
+#include <filesystem>
 #include <stdint.h>
 #include <iostream>
 
@@ -30,6 +31,8 @@ typedef struct _Markup
 class GlobalSettings
 {
   public:
+    // Set defaults
+    static void initialise();
     // Width of the game window
     static unsigned int WINDOWWIDTH;
     // Height of the game window
@@ -38,6 +41,8 @@ class GlobalSettings
     static Markup currentSettings;
     // The default font
     static sf::Font DEFAULTFONT;
+    // The ROOT directory convenience path
+    static std::filesystem::path ROOTDIR;
     // Change CHARSIZE
     static void setCharSize(unsigned int newSize);
     // Change LINESPACE
@@ -46,7 +51,10 @@ class GlobalSettings
     static int getCharSize();
     // Get LINESPACE
     static int getLineSpacing();
+    // See if something is initialised
+    static bool isInitialised();
   private:
+    static bool INITIALISED;
     // The character size relative to the game window
     static unsigned int CHARSIZE;
     // The line spacing relative to the charsize

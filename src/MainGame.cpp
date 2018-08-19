@@ -4,14 +4,10 @@ namespace StoryTime {
 
 MainGame::MainGame() : GameSlice()
 {
-  // Set font
-  if (!GlobalSettings::DEFAULTFONT.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
-  {
-    throw std::runtime_error("Cannot load Rosegarden font!");
-  }
-
   // Set border
-  if (!_borderTexture.loadFromFile("../resources/textures/border1.png"))
+  std::filesystem::path borderPath = GlobalSettings::ROOTDIR;
+  borderPath /= std::filesystem::path("resources/textures/border1.png");
+  if (!_borderTexture.loadFromFile(borderPath.string()))
   {
     throw std::runtime_error("Cannot load border texture!");
   }

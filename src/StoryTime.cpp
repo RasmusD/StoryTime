@@ -9,6 +9,7 @@ namespace StoryTime {
 
 struct Game
 {
+
   // Create game window
   sf::RenderWindow window{{GlobalSettings::WINDOWWIDTH, GlobalSettings::WINDOWHEIGHT}, "StoryTime"};
 
@@ -31,10 +32,13 @@ struct Game
 
   void run()
   {
+    GlobalSettings::initialise();
     running = true;
 
     // Restart the clock
     clock.restart();
+
+    window.setTitle("StoryTime");
 
     while (running == true)
     {
@@ -43,8 +47,6 @@ struct Game
       inputPhase();
       updatePhase();
       drawPhase();
-
-      window.setTitle("StoryTime");
     }
   }
 

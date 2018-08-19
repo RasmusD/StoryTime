@@ -4,10 +4,7 @@ namespace StoryTime {
 
 OpeningScreen::OpeningScreen() : GameSlice()
 {
-  if (!_titleFont.loadFromFile("../resources/fonts/rosegarden/Rosegarden.ttf"))
-  {
-    throw std::runtime_error("Cannot load Rosegarden font!");
-  }
+  _titleFont = GlobalSettings::DEFAULTFONT;
 
   _changeSlice = false;
 
