@@ -53,6 +53,8 @@ class GlobalSettings
     static int getLineSpacing();
     // See if something is initialised
     static bool isInitialised();
+    // Print out the current settings that can be easily printed (for debug)
+    static void printSettings();
   private:
     static bool INITIALISED;
     // The character size relative to the game window

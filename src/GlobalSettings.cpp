@@ -30,7 +30,7 @@ void GlobalSettings::initialise()
   WINDOWHEIGHT = 1200;
   CHARSIZE = 30;
   // We start with 1.5*charsize
-  LINESPACE = GlobalSettings::CHARSIZE * 2;
+  LINESPACE = CHARSIZE * 2;
   INITIALISED = true;
 }
 
@@ -59,6 +59,16 @@ int GlobalSettings::getLineSpacing()
 bool GlobalSettings::isInitialised()
 {
   return INITIALISED;
+}
+
+void GlobalSettings::printSettings()
+{
+  std::cout << "WindowWidth: " << WINDOWWIDTH << std::endl;
+  std::cout << "WindowHeight: " << WINDOWHEIGHT<< std::endl;
+  std::cout << "RootDir: " << ROOTDIR << std::endl;
+  std::cout << "Initialised: " << INITIALISED << std::endl;
+  std::cout << "CharSize: " << CHARSIZE << std::endl;
+  std::cout << "LineSpace: " << LINESPACE << std::endl;
 }
 
 } // end namespace StoryTime
