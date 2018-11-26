@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- Loading stories
+- Text centering
 
 Things Targeted For 1.0 Release:
 
@@ -8,7 +8,6 @@ Things Targeted For 1.0 Release:
 - Ability to add images to text (markup)
 - Save files
 - A bug fix round
-- Text centering
 - Relative paths
 
 Things Targeted For 2.0 Release:
@@ -42,7 +41,8 @@ Features With No Current Release Version
 
 A Little Bit Far Of Features
 
-- TTS
+- TTS reading
+- ASR choices
 - Graphical Story Writing Tool (drag and drop diagram style)
 
 Questions
