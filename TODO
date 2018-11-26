@@ -1,18 +1,19 @@
 Top Things/Currently Working On
 
-- Text centering
+- A bug fix round
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
-- Ability to add images to text (markup)
+- Ability to add images to story (markup)
 - Save files
 - A bug fix round
-- Relative paths
 
 Things Targeted For 2.0 Release:
 
 - Error messages
+- Text boxing/speech segment bubbles
+- Setting text to be centered
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
 - TEST FRAMEWORK
 - Screen resolution scaleability (settings menu in general)
@@ -34,7 +35,6 @@ Features With No Current Release Version
 - Colour effect
 - Ability to change background
 - Text appearance method markup
-- Speech bubble use
 - Random choices
 - Negative Conditional Choices
 
