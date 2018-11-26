@@ -92,13 +92,10 @@ void TextHandler::update(sf::Time& elapsedTime)
     setNextSegment();
   } else {
     //std::cout << "Updating text." << std::endl;
+    // Update the current segment
+    _screenText.back()->update(elapsedTime, _choiceHistory);
     // Check if the current segment is beyond the screen
     sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
-    // Check if lines should move up
-    if (bounds.top + bounds.height >= GlobalSettings::WINDOWHEIGHT)
-    {
-      moveTextLineUp();
-    }
     // Check if new line should be made
     if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
     {
@@ -106,9 +103,14 @@ void TextHandler::update(sf::Time& elapsedTime)
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
       _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
+      // Update bounds
+      bounds = _screenText.back()->getText().getGlobalBounds();
     }
-    // Else update the current segment
-    _screenText.back()->update(elapsedTime, _choiceHistory);
+    // Check if lines should move up
+    if (bounds.top + bounds.height >= GlobalSettings::WINDOWHEIGHT)
+    {
+      moveTextLineUp();
+    }
   }
 }
 
