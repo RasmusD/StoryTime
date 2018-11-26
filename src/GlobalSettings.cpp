@@ -27,7 +27,7 @@ void GlobalSettings::initialise()
 
   // Set the game window size
   WINDOWWIDTH = 1600;
-  WINDOWHEIGHT = 1200;
+  WINDOWHEIGHT = 1000;
   CHARSIZE = 30;
   // We start with 1.5*charsize
   LINESPACE = CHARSIZE * 2;

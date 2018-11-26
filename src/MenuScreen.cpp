@@ -10,7 +10,7 @@ MenuScreen::MenuScreen() : GameSlice()
 
   _titleText.setFont(_titleFont);
   _titleText.setString("Main Menu");
-  _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / (GlobalSettings::getCharSize() / 3));
+  _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
   _titleText.setFillColor(sf::Color::White);
   _titleText.setStyle(sf::Text::Bold | sf::Text::Underlined);
   _textRect = _titleText.getLocalBounds();
@@ -19,7 +19,7 @@ MenuScreen::MenuScreen() : GameSlice()
 
   _newgameText.setFont(_titleFont);
   _newgameText.setString("Play Game");
-  _newgameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / (GlobalSettings::getCharSize() / 3));
+  _newgameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
   _newgameText.setFillColor(sf::Color::White);
   _newgameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
   _textRect = _newgameText.getLocalBounds();
