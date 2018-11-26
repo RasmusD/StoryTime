@@ -51,10 +51,13 @@ class TextHandler
     void addBranch(std::string& id);
 
     // Move screen text one line up
-    void moveTextLineUp();
+    void moveTextLineUp(sf::FloatRect& bounds);
 
     // Variables
 
+    // X/Y base position
+    size_t _baseX;
+    size_t _baseY;
     // Dictionary of branching story segments
     std::unordered_map<std::string, std::string> _storyData;
     // Ordered list of TextSegments and ChoiceBoxes to go through

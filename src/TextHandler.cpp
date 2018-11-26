@@ -13,15 +13,18 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
   //std::cout << text << std::endl;
   //std::cout << _choices.size() << std::endl;
 
+  _baseX = GlobalSettings::WINDOWWIDTH / 50;
+  _baseY = GlobalSettings::WINDOWHEIGHT / 50;
+
   // Set position of core text segment
   if (_segmentQueue.front().text)
   {
     _screenText.push_back(std::move(_segmentQueue.front().text));
-    _screenText.back()->getText().setPosition(GlobalSettings::WINDOWWIDTH / 50, GlobalSettings::WINDOWHEIGHT / 50);
+    _screenText.back()->getText().setPosition(_baseX, _baseY);
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
-    sf::Vector2f pos(GlobalSettings::WINDOWWIDTH / 50, GlobalSettings::WINDOWHEIGHT / 50);
+    sf::Vector2f pos(_baseX, _baseY);
     _currentChoice->setPosition(pos);
     _choiceActive = true;
   } else {
@@ -86,30 +89,34 @@ void TextHandler::update(sf::Time& elapsedTime)
         setNextSegment();
       }
     }
-  } else if (_screenText.back()->atEnd == true)
-  {
-    //std::cout << "Setting next segmetn." << std::endl;
-    setNextSegment();
   } else {
-    //std::cout << "Updating text." << std::endl;
     // Update the current segment
+    // First check if a new segment should be grabbed
+    if (_screenText.back()->atEnd == true)
+    {
+      //std::cout << "Setting next segmetn." << std::endl;
+      setNextSegment();
+    }
+    //std::cout << "Updating text." << std::endl;
+    // Update it
     _screenText.back()->update(elapsedTime, _choiceHistory);
-    // Check if the current segment is beyond the screen
+    // Check if the current segment is beyond the screen and a new line made
     sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
-    // Check if new line should be made
     if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
     {
       // If it is
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-      _screenText.back()->getText().setPosition(_screenText.front()->getText().getPosition().x, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
+      std::cout << "Making new line at x: " << _baseX;
+      std::cout << " and y: " << _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing() << std::endl;
+      _screenText.back()->getText().setPosition(_baseX, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
       // Update bounds
       bounds = _screenText.back()->getText().getGlobalBounds();
     }
     // Check if lines should move up
     if (bounds.top + bounds.height >= GlobalSettings::WINDOWHEIGHT)
     {
-      moveTextLineUp();
+      moveTextLineUp(bounds);
     }
   }
 }
@@ -142,8 +149,7 @@ void TextHandler::setTextNext()
   sf::Vector2f sPos = _screenText.back()->getText().getPosition();;
   if (((std::string)_screenText.back()->getText().getString()).back() == '\n')
   {
-    // Front segment guaranteed to have correct x
-    sPos.x = _screenText.front()->getText().getPosition().x;
+    sPos.x = _baseX;
     sPos.y += GlobalSettings::getLineSpacing();
   } else {
     sPos.x += _screenText.back()->getText().getLocalBounds().width;
@@ -219,10 +225,8 @@ sf::Color& TextHandler::getBackgroundColour()
   }
 }
 
-void TextHandler::moveTextLineUp()
+void TextHandler::moveTextLineUp(sf::FloatRect& bounds)
 {
-  // Current top
-  sf::FloatRect bounds = _screenText.front()->getText().getLocalBounds();
   // Move elements up by height
   sf::Vector2f pos;
   for (auto& seg : _screenText)

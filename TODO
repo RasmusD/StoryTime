@@ -20,7 +20,6 @@ Things Targeted For 2.0 Release:
 Known Bugs
 
 - Text written for a choice that has been made does not check for screen width/if newline should be made
-- If speed is too high sometimes issues seem to appear around newlines.
 - Text can go across the border of the window
 
 Nice Things With No Current Release Version
