@@ -104,7 +104,8 @@ void TextHandler::update(sf::Time& elapsedTime)
     _screenText.back()->update(elapsedTime, _choiceHistory);
     // Check if the current segment is beyond the screen and a new line made
     sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
-    if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH)
+    //std::cout << GlobalSettings::WINDOWWIDTH << " bounds: " << bounds.left + bounds.width << std::endl;
+    if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH - _baseX)
     {
       // If it is
       // Create a new segment. One line down
@@ -191,8 +192,8 @@ void TextHandler::draw(sf::RenderWindow& renderWindow)
   for (auto& segment : _screenText)
   {
     //std::cout << "Drwaing seg..." << std::endl;
-    segment->printTargetText();
-    segment->printVisibleText();
+    //segment->printTargetText();
+    //segment->printVisibleText();
     segment->draw(renderWindow);
     //std::cout << "Done." << std::endl;
   }

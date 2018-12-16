@@ -76,7 +76,7 @@ class TextSegment
     // Alternative text to display, depending on previous choices
     std::vector<std::pair<std::string, std::string> > _alternatives;
     // Shows if this segment has ever had update called on it (sets variables)
-    bool updated = false;
+    bool _updated = false;
 
     // Methods
     // Change the text - e.g. if alternative should be used

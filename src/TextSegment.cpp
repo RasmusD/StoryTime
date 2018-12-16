@@ -54,7 +54,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
 {
   // Check if we should switch what this segment shows
   // Only do first time this is updated
-  if (updated == false)
+  if (_updated == false)
   {
     for (auto& variant : _alternatives)
     {
@@ -68,7 +68,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     {
       atEnd = true;
     }
-    updated = true;
+    _updated = true;
   }
   if (atEnd == false)
   {
