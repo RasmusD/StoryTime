@@ -56,6 +56,9 @@ class TextSegment
     // Get the remaining text not currently shown
     std::unique_ptr<TextSegment> getRemainingTextSegment();
 
+    // Reset the visible text
+    void resetText();
+
   private:
     // The currently visible text
     sf::Text _text;

@@ -16,11 +16,11 @@ Things Targeted For 2.0 Release:
 - Setting text to be centered
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
 - TEST FRAMEWORK
+- Logging
 - Screen resolution scaleability (settings menu in general)
 
 Known Bugs
 
-- Text written for a choice that has been made does not check for screen width/if newline should be made
 - Text can go across the border of the window
 
 Nice Things With No Current Release Version

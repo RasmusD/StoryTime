@@ -68,6 +68,7 @@ void TextHandler::update(sf::Time& elapsedTime)
         _segmentQueue.push_front(Utils::SegChoice());
         //std::cout << "check" << std::endl;
         _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
+        _segmentQueue.front().text->resetText();
         //std::cout << "check" << std::endl;
         setNextSegment();
         //std::cout << "check" << std::endl;
@@ -75,6 +76,7 @@ void TextHandler::update(sf::Time& elapsedTime)
         _segmentQueue.push_front(Utils::SegChoice());
         //std::cout << "check" << std::endl;
         _segmentQueue.front().text = std::move(_currentChoice->getChoiceText());
+        _segmentQueue.front().text->resetText();
         // Add a whitespace at the end of this if necessary
         //std::cout << (std::string)_segmentQueue.back().text->getText().getString() << std::endl;
         if (std::string(_segmentQueue.back().text->getText().getString()).back() != ' ')
@@ -107,8 +109,8 @@ void TextHandler::update(sf::Time& elapsedTime)
       // If it is
       // Create a new segment. One line down
       _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-      std::cout << "Making new line at x: " << _baseX;
-      std::cout << " and y: " << _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing() << std::endl;
+      //std::cout << "Making new line at x: " << _baseX;
+      //std::cout << " and y: " << _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing() << std::endl;
       _screenText.back()->getText().setPosition(_baseX, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
       // Update bounds
       bounds = _screenText.back()->getText().getGlobalBounds();

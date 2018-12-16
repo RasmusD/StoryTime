@@ -32,6 +32,12 @@ sf::Text& TextSegment::getText()
   return _text;
 }
 
+void TextSegment::resetText()
+{
+  _text.setString("");
+  atEnd = false;
+}
+
 std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
 {
   // Find position of last " "
