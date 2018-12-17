@@ -1,12 +1,11 @@
 Top Things/Currently Working On
 
-- A bug fix round
+- Save files
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
 - Ability to add images to story (markup)
-- Save files
 - A bug fix round
 
 Things Targeted For 2.0 Release:
@@ -21,7 +20,7 @@ Things Targeted For 2.0 Release:
 
 Known Bugs
 
-- Text can go across the border of the window
+- Text can go across the border of the window (maybe fixed, keep an ye out)
 
 Nice Things With No Current Release Version
 
