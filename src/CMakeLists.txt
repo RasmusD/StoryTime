@@ -13,7 +13,7 @@ set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp Mai
 
 # Executables
 add_executable(StoryTime StoryTime.cpp ${SOURCE})
-add_executable(Test test.cpp IO.cpp)
+add_executable(Test test.cpp GameSaver.cpp)
 add_executable(StoryVerifier VerifyStory.cpp StoryVerifier.cpp TextParser.cpp ChoiceBox.cpp TextSegment.cpp GlobalSettings.cpp)
 
 # Libraries groups

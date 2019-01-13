@@ -1,15 +1,15 @@
 #include <filesystem>
 
-#include "IO.hpp"
+#include "GameSaver.hpp"
 
 
 int main(int argc, char **argv)
 {
-  std::filesystem::path path("stories");
-  for (auto& f : StoryTime::IO::ListDirectory(path))
-  {
-    std::cout << f << std::endl;
-  }
+  std::filesystem::path saveFile = std::filesystem::current_path();
+  saveFile /= "testSave.save";
+  StoryTime::GameSaver::saveGame(saveFile, true);
+
+  StoryTime::GameSaver::loadGame(saveFile);
 
   return 0;
 }
