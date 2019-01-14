@@ -48,6 +48,50 @@ bool StoryVerifier::loadAndVerifyStory(std::string storyPath,
   
   input.close();
 
+  return verifyStory(storyData, print, strictVerification);
+}
+
+bool StoryVerifier::parseAndVerifyStory(std::vector<std::string>& storyLines,
+                                      std::unordered_map<std::string, std::string>& storyData,
+                                      bool print,
+                                      bool strictVerification)
+{
+  std::pair<std::string, std::string> storySegment = {"" ,""};
+  for(auto& line : storyLines)
+  {
+    if (line.front() == '[')
+    {
+      // Split once on first whitespace
+      if (storySegment.first != "")
+      {
+        // Check this is not a duplicate branch name
+        // If it already exists we have duplicate branch names
+        if (storyData.count(storySegment.first) > 0)
+        {
+          std::cerr << "StoryVerifier: Duplicate branch name (" << storySegment.first << ")!" << std::endl;
+          return false;
+        }
+        storyData.insert(storySegment);
+        storySegment = {"", ""};
+      }
+      size_t wPos = line.find_first_of(' ');
+      storySegment.first = line.substr(0, wPos);
+      storySegment.second = line.substr(wPos+1, std::string::npos);
+    } else {
+      storySegment.second += '\n' + line;
+    }
+  }
+
+  // Add the last segment
+  storyData.insert(storySegment);
+
+  return verifyStory(storyData, print, strictVerification);
+}
+
+bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& storyData,
+                                  bool print,
+                                  bool strictVerification)
+{
   // Check we have a start and end segment
   if (storyData.count("[begin]") == 0)
   {

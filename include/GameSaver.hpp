@@ -7,6 +7,10 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <unordered_set>
+#include <unordered_map>
+
+#include "StoryVerifier.hpp"
 
 namespace StoryTime {
 
@@ -14,7 +18,10 @@ class GameSaver
 {
   public:
     // Save a game to load later
-    static bool saveGame(std::filesystem::path& savepath, bool overwrite);
+    static bool saveGame(std::filesystem::path& savepath,
+                        std::unordered_set<std::string>& choiceHistory,
+                        std::unordered_map<std::string, std::string>& storyData,
+                        bool overwrite);
     // Load a game saved to load later
     static bool loadGame(std::filesystem::path& filepath);
   private:

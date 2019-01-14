@@ -16,13 +16,33 @@ class StoryVerifier
   public:
     /*
     Load a story and verify if it is valid
-    stroyPath = path to story file
+    storyPath = path to story file
     storyData = the output of the final story elements
-    print = whetehr to print details of the verification or not
+    print = whether to print details of the verification or not
     strictVerification = if true the verification process may fail even if all paths from [begin] is valid. E.g. if there are branches which are unreachable.
     */
     static bool loadAndVerifyStory(std::string storyPath,
                                   std::unordered_map<std::string, std::string>& storyData,
+                                  bool print,
+                                  bool strictVerification);
+    /*
+    Parse a story and verify if it is valid
+    storyPath = path to story file
+    storyData = the output of the final story elements
+    print = whether to print details of the verification or not
+    strictVerification = if true the verification process may fail even if all paths from [begin] is valid. E.g. if there are branches which are unreachable.
+    */
+    static bool parseAndVerifyStory(std::vector<std::string>& storyLines,
+                                      std::unordered_map<std::string, std::string>& storyData,
+                                      bool print,
+                                      bool strictVerification);
+    /*
+    Verify if a story is valid
+    storyData = the story elements to verify
+    print = whether to print details of the verification or not
+    strictVerification = if true the verification process may fail even if all paths from [begin] is valid. E.g. if there are branches which are unreachable.
+    */
+    static bool verifyStory(std::unordered_map<std::string, std::string>& storyData,
                                   bool print,
                                   bool strictVerification);
   private:

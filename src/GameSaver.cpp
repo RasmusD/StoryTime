@@ -4,7 +4,10 @@ namespace StoryTime {
 
 const std::string GameSaver::_version = "StoryTime Save File v0.1";
 
-bool GameSaver::saveGame(std::filesystem::path& savepath, bool overwrite)
+bool GameSaver::saveGame(std::filesystem::path& savepath,
+                        std::unordered_set<std::string>& choiceHistory,
+                        std::unordered_map<std::string, std::string>& storyData,
+                        bool overwrite)
 {
   if (overwrite == false and std::filesystem::is_regular_file(savepath) == true)
   {
@@ -18,7 +21,22 @@ bool GameSaver::saveGame(std::filesystem::path& savepath, bool overwrite)
 
   std::ofstream out(savepath);
 
-  out << "!" << _version << std::endl;
+  // Save save information
+  out << "! " << _version << std::endl;
+
+  // Save choice history
+  out << "!";
+  for (auto& choice : choiceHistory)
+  {
+    out << " " << choice;
+  }
+  out << std::endl;
+
+  // Save story data
+  for (auto& storyPiece : storyData)
+  {
+    out << storyPiece.first << " " << storyPiece.second << std::endl;
+  }
 
   out.close();
 
@@ -36,14 +54,22 @@ bool GameSaver::loadGame(std::filesystem::path& filepath)
   std::ifstream in(filepath);
   std::string line;
 
+  std::vector<std::string> storyLines;
+  std::unordered_map<std::string, std::string> storyData;
+
   while (std::getline(in, line))
   {
-    std::cout << line;
+    if (line[0] == '!')
+    {
+      std::cout << line << std::endl;
+    } else {
+      storyLines.push_back(line);
+    }
   }
 
   in.close();
 
-  return true;
+  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, true, false);
 }
 
 bool GameSaver::_confirmOverwrite()
