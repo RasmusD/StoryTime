@@ -16,6 +16,7 @@
 #include "TextSegment.hpp"
 #include "ChoiceBox.hpp"
 #include "StoryVerifier.hpp"
+#include "GameSaver.hpp"
 
 namespace StoryTime {
 
@@ -23,7 +24,7 @@ class MainGame: public GameSlice
 {
   public:
     // Constructor
-    MainGame(std::filesystem::path& storyPath);
+    MainGame(std::filesystem::path& storyPath, bool storyIsSave);
 
     // React to input
     virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow);

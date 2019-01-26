@@ -24,7 +24,10 @@ class TextHandler
 {
   public:
     // Constructor
-    TextHandler(std::unordered_map<std::string, std::string>& storyData, Markup& defaultMarkup);
+    TextHandler(std::unordered_map<std::string, std::string>& storyData,
+                std::unordered_set<std::string>& choiceHistory,
+                std::string& startSegment,
+                Markup& defaultMarkup);
 
     // Destuctor
     ~TextHandler() {};

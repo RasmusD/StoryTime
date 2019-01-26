@@ -2,7 +2,7 @@
 
 namespace StoryTime {
 
-MainGame::MainGame(std::filesystem::path& storyPath) : GameSlice()
+MainGame::MainGame(std::filesystem::path& storyPath, bool storyIsSave) : GameSlice()
 {
   // Set border
   std::filesystem::path borderPath = GlobalSettings::ROOTDIR;
@@ -17,12 +17,25 @@ MainGame::MainGame(std::filesystem::path& storyPath) : GameSlice()
   _windowBorder.setScale(GlobalSettings::WINDOWWIDTH / orgSize.x, GlobalSettings::WINDOWHEIGHT / orgSize.y);
 
 
-  // Load and verify the story
   std::unordered_map<std::string, std::string> story;
-  if (StoryVerifier::loadAndVerifyStory(storyPath.string(), story, false, false) == false)
+  std::unordered_set<std::string> choiceHistory;
+  std::string startSegment;
+  if (storyIsSave == false)
   {
-    // TMP
-    throw std::runtime_error("Story not valid!");
+    startSegment = "[begin]";
+    // Load and verify the story
+    if (StoryVerifier::loadAndVerifyStory(storyPath.string(), story, false, false) == false)
+    {
+      // TMP
+      throw std::runtime_error("Story not valid!");
+    }
+  } else {
+    // Load the save game
+    if (GameSaver::loadGame(storyPath, story, choiceHistory, startSegment) == false)
+    {
+      // TMP
+      throw std::runtime_error("Saved story not valid!");
+    }
   }
   // Get defaults for this story
   _gameDefaults = Markup();
@@ -30,7 +43,7 @@ MainGame::MainGame(std::filesystem::path& storyPath) : GameSlice()
   {
     TextParser::parseSettings(_gameDefaults, story["[settings]"]);
   }
-  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story, _gameDefaults));
+  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story, choiceHistory, startSegment, _gameDefaults));
 }
 
 MainGame::~MainGame()

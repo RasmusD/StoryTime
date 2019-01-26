@@ -30,7 +30,7 @@ SelectStory::SelectStory() : GameSlice()
   }
 
   _titleText.setFont(GlobalSettings::DEFAULTFONT);
-  _titleText.setString("Select A Story");
+  _titleText.setString("Select A Story To Play");
   _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
   _titleText.setFillColor(sf::Color::White);
   _titleText.setStyle(sf::Text::Bold | sf::Text::Underlined);
@@ -74,7 +74,7 @@ GameSlice* SelectStory::update(sf::Time& elapsedTime, sf::RenderWindow& renderWi
 {
   if (_changeSlice == true)
   {
-    return new MainGame(_storyPath);
+    return new MainGame(_storyPath, false);
   }
 
   return NULL;

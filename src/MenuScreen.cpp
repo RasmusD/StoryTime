@@ -6,7 +6,8 @@ MenuScreen::MenuScreen() : GameSlice()
 {
   _titleFont = GlobalSettings::DEFAULTFONT;
 
-  _changeSlice = false;
+  _newGame = false;
+  _loadGame = false;
 
   _titleText.setFont(_titleFont);
   _titleText.setString("Main Menu");
@@ -17,14 +18,23 @@ MenuScreen::MenuScreen() : GameSlice()
   _titleText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
   _titleText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 4.0f));
 
-  _newgameText.setFont(_titleFont);
-  _newgameText.setString("Play Game");
-  _newgameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
-  _newgameText.setFillColor(sf::Color::White);
-  _newgameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
-  _textRect = _newgameText.getLocalBounds();
-  _newgameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
-  _newgameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.5f));
+  _newGameText.setFont(_titleFont);
+  _newGameText.setString("Play Game");
+  _newGameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
+  _newGameText.setFillColor(sf::Color::White);
+  _newGameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+  _textRect = _newGameText.getLocalBounds();
+  _newGameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
+  _newGameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 2.f));
+
+  _loadGameText.setFont(_titleFont);
+  _loadGameText.setString("Load Game");
+  _loadGameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
+  _loadGameText.setFillColor(sf::Color::White);
+  _loadGameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+  _textRect = _loadGameText.getLocalBounds();
+  _loadGameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
+  _loadGameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.25f));
 
   _backgroundColour = sf::Color::Black;
 }
@@ -34,9 +44,12 @@ void MenuScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
   switch (curEvent.type)
   {
     case sf::Event::MouseButtonReleased:
-      if (_newgameText.getGlobalBounds().contains(Utils::toVector2<float>(sf::Mouse::getPosition(renderWindow))) )
+      if (_newGameText.getGlobalBounds().contains(Utils::toVector2<float>(sf::Mouse::getPosition(renderWindow))) )
       {
-        _changeSlice = true;
+        _newGame = true;
+      } else if (_loadGameText.getGlobalBounds().contains(Utils::toVector2<float>(sf::Mouse::getPosition(renderWindow))) )
+      {
+        _loadGame = true;
       }
       break;
     default:
@@ -46,9 +59,12 @@ void MenuScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
 
 GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
 {
-  if (_changeSlice == true)
+  if (_newGame == true)
   {
     return new SelectStory();
+  } else if (_loadGame == true)
+  {
+    return new LoadStoryScreen();
   }
 
   return NULL;
@@ -57,7 +73,8 @@ GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWin
 void MenuScreen::draw(sf::RenderWindow& renderWindow)
 {
   renderWindow.draw(_titleText);
-  renderWindow.draw(_newgameText);
+  renderWindow.draw(_newGameText);
+  renderWindow.draw(_loadGameText);
 }
 
 sf::Color& MenuScreen::getBackgroundColour()

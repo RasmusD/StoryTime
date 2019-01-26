@@ -8,6 +8,7 @@
 
 #include "Utils.hpp"
 #include "SelectStory.hpp"
+#include "LoadStoryScreen.hpp"
 #include "GameSlice.hpp"
 #include "GlobalSettings.hpp"
 
@@ -37,9 +38,13 @@ class MenuScreen: public GameSlice
   private:
     sf::Font _titleFont;
     sf::Text _titleText;
-    sf::Text _newgameText;
+    sf::Text _newGameText;
+    sf::Text _loadGameText;
 
     sf::FloatRect _textRect;
+
+    bool _newGame;
+    bool _loadGame;
 
     // Inhereted from parent
     // bool _changeSlice;

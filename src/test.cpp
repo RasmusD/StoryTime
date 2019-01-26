@@ -14,10 +14,12 @@ int main(int argc, char **argv)
   choices.insert("Test2");
   choices.insert("Test3");
   std::unordered_map<std::string, std::string> storyData;
+  std::string currentSegment = "[test]";
   StoryTime::StoryVerifier::loadAndVerifyStory("/home/rasmus/GitRepos/StoryTime/stories/test.story", storyData, false, false);
-  StoryTime::GameSaver::saveGame(saveFile, choices, storyData, true);
-
-  StoryTime::GameSaver::loadGame(saveFile);
+  StoryTime::GameSaver::saveGame(saveFile, choices, storyData, currentSegment, true);
+  std::unordered_map<std::string, std::string> loadData;
+  std::unordered_set<std::string> choiceHistory;
+  StoryTime::GameSaver::loadGame(saveFile, loadData, choiceHistory, currentSegment);
 
   return 0;
 }

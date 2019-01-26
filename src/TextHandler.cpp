@@ -3,12 +3,16 @@
 namespace StoryTime {
 
 // Constructor
-TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData, Markup& defaultMarkup)
+TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData,
+                        std::unordered_set<std::string>& choiceHistory,
+                        std::string& startSegment,
+                        Markup& defaultMarkup)
 {
   _storyData = storyData;
   _defaultMarkup = defaultMarkup;
+  _choiceHistory = choiceHistory;
   //std::cout << _storyData["[begin]"] << std::endl;
-  TextParser::parseText(_storyData["[begin]"], _segmentQueue, _defaultMarkup);
+  TextParser::parseText(_storyData[startSegment], _segmentQueue, _defaultMarkup);
 
   //std::cout << text << std::endl;
   //std::cout << _choices.size() << std::endl;

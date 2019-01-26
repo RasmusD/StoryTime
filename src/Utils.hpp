@@ -5,6 +5,7 @@
 #define __Utils_H_INCLUDED__
 
 #include <iostream>
+#include <unordered_set>
 
 #include <SFML/Graphics.hpp>
 
@@ -73,6 +74,22 @@ class Utils
         default:
           return sf::Keyboard::Key::Unknown;
       }
+    }
+
+    // Split a string on a string delimiter to a set of strings
+    static void splitStringToSet(std::string stringToSplit,
+                                std::unordered_set<std::string>& outSet,
+                                std::string delimiter)
+    {
+      size_t cpos = 0;
+      size_t ppos = 0;
+      while ((ppos = stringToSplit.find(delimiter, cpos)) != std::string::npos)
+      {
+        outSet.insert(stringToSplit.substr(cpos, ppos - cpos));
+        cpos = ppos + delimiter.length();
+      }
+
+      outSet.insert(stringToSplit.substr(cpos));
     }
 };
 

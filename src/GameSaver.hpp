@@ -1,8 +1,8 @@
 // Static class for saving the state of a game to be loaded later and for loading a save file
 
 // Include guard
-#ifndef __MainGame_H_INCLUDED__
-#define __MainGame_H_INCLUDED__
+#ifndef __GameSaver_H_INCLUDED__
+#define __GameSaver_H_INCLUDED__
 
 #include <filesystem>
 #include <iostream>
@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 #include "StoryVerifier.hpp"
+#include "Utils.hpp"
 
 namespace StoryTime {
 
@@ -21,9 +22,13 @@ class GameSaver
     static bool saveGame(std::filesystem::path& savepath,
                         std::unordered_set<std::string>& choiceHistory,
                         std::unordered_map<std::string, std::string>& storyData,
+                        std::string& currentSegment,
                         bool overwrite);
     // Load a game saved to load later
-    static bool loadGame(std::filesystem::path& filepath);
+    static bool loadGame(std::filesystem::path& filepath,
+                          std::unordered_map<std::string, std::string>& storyData,
+                          std::unordered_set<std::string>& choiceHistory,
+                          std::string& startSegment);
   private:
     // Ask the user if file should be overwritten
     static bool _confirmOverwrite();

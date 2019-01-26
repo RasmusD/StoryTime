@@ -17,6 +17,8 @@ Things Targeted For 2.0 Release:
 - TEST FRAMEWORK
 - Logging
 - Screen resolution scaleability (settings menu in general)
+- TextHandler should handle a single box of text not a full story
+- StoryHandler shoul dbe created to manage a story
 
 Known Bugs
 
@@ -29,6 +31,7 @@ Nice Things With No Current Release Version
 - Unify addBranch and addValue
 - Rename texthandler to storyhandler
 - Proper text box asking user if should overwrite saved game
+- Loading a game should check if choice history is valid
 
 Features With No Current Release Version
 - Rumble effect (vary pos for draw)

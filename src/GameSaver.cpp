@@ -7,6 +7,7 @@ const std::string GameSaver::_version = "StoryTime Save File v0.1";
 bool GameSaver::saveGame(std::filesystem::path& savepath,
                         std::unordered_set<std::string>& choiceHistory,
                         std::unordered_map<std::string, std::string>& storyData,
+                        std::string& currentSegment,
                         bool overwrite)
 {
   if (overwrite == false and std::filesystem::is_regular_file(savepath) == true)
@@ -25,12 +26,15 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
   out << "! " << _version << std::endl;
 
   // Save choice history
-  out << "!";
+  out << "!!";
   for (auto& choice : choiceHistory)
   {
     out << " " << choice;
   }
   out << std::endl;
+
+  // Save current segment id
+  out << "!!! " << currentSegment << std::endl;
 
   // Save story data
   for (auto& storyPiece : storyData)
@@ -43,7 +47,10 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
   return true;
 }
 
-bool GameSaver::loadGame(std::filesystem::path& filepath)
+bool GameSaver::loadGame(std::filesystem::path& filepath,
+                          std::unordered_map<std::string, std::string>& storyData,
+                          std::unordered_set<std::string>& choiceHistory,
+                          std::string& startSegment)
 {
   if (std::filesystem::is_regular_file(filepath) == false)
   {
@@ -55,13 +62,25 @@ bool GameSaver::loadGame(std::filesystem::path& filepath)
   std::string line;
 
   std::vector<std::string> storyLines;
-  std::unordered_map<std::string, std::string> storyData;
 
   while (std::getline(in, line))
   {
     if (line[0] == '!')
     {
-      std::cout << line << std::endl;
+      if (line[1] == '!')
+      {
+        if (line[2] == '!')
+        {
+          // Current segment
+          startSegment = line.substr(4);
+        } else {
+          // Choice history
+          Utils::splitStringToSet(line.substr(3), choiceHistory, " ");
+        }
+      } else {
+        // Version information
+        std::cout << line << std::endl;
+      }
     } else {
       storyLines.push_back(line);
     }
@@ -69,7 +88,7 @@ bool GameSaver::loadGame(std::filesystem::path& filepath)
 
   in.close();
 
-  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, true, false);
+  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, false, false);
 }
 
 bool GameSaver::_confirmOverwrite()
