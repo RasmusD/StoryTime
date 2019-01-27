@@ -22,7 +22,8 @@ Things Targeted For 2.0 Release:
 
 Known Bugs
 
-- Text can go across the border of the window (maybe fixed, keep an ye out)
+- Text can go across the border of the window - particularly question choice text
+- At a choice loop an extra line loop seems to be added
 
 Nice Things With No Current Release Version
 
