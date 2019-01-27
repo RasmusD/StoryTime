@@ -7,6 +7,7 @@ unsigned int GlobalSettings::WINDOWHEIGHT = 10;
 Markup GlobalSettings::currentSettings = Markup();
 sf::Font GlobalSettings::DEFAULTFONT = sf::Font();
 std::filesystem::path GlobalSettings::ROOTDIR = "";
+std::filesystem::path GlobalSettings::SAVEDIR = "";
 bool GlobalSettings::INITIALISED = false;
 unsigned int GlobalSettings::CHARSIZE = 10;
 unsigned int GlobalSettings::LINESPACE = 10;
@@ -14,6 +15,8 @@ unsigned int GlobalSettings::LINESPACE = 10;
 void GlobalSettings::initialise()
 {
   ROOTDIR = std::filesystem::current_path();
+  SAVEDIR = ROOTDIR;
+  SAVEDIR /= "saves";
   // Default font
   std::filesystem::path fontPath = ROOTDIR;
   fontPath /= std::filesystem::path("resources/fonts/rosegarden/Rosegarden.ttf");

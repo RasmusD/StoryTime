@@ -17,6 +17,7 @@
 #include "TextSegment.hpp"
 #include "TextParser.hpp"
 #include "ChoiceBox.hpp"
+#include "GameSaver.hpp"
 
 namespace StoryTime {
 
@@ -57,7 +58,8 @@ class TextHandler
     void moveTextLineUp(sf::FloatRect& bounds);
 
     // Variables
-
+    // Current segment id in the story
+    std::string _currentSegmentId;
     // X/Y base position
     size_t _baseX;
     size_t _baseY;

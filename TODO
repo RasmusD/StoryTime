@@ -1,11 +1,10 @@
 Top Things/Currently Working On
 
-- Save files
+- Ability to add images to story (markup)
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
-- Ability to add images to story (markup)
 - A bug fix round
 
 Things Targeted For 2.0 Release:
@@ -24,6 +23,7 @@ Known Bugs
 
 - Text can go across the border of the window - particularly question choice text
 - At a choice loop an extra line loop seems to be added
+- When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 
 Nice Things With No Current Release Version
 
@@ -33,6 +33,7 @@ Nice Things With No Current Release Version
 - Rename texthandler to storyhandler
 - Proper text box asking user if should overwrite saved game
 - Loading a game should check if choice history is valid
+- Timed text, cna be used anywhere but specifically for showing that a game has been saved
 
 Features With No Current Release Version
 - Rumble effect (vary pos for draw)

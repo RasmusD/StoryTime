@@ -43,6 +43,8 @@ class GlobalSettings
     static sf::Font DEFAULTFONT;
     // The ROOT directory convenience path
     static std::filesystem::path ROOTDIR;
+    // The saved game default directory
+    static std::filesystem::path SAVEDIR;
     // Change CHARSIZE
     static void setCharSize(unsigned int newSize);
     // Change LINESPACE

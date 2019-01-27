@@ -11,6 +11,7 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
   _storyData = storyData;
   _defaultMarkup = defaultMarkup;
   _choiceHistory = choiceHistory;
+  _currentSegmentId = startSegment;
   //std::cout << _storyData["[begin]"] << std::endl;
   TextParser::parseText(_storyData[startSegment], _segmentQueue, _defaultMarkup);
 
@@ -48,9 +49,22 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
 
 void TextHandler::takeInput(sf::Event& curEvent)
 {
-  if (_choiceActive == true)
+  switch (curEvent.type)
   {
-    _currentChoice->takeInput(curEvent, _choiceHistory);
+    case sf::Event::KeyPressed:
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F2))
+      {
+        std::filesystem::path quicksavepath = GlobalSettings::SAVEDIR;
+        quicksavepath /= "quick.save";
+        GameSaver::saveGame(quicksavepath, _choiceHistory, _storyData, _currentSegmentId, true);
+        break;
+      }
+    default:
+      if (_choiceActive == true)
+      {
+        _currentChoice->takeInput(curEvent, _choiceHistory);
+      }
+      break;
   }
 }
 
@@ -93,6 +107,7 @@ void TextHandler::update(sf::Time& elapsedTime)
         std::string cId = _currentChoice->getChoiceId();
         addBranch(cId);
         setNextSegment();
+        _currentSegmentId = cId;
       }
     }
   } else {
