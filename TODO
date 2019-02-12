@@ -1,6 +1,10 @@
 Top Things/Currently Working On
 
-- To add images it is needed to add a window manager - i.e. some heavy re-ordering
+- To add images it is needed to add a window manager - i.e. some heavy re-ordering and bumping of some features
+- Text boxing/speech segment bubbles
+- TextHandler should handle a single box of text not a full story
+- StoryHandler shoul dbe created to manage a story
+- Rename texthandler to storyhandler
 - Ability to add images to story (markup)
 
 Things Targeted For 1.0 Release:
@@ -11,14 +15,11 @@ Things Targeted For 1.0 Release:
 Things Targeted For 2.0 Release:
 
 - Error messages
-- Text boxing/speech segment bubbles
 - Setting text to be centered
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
 - TEST FRAMEWORK
 - Logging
 - Screen resolution scaleability (settings menu in general)
-- TextHandler should handle a single box of text not a full story
-- StoryHandler shoul dbe created to manage a story
 
 Known Bugs
 
@@ -31,7 +32,6 @@ Nice Things With No Current Release Version
 - Scroll bar to look at previous text
 - It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
 - Unify addBranch and addValue
-- Rename texthandler to storyhandler
 - Proper text box asking user if should overwrite saved game
 - Loading a game should check if choice history is valid
 - Timed text, cna be used anywhere but specifically for showing that a game has been saved
