@@ -43,7 +43,7 @@ MainGame::MainGame(std::filesystem::path& storyPath, bool storyIsSave) : GameSli
   {
     TextParser::parseSettings(_gameDefaults, story["[settings]"]);
   }
-  _gameText = std::unique_ptr<TextHandler>(new TextHandler(story, choiceHistory, startSegment, _gameDefaults));
+  _gameText = std::unique_ptr<TextBox>(new TextBox(story, choiceHistory, startSegment, _gameDefaults));
 }
 
 MainGame::~MainGame()

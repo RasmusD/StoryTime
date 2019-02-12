@@ -9,7 +9,7 @@ include_directories(${StoryTime_SOURCE_DIR}/src)
 link_directories(${StoryTime_SOURCE_DIR}/lib)
 
 # Source files
-set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp MainGame.cpp TextHandler.cpp ChoiceBox.cpp TextSegment.cpp TextParser.cpp StoryVerifier.cpp IO.cpp SelectStory.cpp LoadStoryScreen.cpp GameSaver.cpp)
+set(SOURCE GameSlice.cpp OpeningScreen.cpp MenuScreen.cpp GlobalSettings.cpp MainGame.cpp TextBox.cpp ChoiceBox.cpp TextSegment.cpp TextParser.cpp StoryVerifier.cpp IO.cpp SelectStory.cpp LoadStoryScreen.cpp GameSaver.cpp)
 
 # Executables
 add_executable(StoryTime StoryTime.cpp ${SOURCE})

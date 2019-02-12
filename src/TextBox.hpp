@@ -1,8 +1,8 @@
 // The main game
 
 // Include guard
-#ifndef __TextHandler_H_INCLUDED__
-#define __TextHandler_H_INCLUDED__
+#ifndef __TextBox_H_INCLUDED__
+#define __TextBox_H_INCLUDED__
 
 #include <iostream>
 #include <deque>
@@ -21,17 +21,17 @@
 
 namespace StoryTime {
 
-class TextHandler
+class TextBox
 {
   public:
     // Constructor
-    TextHandler(std::unordered_map<std::string, std::string>& storyData,
+    TextBox(std::unordered_map<std::string, std::string>& storyData,
                 std::unordered_set<std::string>& choiceHistory,
                 std::string& startSegment,
                 Markup& defaultMarkup);
 
     // Destuctor
-    ~TextHandler() {};
+    ~TextBox() {};
 
     // React to input
     void takeInput(sf::Event& curEvent);
@@ -85,4 +85,4 @@ class TextHandler
 } // End namespace StoryTime
 
 
-#endif // __TextHandler_H_INCLUDED__;
+#endif // __TextBox_H_INCLUDED__;

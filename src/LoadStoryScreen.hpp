@@ -12,7 +12,7 @@
 #include "GameSlice.hpp"
 #include "MainGame.hpp"
 #include "GlobalSettings.hpp"
-#include "TextHandler.hpp"
+#include "TextBox.hpp"
 
 namespace StoryTime {
 

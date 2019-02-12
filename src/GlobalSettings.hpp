@@ -26,6 +26,10 @@ typedef struct _Markup
 
   // Current text speed
   float speed = 0.01;
+
+  // Current display image
+  // TMP - see TODO
+  std::string displayImage = "";
 } Markup;
 
 class GlobalSettings

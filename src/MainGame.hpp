@@ -12,7 +12,7 @@
 #include "GameSlice.hpp"
 #include "GlobalSettings.hpp"
 #include "MenuScreen.hpp"
-#include "TextHandler.hpp"
+#include "TextBox.hpp"
 #include "TextSegment.hpp"
 #include "ChoiceBox.hpp"
 #include "StoryVerifier.hpp"
@@ -41,7 +41,7 @@ class MainGame: public GameSlice
     // This ensures something something about pointers so a memory thing
     virtual ~MainGame();
   private:
-    std::unique_ptr<TextHandler> _gameText;
+    std::unique_ptr<TextBox> _gameText;
     ChoiceBox _choice;
 
     sf::Sprite _windowBorder;

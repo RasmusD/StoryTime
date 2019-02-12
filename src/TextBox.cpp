@@ -1,9 +1,9 @@
-#include "TextHandler.hpp"
+#include "TextBox.hpp"
 
 namespace StoryTime {
 
 // Constructor
-TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData,
+TextBox::TextBox(std::unordered_map<std::string, std::string>& storyData,
                         std::unordered_set<std::string>& choiceHistory,
                         std::string& startSegment,
                         Markup& defaultMarkup)
@@ -47,7 +47,7 @@ TextHandler::TextHandler(std::unordered_map<std::string, std::string>& storyData
   //std::cout << "Done." << std::endl;*/
 }
 
-void TextHandler::takeInput(sf::Event& curEvent)
+void TextBox::takeInput(sf::Event& curEvent)
 {
   switch (curEvent.type)
   {
@@ -68,7 +68,7 @@ void TextHandler::takeInput(sf::Event& curEvent)
   }
 }
 
-void TextHandler::update(sf::Time& elapsedTime)
+void TextBox::update(sf::Time& elapsedTime)
 {
   // If there is an active choice - it takes precedence
   //std::cout << "update" << std::endl;
@@ -143,7 +143,7 @@ void TextHandler::update(sf::Time& elapsedTime)
   }
 }
 
-void TextHandler::setNextSegment()
+void TextBox::setNextSegment()
 {
   if (_segmentQueue.size() == 0)
   {
@@ -165,7 +165,7 @@ void TextHandler::setNextSegment()
   }
 }
 
-void TextHandler::setTextNext()
+void TextBox::setTextNext()
 { 
   // Set position of next segment
   sf::Vector2f sPos = _screenText.back()->getText().getPosition();;
@@ -182,7 +182,7 @@ void TextHandler::setTextNext()
   //std::cout << "push" << std::endl;
 }
 
-void TextHandler::setChoiceNext()
+void TextBox::setChoiceNext()
 {
   // Activate next choice
   //std::cout << "here" << std::endl;
@@ -205,7 +205,7 @@ void TextHandler::setChoiceNext()
   //std::cout << "here" << std::endl;
 }
 
-void TextHandler::draw(sf::RenderWindow& renderWindow)
+void TextBox::draw(sf::RenderWindow& renderWindow)
 {
   //std::cout << "Drwaing..." << std::endl;
   for (auto& segment : _screenText)
@@ -223,7 +223,7 @@ void TextHandler::draw(sf::RenderWindow& renderWindow)
   }
 }
 
-void TextHandler::addBranch(std::string& id)
+void TextBox::addBranch(std::string& id)
 {
   // Check id exists
   auto it = _storyData.find(id);
@@ -237,7 +237,7 @@ void TextHandler::addBranch(std::string& id)
   }
 }
 
-sf::Color& TextHandler::getBackgroundColour()
+sf::Color& TextBox::getBackgroundColour()
 {
   if (_choiceActive == true)
   {
@@ -247,7 +247,7 @@ sf::Color& TextHandler::getBackgroundColour()
   }
 }
 
-void TextHandler::moveTextLineUp(sf::FloatRect& bounds)
+void TextBox::moveTextLineUp(sf::FloatRect& bounds)
 {
   // Move elements up by height
   sf::Vector2f pos;
