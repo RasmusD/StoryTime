@@ -154,6 +154,16 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
                 std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
                 return false;
               }
+            } else if (type == "image")
+            {
+              if (std::get<1>(cMarkup) == "display")
+              {
+                //std::cout << "Setting to " << std::get<2>(cMarkup) << std::endl;
+                activeMarkup.displayImage = std::get<2>(cMarkup);
+              } else {
+                std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
+                return false;
+              }
             } else if (type == "set")
             {
               if (std::get<1>(cMarkup) == "speed")
@@ -617,11 +627,12 @@ std::unordered_map<std::string, std::pair<std::unordered_set<std::string>, std::
   validMarkup.insert(tag);
   // Do something with images
   // background = change the background color
-  tag = {"image", {{"background"}, "string"}};
+  // display = set an image to display (value is filename of image)
+  tag = {"image", {{"background", "display"}, "string"}};
   validMarkup.insert(tag);
   // A tag to be ignored
   tag = {"ignore", {{""}, ""}};
-  // For some reason I can't leave that empty in a statin method according to g++4.9 so we create it with something and then clear it
+  // For some reason I can't leave that empty in a static method according to g++4.9 so we create it with something and then clear it
   tag.second.first.clear();
   validMarkup.insert(tag);
   return validMarkup;
