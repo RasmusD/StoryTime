@@ -1,8 +1,8 @@
 // The main game
 
 // Include guard
-#ifndef __MainGame_H_INCLUDED__
-#define __MainGame_H_INCLUDED__
+#ifndef __StoryHandler_H_INCLUDED__
+#define __StoryHandler_H_INCLUDED__
 
 #include <memory>
 #include <filesystem>
@@ -20,11 +20,11 @@
 
 namespace StoryTime {
 
-class MainGame: public GameSlice
+class StoryHandler: public GameSlice
 {
   public:
     // Constructor
-    MainGame(std::filesystem::path& storyPath, bool storyIsSave);
+    StoryHandler(std::filesystem::path& storyPath, bool storyIsSave);
 
     // React to input
     virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow);
@@ -39,7 +39,7 @@ class MainGame: public GameSlice
     virtual sf::Color& getBackgroundColour();
 
     // This ensures something something about pointers so a memory thing
-    virtual ~MainGame();
+    virtual ~StoryHandler();
   private:
     std::unique_ptr<TextBox> _gameText;
     ChoiceBox _choice;

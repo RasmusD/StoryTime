@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameSlice.hpp"
-#include "MainGame.hpp"
+#include "StoryHandler.hpp"
 #include "GlobalSettings.hpp"
 #include "TextBox.hpp"
 

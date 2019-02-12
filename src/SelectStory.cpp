@@ -74,7 +74,7 @@ GameSlice* SelectStory::update(sf::Time& elapsedTime, sf::RenderWindow& renderWi
 {
   if (_changeSlice == true)
   {
-    return new MainGame(_storyPath, false);
+    return new StoryHandler(_storyPath, false);
   }
 
   return NULL;

@@ -1,8 +1,8 @@
-#include "MainGame.hpp"
+#include "StoryHandler.hpp"
 
 namespace StoryTime {
 
-MainGame::MainGame(std::filesystem::path& storyPath, bool storyIsSave) : GameSlice()
+StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave) : GameSlice()
 {
   // Set border
   std::filesystem::path borderPath = GlobalSettings::ROOTDIR;
@@ -46,12 +46,12 @@ MainGame::MainGame(std::filesystem::path& storyPath, bool storyIsSave) : GameSli
   _gameText = std::unique_ptr<TextBox>(new TextBox(story, choiceHistory, startSegment, _gameDefaults));
 }
 
-MainGame::~MainGame()
+StoryHandler::~StoryHandler()
 {
 
 }
 
-void MainGame::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
+void StoryHandler::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
 {
   //std::cout << "update" << std::endl;
   switch (curEvent.type)
@@ -65,7 +65,7 @@ void MainGame::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
   }
 }
 
-GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
+GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow)
 {
   _gameText->update(elapsedTime);
   
@@ -73,12 +73,12 @@ GameSlice* MainGame::update(sf::Time& elapsedTime, sf::RenderWindow& renderWindo
   return NULL;
 }
 
-sf::Color& MainGame::getBackgroundColour()
+sf::Color& StoryHandler::getBackgroundColour()
 {
   return _gameText->getBackgroundColour();
 }
 
-void MainGame::draw(sf::RenderWindow& renderWindow)
+void StoryHandler::draw(sf::RenderWindow& renderWindow)
 {  
   renderWindow.draw(_windowBorder);
   //std::cout << "drawing" << std::endl;
