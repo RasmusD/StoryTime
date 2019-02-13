@@ -1,10 +1,7 @@
 Top Things/Currently Working On
 
 - To add images it is needed to add a window manager - i.e. some heavy re-ordering and bumping of some features
-- Text boxing/speech segment bubbles
-- TextHandler should handle a single box of text not a full story
-- StoryHandler shoul dbe created to manage a story
-- Rename texthandler to storyhandler
+- Order and set up image, text and choice box as necessary
 - Ability to add images to story (markup)
 
 Things Targeted For 1.0 Release:

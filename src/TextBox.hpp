@@ -25,58 +25,39 @@ class TextBox
 {
   public:
     // Constructor
-    TextBox(std::unordered_map<std::string, std::string>& storyData,
-                std::unordered_set<std::string>& choiceHistory,
-                std::string& startSegment,
-                Markup& defaultMarkup);
+    TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, size_t x, size_t y);
 
     // Destuctor
     ~TextBox() {};
 
-    // React to input
-    void takeInput(sf::Event& curEvent);
-
     // Update the text handler
-    void update(sf::Time& elapsedTime);
+    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
 
     // Draw
     void draw(sf::RenderWindow& renderWindow);
 
+    // Check if the text box is at the end of the current screen text to update
+    bool atEnd();
+
+    // Add a segment of text to the text box
+    void addTextSegment(std::unique_ptr<TextSegment>& segment);
+
     // Get the background colour of the current segment
     sf::Color& getBackgroundColour();
 
+    // Get the lower left corner of the box
+    sf::Vector2f bottomLeftCornerPos();
+
   private:
-    // Methods
-    void setNextSegment();
-    void setTextNext();
-    void setChoiceNext();
-
-    // Add a new branch
-    void addBranch(std::string& id);
-
     // Move screen text one line up
     void moveTextLineUp(sf::FloatRect& bounds);
 
     // Variables
-    // Current segment id in the story
-    std::string _currentSegmentId;
     // X/Y base position
     size_t _baseX;
     size_t _baseY;
-    // Dictionary of branching story segments
-    std::unordered_map<std::string, std::string> _storyData;
-    // Ordered list of TextSegments and ChoiceBoxes to go through
-    std::deque<Utils::SegChoice> _segmentQueue;
     // The text to currently be displayed
     std::deque<std::unique_ptr<TextSegment>> _screenText;
-    // Current choice
-    std::unique_ptr<ChoiceBox> _currentChoice;
-    // List of previously made choices
-    std::unordered_set<std::string> _choiceHistory;
-    // Are we currently making a choice?
-    bool _choiceActive;
-    // Should the next segment be a choice or text?
-    bool _isNextChoice;
     // The default markup for text parsing
     Markup _defaultMarkup;
 };
