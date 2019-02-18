@@ -483,8 +483,7 @@ void TextParser::addValueChoice(std::deque<Utils::SegChoice>& segments, std::str
   {
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
-    sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, pos, activeMarkup, ChoiceType::VALUE));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, sf::IntRect(0.f, 0.f, 0.f, 0.f), activeMarkup, ChoiceType::VALUE));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }
@@ -523,8 +522,7 @@ void TextParser::addBranchChoice(std::deque<Utils::SegChoice>& segments,
   {
     throw std::runtime_error("TextParser: Didn't find any choices in choice markup! Def: " + value);
   } else {
-    sf::Vector2f pos(0.f, 0.f);
-    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, pos, activeMarkup, ChoiceType::BRANCH));
+    std::unique_ptr<ChoiceBox> cB(new ChoiceBox(choiceVec, sf::IntRect(0.f, 0.f, 0.f, 0.f), activeMarkup, ChoiceType::BRANCH));
     segments.push_back(Utils::SegChoice());
     segments.back().choice = std::move(cB);
   }

@@ -21,6 +21,7 @@ Things Targeted For 2.0 Release:
 Known Bugs
 
 - Text can go across the border of the window - this seems to be for non-choice choices' text
+- Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected.
 - At a choice loop an extra line loop seems to be added
 - When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 

@@ -34,7 +34,7 @@ class ChoiceBox
   public:
     // Constructor
     ChoiceBox(std::vector<Choice>& choices,
-              sf::Vector2f& pos,
+              sf::IntRect boxRect,
               Markup& settings,
               ChoiceType type);
     ChoiceBox() {};
@@ -55,7 +55,7 @@ class ChoiceBox
     sf::Color& getBackgroundColour();
 
     // Set position of the box relative to the top left corner
-    void setPosition(sf::Vector2f& newPos);
+    void setPosition(sf::Vector2f newPos);
 
     // Returns the identifier of the next text segment if a choice has been made
     // Returns "<continue>" if not a branching choice
@@ -85,10 +85,7 @@ class ChoiceBox
     std::vector<TextSegment> _choiceNums;
 
     // The top left corner position
-    sf::Vector2f _topLeft;
-
-    // The bottom right corner position
-    sf::Vector2f _bottomRight;
+    sf::IntRect _baseRect;
 
     // The choice made
     // Default while no choice has been made

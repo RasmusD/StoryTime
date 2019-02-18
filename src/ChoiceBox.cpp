@@ -4,7 +4,7 @@ namespace StoryTime {
 
 // Constructor
 ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
-                    sf::Vector2f& pos,
+                    sf::IntRect boxRect,
                     Markup& settings,
                     ChoiceType type)
 {
@@ -26,7 +26,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   // Set choice type
   _type = type;
   // Set position of choices and box
-  setPosition(pos);
+  setPosition(sf::Vector2f(boxRect.left, boxRect.top));
   // If there is only one choice - mark it as already chosen
   if (choices.size() == 1)
   {
@@ -108,10 +108,10 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::str
   }
 }
 
-void ChoiceBox::setPosition(sf::Vector2f& newPos)
+void ChoiceBox::setPosition(sf::Vector2f newPos)
 {
-  _topLeft = newPos;
-  _bottomRight = newPos;
+  _baseRect.left = newPos.x;
+  _baseRect.top = newPos.y;
   float tHeight = _choiceNums.front().getLocalBounds().height * 1.5;
   // Set the numbers
   for (TextSegment& number : _choiceNums)
@@ -127,22 +127,12 @@ void ChoiceBox::setPosition(sf::Vector2f& newPos)
   newPos.x += 2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance;
   for (Choice& choice : _choices)
   {
-    // Check if this is the widest string for the box so far
-    sf::FloatRect bounds = choice.text.getLocalBounds();
-    if (bounds.width > _bottomRight.x)
-    {
-      _bottomRight.x = bounds.width;
-    }
+    //TODO: Check text does not exceed boundaries
     // Set the choice's position
     choice.text.getText().setPosition(newPos);
     // Update the height of the next choice
     newPos.y += tHeight;
   }
-  // Update lower rightt corner y
-  _bottomRight.y = newPos.y;
-  // Add whitespace
-  _bottomRight.x += 2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance;
-  
 }
 
 // If the choice is made this is either
