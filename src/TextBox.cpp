@@ -3,15 +3,14 @@
 namespace StoryTime {
 
 // Constructor
-TextBox::TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, size_t x, size_t y)
+TextBox::TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, sf::IntRect boxRect)
 {
   _defaultMarkup = defaultMarkup;
 
-  _baseX = x;
-  _baseY = y;
+  _baseRect = boxRect;
 
   _screenText.push_back(std::move(initialText));
-  _screenText.front()->getText().setPosition(_baseX, _baseY);
+  _screenText.front()->getText().setPosition(_baseRect.left, _baseRect.top);
 }
 
 void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
@@ -22,14 +21,12 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
   // Check if the current segment is beyond the screen and a new line made
   sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
   //std::cout << GlobalSettings::WINDOWWIDTH << " bounds: " << bounds.left + bounds.width << std::endl;
-  if (bounds.left + bounds.width >= GlobalSettings::WINDOWWIDTH - _baseX)
+  if (bounds.left + bounds.width >= _baseRect.width)
   {
     // If it is
     // Create a new segment. One line down
     _screenText.push_back(_screenText.back()->getRemainingTextSegment());
-    //std::cout << "Making new line at x: " << _baseX;
-    //std::cout << " and y: " << _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing() << std::endl;
-    _screenText.back()->getText().setPosition(_baseX, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
+    _screenText.back()->getText().setPosition(_baseRect.left, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
     // Update bounds
     bounds = _screenText.back()->getText().getGlobalBounds();
   }
@@ -91,7 +88,7 @@ void TextBox::addTextSegment(std::unique_ptr<TextSegment>& segment)
   sf::Vector2f sPos = _screenText.back()->getText().getPosition();;
   if (((std::string)_screenText.back()->getText().getString()).back() == '\n')
   {
-    sPos.x = _baseX;
+    sPos.x = _baseRect.left;
     sPos.y += GlobalSettings::getLineSpacing();
   } else {
     sPos.x += _screenText.back()->getText().getLocalBounds().width;

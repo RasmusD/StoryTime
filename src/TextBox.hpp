@@ -25,7 +25,7 @@ class TextBox
 {
   public:
     // Constructor
-    TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, size_t x, size_t y);
+    TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, sf::IntRect boxRect);
 
     // Destuctor
     ~TextBox() {};
@@ -53,9 +53,8 @@ class TextBox
     void moveTextLineUp(sf::FloatRect& bounds);
 
     // Variables
-    // X/Y base position
-    size_t _baseX;
-    size_t _baseY;
+    // Box rectangle
+    sf::IntRect _baseRect;
     // The text to currently be displayed
     std::deque<std::unique_ptr<TextSegment>> _screenText;
     // The default markup for text parsing

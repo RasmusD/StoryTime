@@ -67,7 +67,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave) :
   }
   _segmentQueue.pop_front();
 
-  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, 10, 10));
+  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(10, 10, GlobalSettings::WINDOWWIDTH - 20, GlobalSettings::WINDOWHEIGHT - 20)));
 }
 
 StoryHandler::~StoryHandler()
