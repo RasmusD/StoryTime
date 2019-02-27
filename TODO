@@ -13,10 +13,12 @@ Things Targeted For 2.0 Release:
 
 - Error messages
 - Setting text to be centered
-- Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge)
+- Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge). Ability to remove variables.
 - TEST FRAMEWORK
 - Logging
 - Screen resolution scaleability (settings menu in general)
+- Background image markup should allow setting an actual image and not just change colour.
+- Font markup should also have a type to change font size and colour.
 
 Known Bugs
 
@@ -41,6 +43,7 @@ Features With No Current Release Version
 - Text appearance method markup
 - Random choices
 - Negative Conditional Choices
+- Choices whose text is different when choosing from when put on screen after
 
 A Little Bit Far Of Features
 
@@ -51,4 +54,4 @@ A Little Bit Far Of Features
 Questions
 
 - Is there any benefit to the string/double definition of markup types?
-- Is there a benefit to just-in-time parsing an dhaving the parser own optional stuff depending on previous choices?
+- Is there a benefit to just-in-time parsing and having the parser own optional stuff depending on previous choices?
