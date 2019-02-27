@@ -30,7 +30,7 @@ You want to write a story. Here's how:
 
 5. If it's really good, you can share it with us or your remaining friends. No pressure.
 
-Of steps 1-5 only 2 should cause you any headache. If 1, 3, 4 or 5 is hard to understand. This guide will not help you. Sorry... Not sorry.
+Of steps 1-5 only 2 should cause you any headache. If 1, 3, 4 or 5 is hard to understand. This guide will not help you. Sorry   Not sorry.
 
 ### How to do the magical bit in 2
 
@@ -56,7 +56,7 @@ In case it doesn't or you just want to test it without opening the whole applica
 
 ### But how does markup work?
 
-Good question. Lemme just see... Um... it's sorta, kinda, maybe like XML?
+Good question. Lemme just see   Um   it's sorta, kinda, maybe like XML?
 
 Basically, if you want to apply markup you just do the following:
 
@@ -78,34 +78,42 @@ Take a look at the test.story for examples of **every** available markup in acti
 
 \<choice\> things to do with choices and the most complicated markup as there's markup within the markup. Meta.
 * val - *self-contained* - a choice which does not affect the Story's branching but which saves a value which can be referred to later to enable other choices.
-... The value field of this is a bit complicated and has a specific format. Ignore this format at your own peril. Format is:
-... `choice1` then `/` then `choice2` for as many choices as is needed. You can also just have a single choice if you want to save some value no matter what (maybe you get a glove in two different branches which enables a choice in a third branch).
-... A choice has the format of `choice text` then `-` then `variableName`. `choice text` is the text to be displayed on screen when making the choice (and in the main story after). `variableName` is the *single word no whitespace* variable to save.
-... Note that the term variable is kinda misleading as this really is just telling the interpreter that you've made a "choice" called this name. That's it. So don't use [] here to avoid name clashes. Using a variable multiple times is fine, it'll only be stored once though, and it can't be removed later.
+   
+   The value field of this is a bit complicated and has a specific format. Ignore this format at your own peril. Format is:
+   `choice1` then `/` then `choice2` for as many choices as is needed. You can also just have a single choice if you want to save some value no matter what (maybe you get a glove in two different branches which enables a choice in a third branch).
+   A choice has the format of `choice text` then `-` then `variableName`. `choice text` is the text to be displayed on screen when making the choice (and in the main story after). `variableName` is the *single word no whitespace* variable to save.
+   Note that the term variable is kinda misleading as this really is just telling the interpreter that you've made a "choice" called this name. That's it. So don't use [] here to avoid name clashes. Using a variable multiple times is fine, it'll only be stored once though, and it can't be removed later.
 * branch - *self-contained* - a choice which decides the next segment in the story. Counter-intuitively this does not need to have more than one choice. If only one choice is present then this just sets what the next segment is without the player seeing it. Useful for splitting segments into smaller more manageable bits. Though normally, you'd totally have an actual choice to make. Format
-... `choice1` then `/` then `choice2` for as many choices as intended.
-... A choice has a slightly expanded format to the \<choice val\> markup which is `choice text` then `-` then `[branchName]` then `-` then `variableName`. The last two are optional. I.e. first provide the text to show, then the name of the branch this choice leads to, then an **optional** variable to save for later use. So both `choice text-[branchName]-variableName` and `choice text-[branchName]` are valid.
+   
+   `choice1` then `/` then `choice2` for as many choices as intended.
+   A choice has a slightly expanded format to the \<choice val\> markup which is `choice text` then `-` then `[branchName]` then `-` then `variableName`. The last two are optional. I.e. first provide the text to show, then the name of the branch this choice leads to, then an **optional** variable to save for later use. So both `choice text-[branchName]-variableName` and `choice text-[branchName]` are valid.
 
 \<font\> things to do with fonts
 * colour - *opened and closed* - yup that's colour with a ***u***. Deal with it. Basically you can change the colour of the font.
-... The value can be *either* a comma separated list of RGB values *or* from a set of preset values named: black, white, red, green, blue, yellow, magenta, cyan and transparent. *\* Any similarity to the list of preset colour values from SFML is purely intended.*
+   
+   The value can be *either* a comma separated list of RGB values *or* from a set of preset values named: black, white, red, green, blue, yellow, magenta, cyan and transparent. *\* Any similarity to the list of preset colour values from SFML is purely intended.*
 
 \<image\> things to do with images
 * background - *opened and closed* - change the background colour of the story. Some day in the distant future, or maybe tomorrow if I can be arsed, this could be an actual image!
-... The value is the same sort of colo***u***r thing as for the font colour value. That is... drum roll for repetition: The value can be *either* a comma separated list of RGB values *or* from a set of preset values named: black, white, red, green, blue, yellow, magenta, cyan and transparent. *\* Any similarity to the list of preset colour values from SFML is purely intended.*
+   
+   The value is the same sort of colo***u***r thing as for the font colour value. That is   drum roll for repetition: The value can be *either* a comma separated list of RGB values *or* from a set of preset values named: black, white, red, green, blue, yellow, magenta, cyan and transparent. *\* Any similarity to the list of preset colour values from SFML is purely intended.*
 * display - *opened and closed* - set the/an image to be displayed with the story. ***THIS DOES NOTHING rigHT NOW***
-... The value will be some sort of path to the image.
+   
+   The value will be some sort of path to the image.
 
 \<set\> set some settings
 * speed - *opened and closed* - change the text speed.
-... The value is some number. You'd probably make it around 0.01 which seems a reasonable starting point. I don't remember which makes it faster and which slower. But hey - try it. Actually... less is faster.
+   
+   The value is some number. You'd probably make it around 0.01 which seems a reasonable starting point. I don't remember which makes it faster and which slower. But hey - try it. Actually   less is faster.
 
 \<text\> a piece of text which depends on previous choices
 * option - *self-contained* - some text which is only shown if a previous choice/variable has been made/exists.
-... The value field has the format of `text` then `-` then `variableName`. The `text` is the text to show if the `variableName` has previously been saved or chosen.
+   
+   The value field has the format of `text` then `-` then `variableName`. The `text` is the text to show if the `variableName` has previously been saved or chosen.
 * variant - *self-contained* - some text which will vary depending on previous choices.
-... The value field has the format of `variant1` then `/` then `variant2` then `-` then `variableName` and then more `/variantX-variableName` as you need.
-... Note that `variant1` is the default and will thus be showed if no other variants variables are present. If no default variant is defined, nothing will be shown if no variable is previously chosen. The first found variable that has been chosen previously is displayed. So watch the order.
+   
+   The value field has the format of `variant1` then `/` then `variant2` then `-` then `variableName` and then more `/variantX-variableName` as you need.
+   Note that `variant1` is the default and will thus be showed if no other variants variables are present. If no default variant is defined, nothing will be shown if no variable is previously chosen. The first found variable that has been chosen previously is displayed. So watch the order.
 
 And that's all ther eis to say about markup. At least right now, see TODO for loads more planned.
 
