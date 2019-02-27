@@ -83,7 +83,7 @@ Take a look at the test.story for examples of **every** available markup in acti
    `choice1` then `/` then `choice2` for as many choices as is needed. You can also just have a single choice if you want to save some value no matter what (maybe you get a glove in two different branches which enables a choice in a third branch).
    A choice has the format of `choice text` then `-` then `variableName`. `choice text` is the text to be displayed on screen when making the choice (and in the main story after). `variableName` is the *single word no whitespace* variable to save.
    Note that the term variable is kinda misleading as this really is just telling the interpreter that you've made a "choice" called this name. That's it. So don't use [] here to avoid name clashes. Using a variable multiple times is fine, it'll only be stored once though, and it can't be removed later.
-* branch - *self-contained* - a choice which decides the next segment in the story. Counter-intuitively this does not need to have more than one choice. If only one choice is present then this just sets what the next segment is without the player seeing it. Useful for splitting segments into smaller more manageable bits. Though normally, you'd totally have an actual choice to make. Format
+* branch - *self-contained* - a choice which decides the next segment in the story. Counter-intuitively this does not need to have more than one choice. If only one choice is present then this just sets what the next segment is without the player seeing it. Useful for splitting segments into smaller more manageable bits. Though normally, you'd totally have an actual choice to make. Format:
    
    `choice1` then `/` then `choice2` for as many choices as intended.
    A choice has a slightly expanded format to the \<choice val\> markup which is `choice text` then `-` then `[branchName]` then `-` then `variableName`. The last two are optional. I.e. first provide the text to show, then the name of the branch this choice leads to, then an **optional** variable to save for later use. So both `choice text-[branchName]-variableName` and `choice text-[branchName]` are valid.
@@ -115,7 +115,7 @@ Take a look at the test.story for examples of **every** available markup in acti
    The value field has the format of `variant1` then `/` then `variant2` then `-` then `variableName` and then more `/variantX-variableName` as you need.
    Note that `variant1` is the default and will thus be showed if no other variants variables are present. If no default variant is defined, nothing will be shown if no variable is previously chosen. The first found variable that has been chosen previously is displayed. So watch the order.
 
-And that's all ther eis to say about markup. At least right now, see TODO for loads more planned.
+And that's all there is to say about markup. At least right now, see TODO for loads more planned.
 
 ### But I could set some settings and you didn't explain those
 
