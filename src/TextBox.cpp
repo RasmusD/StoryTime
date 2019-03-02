@@ -3,7 +3,10 @@
 namespace StoryTime {
 
 // Constructor
-TextBox::TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, sf::IntRect boxRect)
+TextBox::TextBox(std::unique_ptr<TextSegment>& initialText,
+                Markup& defaultMarkup,
+                sf::IntRect boxRect)
+              : Box(boxRect)
 {
   _defaultMarkup = defaultMarkup;
 

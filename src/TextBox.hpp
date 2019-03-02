@@ -21,11 +21,13 @@
 
 namespace StoryTime {
 
-class TextBox
+class TextBox : Box
 {
   public:
     // Constructor
-    TextBox(std::unique_ptr<TextSegment>& initialText, Markup& defaultMarkup, sf::IntRect boxRect);
+    TextBox(std::unique_ptr<TextSegment>& initialText,
+            Markup& defaultMarkup,
+            sf::IntRect boxRect);
 
     // Destuctor
     ~TextBox() {};
@@ -48,17 +50,22 @@ class TextBox
     // Get the lower left corner of the box
     sf::Vector2f bottomLeftCornerPos();
 
+    // Inherited from base
+    // void setPosition(sf::Vector2f newPos);
+
   private:
     // Move screen text one line up
     void moveTextLineUp(sf::FloatRect& bounds);
 
     // Variables
-    // Box rectangle
-    sf::IntRect _baseRect;
     // The text to currently be displayed
     std::deque<std::unique_ptr<TextSegment>> _screenText;
     // The default markup for text parsing
     Markup _defaultMarkup;
+
+    // Inherited from base
+    // Box rectangle
+    //sf::IntRect _baseRect;
 };
 
 

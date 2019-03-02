@@ -12,6 +12,7 @@
 #include "Utils.hpp"
 #include "GlobalSettings.hpp"
 #include "TextSegment.hpp"
+#include "Box.hpp"
 
 namespace StoryTime {
 
@@ -29,7 +30,7 @@ struct Choice
   std::string prereq = "";
 };
 
-class ChoiceBox
+class ChoiceBox : Box
 {
   public:
     // Constructor
@@ -37,7 +38,6 @@ class ChoiceBox
               sf::IntRect boxRect,
               Markup& settings,
               ChoiceType type);
-    ChoiceBox() {};
 
     // Destuctor
     ~ChoiceBox() {};
@@ -55,7 +55,7 @@ class ChoiceBox
     sf::Color& getBackgroundColour();
 
     // Set position of the box relative to the top left corner
-    void setPosition(sf::Vector2f newPos);
+    void setPosition(sf::Vector2f newPos) override;
 
     // Returns the identifier of the next text segment if a choice has been made
     // Returns "<continue>" if not a branching choice
@@ -84,12 +84,13 @@ class ChoiceBox
     // The choices numbers
     std::vector<TextSegment> _choiceNums;
 
-    // The top left corner position
-    sf::IntRect _baseRect;
-
     // The choice made
     // Default while no choice has been made
     Choice _choice;
+
+    // Inherited from base class
+    // The top left corner position
+    //sf::IntRect _baseRect;
 };
 
 

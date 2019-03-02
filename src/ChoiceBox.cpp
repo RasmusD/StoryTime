@@ -7,6 +7,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
                     sf::IntRect boxRect,
                     Markup& settings,
                     ChoiceType type)
+                  : Box(boxRect)
 {
   // If there are no choices - throw
   // TMP - should not throw
