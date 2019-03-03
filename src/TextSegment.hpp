@@ -59,6 +59,8 @@ class TextSegment
     // Reset the visible text
     void resetText();
 
+    Markup getSettings();
+
   private:
     // The currently visible text
     sf::Text _text;

@@ -138,4 +138,9 @@ sf::Color& TextSegment::getBackgroundColour()
   return _settings.backgroundColour;
 }
 
+Markup TextSegment::getSettings()
+{
+  return this->_settings;
+}
+
 } // End namespace StoryTime

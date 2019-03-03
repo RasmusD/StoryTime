@@ -4,19 +4,19 @@
 
 namespace StoryTime {
 
-bool StoryVerifier::loadAndVerifyStory(std::string storyPath,
+bool StoryVerifier::loadAndVerifyStory(const std::filesystem::path& storyPath,
                                       std::unordered_map<std::string, std::string>& storyData,
-                                      bool print,
-                                      bool strictVerification)
+                                      const bool& print,
+                                      const bool& strictVerification)
 {
   // Open story and find segments
-  std::ifstream input(storyPath, std::ios::in);
-  if (!input)
+  if (!std::filesystem::is_regular_file(storyPath))
   {
-    std::cerr << "StoryVerifier: File " + storyPath + " doesn't exist!" << std::endl;
+    std::cerr << "StoryVerifier: File " + storyPath.string() + " doesn't exist!" << std::endl;
     return false; 
   }
 
+  std::ifstream input(storyPath, std::ios::in);
   std::pair<std::string, std::string> storySegment = {"" ,""};
   for(std::string line; getline(input, line); )
   {
@@ -48,13 +48,14 @@ bool StoryVerifier::loadAndVerifyStory(std::string storyPath,
   
   input.close();
 
-  return verifyStory(storyData, print, strictVerification);
+  return verifyStory(storyData, storyPath, print, strictVerification);
 }
 
 bool StoryVerifier::parseAndVerifyStory(std::vector<std::string>& storyLines,
                                       std::unordered_map<std::string, std::string>& storyData,
-                                      bool print,
-                                      bool strictVerification)
+                                      const std::filesystem::path& storyPath,
+                                      const bool& print,
+                                      const bool& strictVerification)
 {
   std::pair<std::string, std::string> storySegment = {"" ,""};
   for(auto& line : storyLines)
@@ -85,12 +86,13 @@ bool StoryVerifier::parseAndVerifyStory(std::vector<std::string>& storyLines,
   // Add the last segment
   storyData.insert(storySegment);
 
-  return verifyStory(storyData, print, strictVerification);
+  return verifyStory(storyData, storyPath, print, strictVerification);
 }
 
 bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& storyData,
-                                  bool print,
-                                  bool strictVerification)
+                                  const std::filesystem::path& storyPath,
+                                  const bool& print,
+                                  const bool& strictVerification)
 {
   // Check we have a start and end segment
   if (storyData.count("[begin]") == 0)
@@ -106,6 +108,8 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
   // Now make a set of paths and verify that they all lead to [end]
   std::unordered_map<std::string, std::vector<std::string> > paths;
   Markup defaultMarkup = Markup();
+  // Set of used resources
+  std::unordered_set<std::string> images;
   for (auto& segment : storyData)
   {
     std::deque<Utils::SegChoice> segmentQueue;
@@ -115,6 +119,7 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
     // Find the branching choice of this segment
     for (auto& segChoice : segmentQueue)
     {
+      Markup segmentMarkup;
       if (segChoice.choice)
       {
         if (segChoice.choice->getChoiceType() == ChoiceType::BRANCH)
@@ -132,7 +137,15 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
             std::cerr << "StoryVerifier: Multiple branching choices in segment!" << std::endl;
             return false;
           }
+          segmentMarkup = segChoice.choice->getSettings();
         }
+      } else {
+        segmentMarkup = segChoice.text->getSettings();
+      }
+
+      if (segmentMarkup.displayImage != "")
+      {
+        images.insert(segmentMarkup.displayImage);
       }
     }
   }
@@ -149,6 +162,30 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
       }
       std::cout << std::endl;
     }
+    std::cout << std::endl << "Used resources:" << std::endl;
+    for (auto& image : images)
+    {
+      std::cout << image << std::endl;
+    }
+  }
+
+  // Check all resources exist, this will be the case if we can create a resource object
+  bool resourcesValid;
+  try
+  {
+    StoryResources resources = StoryResources(storyPath, images);
+    if (print)
+    {
+      std::cout << "Resources are valid!" << std::endl; 
+    }
+    resourcesValid = true;
+  } catch (...)
+  {
+    if (print)
+    {
+      std::cout << "Resources are not valid!" << std::endl; 
+    }
+    resourcesValid = false;
   }
 
   // Verify that all paths eventually lead to [end]
@@ -159,6 +196,7 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
   // A set of paths which have 
   std::unordered_set<std::string> pathsTouched = {"[begin]"};
   std::string beg = "[begin]";
+  bool storyValid;
   if (strictVerification)
   {
     if (verifyPaths(paths, beg, history, pathsTouched, print))
@@ -175,16 +213,24 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
             {
               std::cout << "StoryVerifier: " << storyPair.first << " is an unreachable segment!" << std::endl;
             }
-            return false;
+            storyValid = false;
+            break;
           }
         }
       }
-      return true;
+      storyValid =  true;
     } else {
-      return false;
+      storyValid = false;
     }
   } else {
-    return verifyPaths(paths, beg, history, pathsTouched, print);
+    storyValid = verifyPaths(paths, beg, history, pathsTouched, print);
+  }
+
+  if (storyValid == true && resourcesValid)
+  {
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -192,7 +238,7 @@ bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std:
                                 std::string& startKey,
                                 std::unordered_set<std::string> history,
                                 std::unordered_set<std::string>& pathsTouched,
-                                bool print)
+                                const bool& print)
 {
   history.insert(startKey);
   for (auto& pathEnds : paths[startKey])

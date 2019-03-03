@@ -20,12 +20,14 @@ class GameSaver
   public:
     // Save a game to load later
     static bool saveGame(std::filesystem::path& savepath,
-                        std::unordered_set<std::string>& choiceHistory,
-                        std::unordered_map<std::string, std::string>& storyData,
-                        std::string& currentSegment,
-                        bool overwrite);
+                        const std::filesystem::path& storyPath,
+                        const std::unordered_set<std::string>& choiceHistory,
+                        const std::unordered_map<std::string, std::string>& storyData,
+                        const std::string& currentSegment,
+                        const bool overwrite);
     // Load a game saved to load later
     static bool loadGame(std::filesystem::path& filepath,
+                          std::filesystem::path& storyPath,
                           std::unordered_map<std::string, std::string>& storyData,
                           std::unordered_set<std::string>& choiceHistory,
                           std::string& startSegment);

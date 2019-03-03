@@ -17,6 +17,7 @@
 #include "ChoiceBox.hpp"
 #include "StoryVerifier.hpp"
 #include "GameSaver.hpp"
+#include "StoryResources.hpp"
 
 namespace StoryTime {
 
@@ -48,6 +49,9 @@ class StoryHandler: public GameSlice
 
     // Add a new branch
     void _addBranch(std::string& id);
+
+    // A set of resources used in this story
+    StoryResources _resources;
 
     // Dictionary of branching story segments
     std::unordered_map<std::string, std::string> _storyData;
@@ -82,6 +86,8 @@ class StoryHandler: public GameSlice
     float _timeCount;
 
     Markup _gameDefaults;
+
+    std::filesystem::path _storyPath;
     
     // Inhereted from parent
     // bool _changeSlice;

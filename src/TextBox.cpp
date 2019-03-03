@@ -45,7 +45,7 @@ bool TextBox::atEnd()
   return _screenText.back()->atEnd;
 }
 
-void TextBox::draw(sf::RenderWindow& renderWindow)
+void TextBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
 {
   //std::cout << "Drwaing..." << std::endl;
   for (auto& segment : _screenText)
@@ -57,6 +57,13 @@ void TextBox::draw(sf::RenderWindow& renderWindow)
     //std::cout << "Done." << std::endl;
   }
 }
+
+// React to input
+void TextBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory)
+{
+  // Nothing
+}
+
 
 sf::Color& TextBox::getBackgroundColour()
 {

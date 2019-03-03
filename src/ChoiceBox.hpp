@@ -43,13 +43,13 @@ class ChoiceBox : Box
     ~ChoiceBox() {};
 
     // React to input
-    void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory);
+    void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) override;
 
     // Update the box
-    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
+    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory) override;
 
     // Draw the box
-    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory);
+    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
 
     // Get the background color of the choice
     sf::Color& getBackgroundColour();
@@ -74,6 +74,9 @@ class ChoiceBox : Box
     // Get the choice type of this choice
     ChoiceType getChoiceType();
 
+    // Get the settings
+    Markup getSettings();
+
   private:
     // The choices which can be made
     std::vector<Choice> _choices;
@@ -87,6 +90,8 @@ class ChoiceBox : Box
     // The choice made
     // Default while no choice has been made
     Choice _choice;
+
+    Markup _settings;
 
     // Inherited from base class
     // The top left corner position

@@ -5,10 +5,11 @@ namespace StoryTime {
 const std::string GameSaver::_version = "StoryTime Save File v0.1";
 
 bool GameSaver::saveGame(std::filesystem::path& savepath,
-                        std::unordered_set<std::string>& choiceHistory,
-                        std::unordered_map<std::string, std::string>& storyData,
-                        std::string& currentSegment,
-                        bool overwrite)
+                        const std::filesystem::path& storyPath,
+                        const std::unordered_set<std::string>& choiceHistory,
+                        const std::unordered_map<std::string, std::string>& storyData,
+                        const std::string& currentSegment,
+                        const bool overwrite)
 {
   if (overwrite == false and std::filesystem::is_regular_file(savepath) == true)
   {
@@ -25,8 +26,11 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
   // Save save information
   out << "! " << _version << std::endl;
 
+  // Save original story path
+  out << "!! " << storyPath << std::endl;
+
   // Save choice history
-  out << "!!";
+  out << "!!!";
   for (auto& choice : choiceHistory)
   {
     out << " " << choice;
@@ -34,7 +38,7 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
   out << std::endl;
 
   // Save current segment id
-  out << "!!! " << currentSegment << std::endl;
+  out << "!!!! " << currentSegment << std::endl;
 
   // Save story data
   for (auto& storyPiece : storyData)
@@ -48,6 +52,7 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
 }
 
 bool GameSaver::loadGame(std::filesystem::path& filepath,
+                          std::filesystem::path& storyPath,
                           std::unordered_map<std::string, std::string>& storyData,
                           std::unordered_set<std::string>& choiceHistory,
                           std::string& startSegment)
@@ -71,11 +76,17 @@ bool GameSaver::loadGame(std::filesystem::path& filepath,
       {
         if (line[2] == '!')
         {
-          // Current segment
-          startSegment = line.substr(4);
+          if (line[3] == '!')
+          {
+            // segment
+            startSegment = line.substr(5);
+          } else {
+            // Choice history
+            Utils::splitStringToSet(line.substr(4), choiceHistory, " ");
+          }
         } else {
-          // Choice history
-          Utils::splitStringToSet(line.substr(3), choiceHistory, " ");
+          // StoryPath
+          storyPath = std::filesystem::path(line.substr(3));
         }
       } else {
         // Version information
@@ -88,7 +99,7 @@ bool GameSaver::loadGame(std::filesystem::path& filepath,
 
   in.close();
 
-  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, false, false);
+  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, storyPath, false, false);
 }
 
 bool GameSaver::_confirmOverwrite()

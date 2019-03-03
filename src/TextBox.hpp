@@ -33,10 +33,13 @@ class TextBox : Box
     ~TextBox() {};
 
     // Update the text handler
-    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
+    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory) override;
 
-    // Draw
-    void draw(sf::RenderWindow& renderWindow);
+    // Draw the box
+    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
+    
+    // React to input
+    void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) override;
 
     // Check if the text box is at the end of the current screen text to update
     bool atEnd();
@@ -50,7 +53,7 @@ class TextBox : Box
     // Get the lower left corner of the box
     sf::Vector2f bottomLeftCornerPos();
 
-    // Inherited from base
+    // Inherited from base and not overriden
     // void setPosition(sf::Vector2f newPos);
 
   private:

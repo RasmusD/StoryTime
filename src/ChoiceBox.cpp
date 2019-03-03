@@ -183,4 +183,9 @@ ChoiceType ChoiceBox::getChoiceType()
   return _type;
 }
 
+Markup ChoiceBox::getSettings()
+{
+  return this->_settings;
+}
+
 } // End namespace StoryTime
