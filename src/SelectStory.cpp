@@ -20,13 +20,16 @@ SelectStory::SelectStory() : GameSlice()
   int count = 1;
   for (auto& story : std::filesystem::directory_iterator("stories"))
   {
-    sf::Text storyText(story.path().stem().string(), GlobalSettings::DEFAULTFONT, GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 1.5);
-    storyText.setFillColor(sf::Color::White);
-    sf::FloatRect textRect = storyText.getLocalBounds();
-    storyText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    storyText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 4.0f * (1 + count * 0.4)));
-    _storyChoices.push_back(storyText);
-    count++;
+    if (std::filesystem::is_directory(story))
+    {
+      sf::Text storyText(story.path().stem().string(), GlobalSettings::DEFAULTFONT, GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 1.5);
+      storyText.setFillColor(sf::Color::White);
+      sf::FloatRect textRect = storyText.getLocalBounds();
+      storyText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+      storyText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 4.0f * (1 + count * 0.4)));
+      _storyChoices.push_back(storyText);
+      count++;
+    }
   }
 
   _titleText.setFont(GlobalSettings::DEFAULTFONT);
@@ -59,6 +62,7 @@ void SelectStory::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
         {
           _storyPath = GlobalSettings::ROOTDIR;
           _storyPath /= "stories";
+          _storyPath /= std::string(story.getString());
           _storyPath /= std::string(story.getString());
           _storyPath.replace_extension(".story");
           _changeSlice = true;
