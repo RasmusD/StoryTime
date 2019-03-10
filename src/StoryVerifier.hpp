@@ -28,6 +28,7 @@ class StoryVerifier
     */
     static bool loadAndVerifyStory(const std::filesystem::path& storyPath,
                                       std::unordered_map<std::string, std::string>& storyData,
+                                      StoryResources& resources,
                                       const bool& print,
                                       const bool& strictVerification);
     /*
@@ -39,6 +40,7 @@ class StoryVerifier
     */
     static bool parseAndVerifyStory(std::vector<std::string>& storyLines,
                                       std::unordered_map<std::string, std::string>& storyData,
+                                      StoryResources& resources,
                                       const std::filesystem::path& storyPath,
                                       const bool& print,
                                       const bool& strictVerification);
@@ -49,6 +51,7 @@ class StoryVerifier
     strictVerification = if true the verification process may fail even if all paths from [begin] is valid. E.g. if there are branches which are unreachable.
     */
     static bool verifyStory(std::unordered_map<std::string, std::string>& storyData,
+                                  StoryResources& resources,
                                   const std::filesystem::path& storyPath,
                                   const bool& print,
                                   const bool& strictVerification);

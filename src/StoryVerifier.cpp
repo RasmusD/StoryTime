@@ -6,6 +6,7 @@ namespace StoryTime {
 
 bool StoryVerifier::loadAndVerifyStory(const std::filesystem::path& storyPath,
                                       std::unordered_map<std::string, std::string>& storyData,
+                                      StoryResources& resources,
                                       const bool& print,
                                       const bool& strictVerification)
 {
@@ -48,11 +49,12 @@ bool StoryVerifier::loadAndVerifyStory(const std::filesystem::path& storyPath,
   
   input.close();
 
-  return verifyStory(storyData, storyPath, print, strictVerification);
+  return verifyStory(storyData, resources, storyPath, print, strictVerification);
 }
 
 bool StoryVerifier::parseAndVerifyStory(std::vector<std::string>& storyLines,
                                       std::unordered_map<std::string, std::string>& storyData,
+                                      StoryResources& resources,
                                       const std::filesystem::path& storyPath,
                                       const bool& print,
                                       const bool& strictVerification)
@@ -86,10 +88,11 @@ bool StoryVerifier::parseAndVerifyStory(std::vector<std::string>& storyLines,
   // Add the last segment
   storyData.insert(storySegment);
 
-  return verifyStory(storyData, storyPath, print, strictVerification);
+  return verifyStory(storyData, resources, storyPath, print, strictVerification);
 }
 
 bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& storyData,
+                                  StoryResources& resources,
                                   const std::filesystem::path& storyPath,
                                   const bool& print,
                                   const bool& strictVerification)
@@ -173,7 +176,7 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
   bool resourcesValid;
   try
   {
-    StoryResources resources = StoryResources(storyPath, images);
+    resources = StoryResources(storyPath, images);
     if (print)
     {
       std::cout << "Resources are valid!" << std::endl; 

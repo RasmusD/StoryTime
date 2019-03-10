@@ -28,6 +28,7 @@ class GameSaver
     // Load a game saved to load later
     static bool loadGame(std::filesystem::path& filepath,
                           std::filesystem::path& storyPath,
+                          StoryResources& resources,
                           std::unordered_map<std::string, std::string>& storyData,
                           std::unordered_set<std::string>& choiceHistory,
                           std::string& startSegment);

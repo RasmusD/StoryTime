@@ -53,6 +53,7 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
 
 bool GameSaver::loadGame(std::filesystem::path& filepath,
                           std::filesystem::path& storyPath,
+                          StoryResources& resources,
                           std::unordered_map<std::string, std::string>& storyData,
                           std::unordered_set<std::string>& choiceHistory,
                           std::string& startSegment)
@@ -99,7 +100,7 @@ bool GameSaver::loadGame(std::filesystem::path& filepath,
 
   in.close();
 
-  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, storyPath, false, false);
+  return StoryVerifier::parseAndVerifyStory(storyLines, storyData, resources, storyPath, false, false);
 }
 
 bool GameSaver::_confirmOverwrite()

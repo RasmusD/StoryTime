@@ -13,14 +13,14 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   {
     startSegment = "[begin]";
     // Load and verify the story
-    if (StoryVerifier::loadAndVerifyStory(storyPath, story, false, false) == false)
+    if (StoryVerifier::loadAndVerifyStory(storyPath, story, _resources, false, false) == false)
     {
       // TMP
       throw std::runtime_error("Story not valid!");
     }
   } else {
     // Load the save game
-    if (GameSaver::loadGame(storyPath, _storyPath, story, choiceHistory, startSegment) == false)
+    if (GameSaver::loadGame(storyPath, _storyPath, _resources, story, choiceHistory, startSegment) == false)
     {
       // TMP
       throw std::runtime_error("Saved story not valid!");
@@ -57,9 +57,6 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   _segmentQueue.pop_front();
 
   _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(10, 10, GlobalSettings::WINDOWWIDTH - 20, GlobalSettings::WINDOWHEIGHT - 20)));
-
-  // Load resources
-
 
   // Set border
   std::filesystem::path borderPath = GlobalSettings::ROOTDIR;

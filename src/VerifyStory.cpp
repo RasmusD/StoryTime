@@ -34,8 +34,9 @@ int main(int argc, char *argv[])
   }
 
   std::unordered_map<std::string, std::string> story;
+  StoryTime::StoryResources resources;
   // Verify the story
-  if (StoryTime::StoryVerifier::loadAndVerifyStory(std::string(argv[1]), story, true, strictVerification) == false)
+  if (StoryTime::StoryVerifier::loadAndVerifyStory(std::string(argv[1]), story, resources, true, strictVerification) == false)
   {
     std::cout << "\nStory (" + std::string(argv[1]) + ") not valid!" << std::endl;
   } else {
