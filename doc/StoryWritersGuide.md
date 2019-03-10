@@ -24,11 +24,13 @@ You want to write a story. Here's how:
 
 2. Write a Story. Name it `name.story`.
 
-3. Put it in the `stories` folder in the `StoryTime` directory.
+3. Put it in a directory called `name` in the `stories` folder.
 
-4. Run StoryTime and select ***your*** creation to play in the menu.
+4. If you've mad eyour own imagery and wish to use it. Put it in a folder called `images` in the directory where you put `name.story`.
 
-5. If it's really good, you can share it with us or your remaining friends. No pressure.
+5. Run StoryTime and select ***your*** creation to play in the menu.
+
+6. If it's really good, you can share it with us or your remaining friends. No pressure.
 
 Of steps 1-5 only 2 should cause you any headache. If 1, 3, 4 or 5 is hard to understand. This guide will not help you. Sorry   Not sorry.
 
