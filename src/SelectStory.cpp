@@ -43,6 +43,7 @@ SelectStory::SelectStory() : GameSlice()
 
   _backgroundColour = sf::Color::Black;
   _changeSlice = false;
+  requestDraw();
 }
 
 SelectStory::~SelectStory()

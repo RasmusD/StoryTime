@@ -40,6 +40,7 @@ LoadStoryScreen::LoadStoryScreen() : GameSlice()
 
   _backgroundColour = sf::Color::Black;
   _changeSlice = false;
+  requestDraw();
 }
 
 LoadStoryScreen::~LoadStoryScreen()

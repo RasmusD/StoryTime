@@ -10,7 +10,7 @@
 
 namespace StoryTime {
 
-class ImageBox : Box
+class ImageBox : public Box
 {
   public:
     // Constructor

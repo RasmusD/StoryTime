@@ -21,7 +21,7 @@
 
 namespace StoryTime {
 
-class TextBox : Box
+class TextBox : public Box
 {
   public:
     // Constructor

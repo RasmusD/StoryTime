@@ -17,7 +17,7 @@ class Box
     Box(sf::IntRect boxRect);
 
     // Destructor
-    ~Box() {};
+    virtual ~Box() {};
 
     // Set position of the box relative to the top left corner
     virtual void setPosition(sf::Vector2f newPos);
@@ -31,9 +31,22 @@ class Box
     // Draw the box
     virtual void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) = 0;
 
+    // Request a redraw of the box. Subclasses should call this when the graphics change
+    void requestDraw();
+
+    // Indicate to the box that drawing has completed. Subclasses should not
+    // need to call this.
+    void drawComplete();
+
+    // Indicates whether the box needs a redraw
+    bool needsDraw();
+
   protected:
     // The box rect
     sf::IntRect _baseRect;
+
+  private:
+    bool _needsDraw;
 };
 
 

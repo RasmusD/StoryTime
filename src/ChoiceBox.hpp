@@ -30,7 +30,7 @@ struct Choice
   std::string prereq = "";
 };
 
-class ChoiceBox : Box
+class ChoiceBox : public Box
 {
   public:
     // Constructor

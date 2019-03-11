@@ -14,6 +14,7 @@ TextSegment::TextSegment(const sf::Font& font, std::string text, Markup& setting
   _targetText = text;
   _settings = settings;
   atEnd = false;
+  _needsDraw = true;
 }
 
 TextSegment::TextSegment(const sf::Font& font, std::string text, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives) :
@@ -36,6 +37,7 @@ void TextSegment::resetText()
 {
   _text.setString("");
   atEnd = false;
+  _needsDraw = true;
 }
 
 std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
@@ -47,6 +49,7 @@ std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
   _targetText = _targetText.substr(0, spacePos);
   _text.setString(_targetText);
   atEnd = true;
+  _needsDraw = true;
   return remainder;
 }
 
@@ -77,6 +80,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     if (_drawSpeed < 0)
     {
       _text.setString(_targetText);
+      _needsDraw = true;
       atEnd = true;
       return;
     }
@@ -84,6 +88,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     while (_timeCount > _drawSpeed)
     {
       _text.setString(_targetText.substr(0, _stringPos));
+      _needsDraw = true;
       _timeCount -= _drawSpeed;
       if (_stringPos == _targetText.size())
       {
@@ -94,6 +99,10 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     }
   }
 }
+
+bool TextSegment::needsDraw() { return _needsDraw; }
+
+void TextSegment::drawComplete() { _needsDraw = false; }
 
 void TextSegment::draw(sf::RenderWindow& renderWindow)
 {
@@ -131,6 +140,7 @@ void TextSegment::_changeText(std::string& text)
 {
   _targetText = text;
   _text.setString("");
+  _needsDraw = true;
 }
 
 sf::Color& TextSegment::getBackgroundColour()

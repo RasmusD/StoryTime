@@ -28,6 +28,12 @@ class TextSegment
     // Update the text
     void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
 
+    // See if the text segment requires a draw
+    bool needsDraw();
+
+    // Indicate that the draw has been completed
+    void drawComplete();
+
     // Draw the text
     void draw(sf::RenderWindow& renderWindow);
 
@@ -79,6 +85,8 @@ class TextSegment
     std::vector<std::pair<std::string, std::string> > _alternatives;
     // Shows if this segment has ever had update called on it (sets variables)
     bool _updated = false;
+    // Shows whether a draw has been requested
+    bool _needsDraw = false;
 
     // Methods
     // Change the text - e.g. if alternative should be used

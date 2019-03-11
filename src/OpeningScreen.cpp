@@ -18,6 +18,7 @@ OpeningScreen::OpeningScreen() : GameSlice()
   _titleTextRect = _titleText.getLocalBounds();
   _titleText.setOrigin(_titleTextRect.left + _titleTextRect.width / 2.0f, _titleTextRect.top + _titleTextRect.height / 2.0f);
   _titleText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 2.0f));
+  requestDraw();
 }
 
 void OpeningScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)

@@ -69,6 +69,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   _windowBorder.setPosition(0, 0);
   sf::Vector2f orgSize = (sf::Vector2f)_borderTexture.getSize();
   _windowBorder.setScale(GlobalSettings::WINDOWWIDTH / orgSize.x, GlobalSettings::WINDOWHEIGHT / orgSize.y);
+  requestDraw();
 }
 
 StoryHandler::~StoryHandler()
@@ -150,6 +151,10 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
       _setNextSegment();
     }
   }
+
+  if (_gameText->needsDraw() || _currentChoice->needsDraw() )
+    requestDraw();
+
   //std::cout << "update end" << std::endl;
   return NULL;
 }
@@ -219,11 +224,13 @@ void StoryHandler::draw(sf::RenderWindow& renderWindow)
   renderWindow.draw(_windowBorder);
   //std::cout << "drawing" << std::endl;
   _gameText->draw(renderWindow, _choiceHistory);
+  _gameText->drawComplete();
   //std::cout << "drawing end" << std::endl;
   if (_choiceActive == true)
   {
     //std::cout << "Drwaing choice..." << std::endl;
     _currentChoice->draw(renderWindow, _choiceHistory);
+    _currentChoice->drawComplete();
   }
 }
 

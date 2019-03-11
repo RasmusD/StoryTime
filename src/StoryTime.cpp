@@ -90,6 +90,10 @@ struct Game
 
   void drawPhase()
   {
+    // Check if anything in the slice has changed
+    if (!currentSlice->needsDraw())
+      return;
+      
     // Draw things
     // "Clear" window from previous frame
     // Each slice should know it's background colour and we do it here to avoid forgetting to do the clearing in the slice drawing
@@ -100,6 +104,9 @@ struct Game
 
     // Show window
     window.display();
+    
+    currentSlice->drawComplete();
+    
   }
 };
 

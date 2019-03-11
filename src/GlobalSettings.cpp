@@ -75,3 +75,4 @@ void GlobalSettings::printSettings()
 }
 
 } // end namespace StoryTime
+

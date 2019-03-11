@@ -2,9 +2,17 @@
 
 namespace StoryTime {
 
-GameSlice::GameSlice()
+GameSlice::GameSlice() :
+  _needsDraw(false)
 {
   // Do nothing
 }
 
+bool GameSlice::needsDraw() { return _needsDraw; }
+
+void GameSlice::requestDraw() { _needsDraw = true; }
+
+void GameSlice::drawComplete() { _needsDraw = false; }
+
 } // End namespace StoryTime
+
