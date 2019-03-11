@@ -77,7 +77,7 @@ GameSlice* LoadStoryScreen::update(sf::Time& elapsedTime, sf::RenderWindow& rend
     return new StoryHandler(_storyPath, true);
   }
 
-  return NULL;
+  return nullptr;
 }
 
 sf::Color& LoadStoryScreen::getBackgroundColour()

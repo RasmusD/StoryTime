@@ -150,13 +150,7 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
               {
                 //std::cout << "Setting to " << std::get<2>(cMarkup) << std::endl;
                 activeMarkup.backgroundColour = getColourFromString(std::get<2>(cMarkup));
-              } else {
-                std::cerr << "TextParser: Unknown subtype (" + std::get<1>(cMarkup) + ") for markup type (" + type + "). How did this even happen?" << std::endl;
-                return false;
-              }
-            } else if (type == "image")
-            {
-              if (std::get<1>(cMarkup) == "display")
+              } else if (std::get<1>(cMarkup) == "display")
               {
                 //std::cout << "Setting to " << std::get<2>(cMarkup) << std::endl;
                 activeMarkup.displayImage = std::get<2>(cMarkup);
@@ -393,6 +387,12 @@ bool TextParser::applyMarkup(std::pair<std::string, std::pair<std::unordered_set
         activeMarkup.activeMarkup.push_back(cMark);
         // Set new value
         activeMarkup.backgroundColour = getColourFromString(value);
+      } else if (subtype == "display") {
+        // Store previous value
+        std::get<2>(cMark) = activeMarkup.displayImage;
+        activeMarkup.activeMarkup.push_back(cMark);
+        // Set new value
+        activeMarkup.displayImage = value;
       } else {
         std::cerr << "TextParser: I somehow got markup of subtype (" + subtype + ") but it's unsupported for type (" + type.first + ")." << std::endl;  
         return false;
@@ -746,7 +746,7 @@ void TextParser::parseSettings(Markup& currentSettings, std::string& settingsStr
     }
     // Get = pos
     cpos = setting.find("=");
-    if (cpos == std::string::npos)
+    if (pos > 0 && cpos == std::string::npos)
     {
       std::cerr << "TextParser: Invalid setting string \"" << setting << "\"!" << std::endl;
     } else {
@@ -763,6 +763,8 @@ void TextParser::parseSettings(Markup& currentSettings, std::string& settingsStr
       } else if (settingType == "textSpeed")
       {
         currentSettings.speed = std::stof(settingValue);
+      } else if (settingType == "displayImage") {
+        currentSettings.displayImage = settingValue;
       } else {
         std::cerr << "TextParser: Invalid setting type \"" << settingType << "\"!" << std::endl;
       }

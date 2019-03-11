@@ -20,7 +20,7 @@ struct Game
 
   GameSlice* currentSlice = new OpeningScreen();
   // Keeps track of any changes in slice
-  GameSlice* changeSlice = NULL;
+  GameSlice* changeSlice = nullptr;
 
   sf::Event curEvent;
 
@@ -79,12 +79,12 @@ struct Game
     // Logic Updates
     changeSlice = currentSlice->update(elapsedTime, window);
 
-    // If changeSlice is not null delete the old and make that the new current
-    if (changeSlice != NULL)
+    // If changeSlice is not nullptr delete the old and make that the new current
+    if (changeSlice != nullptr)
     {
       delete currentSlice;
       currentSlice = changeSlice;
-      changeSlice = NULL;
+      changeSlice = nullptr;
     }
   }
 

@@ -81,7 +81,7 @@ GameSlice* SelectStory::update(sf::Time& elapsedTime, sf::RenderWindow& renderWi
     return new StoryHandler(_storyPath, false);
   }
 
-  return NULL;
+  return nullptr;
 }
 
 sf::Color& SelectStory::getBackgroundColour()

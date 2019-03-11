@@ -14,7 +14,7 @@ class ImageBox : Box
 {
   public:
     // Constructor
-    ImageBox(sf::IntRect boxRect);
+    ImageBox(sf::IntRect boxRect, const sf::Image* image);
 
     // Destructor
     ~ImageBox() {};
@@ -29,10 +29,15 @@ class ImageBox : Box
     // Draw the box
     void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
 
+    // Update the image in the box
+    void setImage(const sf::Image* newImage);
+
     // Inherited methods
     // Set position of the box relative to the top left corner
     // virtual void setPosition(sf::Vector2f newPos);
   private:
+    // The image to display
+    std::unique_ptr<sf::Sprite> _image;
 
     // Inherited methods
     // The box rect

@@ -39,7 +39,7 @@ GameSlice* OpeningScreen::update(sf::Time& elapsedTime, sf::RenderWindow& render
     return new MenuScreen();
   }
   
-  return NULL;
+  return nullptr;
 }
 
 void OpeningScreen::draw(sf::RenderWindow& renderWindow)
