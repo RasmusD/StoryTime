@@ -153,7 +153,9 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
   }
 
   if (_gameText->needsDraw() || _currentChoice->needsDraw() )
+  {
     requestDraw();
+  }
 
   //std::cout << "update end" << std::endl;
   return NULL;

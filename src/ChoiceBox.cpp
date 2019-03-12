@@ -82,7 +82,9 @@ void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& c
     _choiceNums[i].update(elapsedTime, choiceHistory);
 
     if ( _choices[i].text.needsDraw() || _choiceNums[i].needsDraw() )
+    {
       requestDraw();
+    }
   }
 }
 

@@ -92,7 +92,9 @@ struct Game
   {
     // Check if anything in the slice has changed
     if (!currentSlice->needsDraw())
+    {
       return;
+    }
       
     // Draw things
     // "Clear" window from previous frame
