@@ -106,9 +106,6 @@ struct Game
 
     // Show window
     window.display();
-    
-    currentSlice->drawComplete();
-    
   }
 };
 

@@ -10,7 +10,7 @@ GameSlice::GameSlice() :
 
 bool GameSlice::needsDraw() { return _needsDraw; }
 
-void GameSlice::requestDraw() { _needsDraw = true; }
+void GameSlice::redraw() { _needsDraw = true; }
 
 void GameSlice::drawComplete() { _needsDraw = false; }
 

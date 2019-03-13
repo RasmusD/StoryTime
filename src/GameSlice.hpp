@@ -27,10 +27,10 @@ class GameSlice
 
     // Request that the slice be drawn. Subclasses should call this after
     // making changes to items that need to be drawn.
-    void requestDraw();
+    void redraw();
 
-    // Indicate that the slice was drawn (subclasses should not need to call
-    // this).
+    // Indicate that the slice was drawn. Subclasses should call this when 
+    // drawing has finished (in the draw function).
     void drawComplete();
 
     // Draw the slice

@@ -34,7 +34,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
     _choice = _choices[0];
   }
 
-  requestDraw();
+  redraw();
 }
 
 void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory)
@@ -83,7 +83,7 @@ void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& c
 
     if ( _choices[i].text.needsDraw() || _choiceNums[i].needsDraw() )
     {
-      requestDraw();
+      redraw();
     }
   }
 }
@@ -104,7 +104,6 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::str
     //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
     renderWindow.draw(choice.text.getText());
-    choice.text.drawComplete();
     //choice.printTargetText();
   }
   for (TextSegment& number : _choiceNums)
@@ -113,9 +112,10 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::str
     //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
     renderWindow.draw(number.getText());
-    number.drawComplete();
     //choice.printTargetText();
   }
+
+  drawComplete();
 }
 
 void ChoiceBox::setPosition(sf::Vector2f newPos)
@@ -144,7 +144,7 @@ void ChoiceBox::setPosition(sf::Vector2f newPos)
     newPos.y += tHeight;
   }
 
-  requestDraw();
+  redraw();
 }
 
 // If the choice is made this is either

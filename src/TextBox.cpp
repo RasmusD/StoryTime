@@ -14,7 +14,7 @@ TextBox::TextBox(std::unique_ptr<TextSegment>& initialText,
 
   _screenText.push_back(std::move(initialText));
   _screenText.front()->getText().setPosition(_baseRect.left, _baseRect.top);
-  requestDraw();
+  redraw();
 }
 
 void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
@@ -31,7 +31,7 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
     // Create a new segment. One line down
     _screenText.push_back(_screenText.back()->getRemainingTextSegment());
     _screenText.back()->getText().setPosition(_baseRect.left, _screenText.back()->getText().getPosition().y + GlobalSettings::getLineSpacing());
-    requestDraw();
+    redraw();
 
     // Update bounds
     bounds = _screenText.back()->getText().getGlobalBounds();
@@ -43,7 +43,9 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
   }
 
   if (_screenText.back()->needsDraw())
-    requestDraw();
+  {
+    redraw();
+  }
 }
 
 bool TextBox::atEnd()
@@ -60,9 +62,10 @@ void TextBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::strin
     //segment->printTargetText();
     //segment->printVisibleText();
     segment->draw(renderWindow);
-    segment->drawComplete();
     //std::cout << "Done." << std::endl;
   }
+
+  drawComplete();
 }
 
 // React to input
@@ -90,7 +93,7 @@ void TextBox::moveTextLineUp(sf::FloatRect& bounds)
   {
     pos = seg->getText().getPosition();
     seg->getText().setPosition(pos.x, pos.y - GlobalSettings::getLineSpacing());
-    requestDraw();
+    redraw();
   }
   // Get rid of all the obsolete elements
   // We assume height is valid
@@ -113,7 +116,7 @@ void TextBox::addTextSegment(std::unique_ptr<TextSegment>& segment)
   }
   _screenText.push_back(std::move(segment));
   _screenText.back()->getText().setPosition(sPos);
-  requestDraw();
+  redraw();
 }
 
 } // End namespace StoryTime

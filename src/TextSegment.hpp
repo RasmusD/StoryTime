@@ -34,6 +34,9 @@ class TextSegment
     // Indicate that the draw has been completed
     void drawComplete();
 
+    // Request a redraw when the graphics change
+    void redraw();
+
     // Draw the text
     void draw(sf::RenderWindow& renderWindow);
 

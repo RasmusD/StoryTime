@@ -14,7 +14,7 @@ TextSegment::TextSegment(const sf::Font& font, std::string text, Markup& setting
   _targetText = text;
   _settings = settings;
   atEnd = false;
-  _needsDraw = true;
+  redraw();
 }
 
 TextSegment::TextSegment(const sf::Font& font, std::string text, Markup& settings, std::vector<std::pair<std::string, std::string> >& alternatives) :
@@ -37,7 +37,7 @@ void TextSegment::resetText()
 {
   _text.setString("");
   atEnd = false;
-  _needsDraw = true;
+  redraw();
 }
 
 std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
@@ -49,7 +49,7 @@ std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
   _targetText = _targetText.substr(0, spacePos);
   _text.setString(_targetText);
   atEnd = true;
-  _needsDraw = true;
+  redraw();
   return remainder;
 }
 
@@ -80,7 +80,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     if (_drawSpeed < 0)
     {
       _text.setString(_targetText);
-      _needsDraw = true;
+      redraw();
       atEnd = true;
       return;
     }
@@ -88,7 +88,7 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
     while (_timeCount > _drawSpeed)
     {
       _text.setString(_targetText.substr(0, _stringPos));
-      _needsDraw = true;
+      redraw();
       _timeCount -= _drawSpeed;
       if (_stringPos == _targetText.size())
       {
@@ -104,9 +104,12 @@ bool TextSegment::needsDraw() { return _needsDraw; }
 
 void TextSegment::drawComplete() { _needsDraw = false; }
 
+void TextSegment::redraw() { _needsDraw = true; }
+
 void TextSegment::draw(sf::RenderWindow& renderWindow)
 {
   renderWindow.draw(_text);
+  drawComplete();
 }
 
 sf::FloatRect TextSegment::getLocalBounds()
@@ -140,7 +143,7 @@ void TextSegment::_changeText(std::string& text)
 {
   _targetText = text;
   _text.setString("");
-  _needsDraw = true;
+  redraw();
 }
 
 sf::Color& TextSegment::getBackgroundColour()

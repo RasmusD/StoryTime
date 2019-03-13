@@ -37,7 +37,7 @@ MenuScreen::MenuScreen() : GameSlice()
   _loadGameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.25f));
 
   _backgroundColour = sf::Color::Black;
-  requestDraw();
+  redraw();
 }
 
 void MenuScreen::takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow)
@@ -76,6 +76,7 @@ void MenuScreen::draw(sf::RenderWindow& renderWindow)
   renderWindow.draw(_titleText);
   renderWindow.draw(_newGameText);
   renderWindow.draw(_loadGameText);
+  drawComplete();
 }
 
 sf::Color& MenuScreen::getBackgroundColour()

@@ -13,10 +13,10 @@ void Box::setPosition(sf::Vector2f newPos)
 {
   _baseRect.left = newPos.x;
   _baseRect.top = newPos.y;
-  requestDraw();
+  redraw();
 }
 
-void Box::requestDraw() { _needsDraw = true; }
+void Box::redraw() { _needsDraw = true; }
 
 void Box::drawComplete() { _needsDraw = false; }
 

@@ -32,10 +32,10 @@ class Box
     virtual void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) = 0;
 
     // Request a redraw of the box. Subclasses should call this when the graphics change
-    void requestDraw();
+    void redraw();
 
-    // Indicate to the box that drawing has completed. Subclasses should not
-    // need to call this.
+    // Indicate to the box that drawing has completed. Subclasses should call this
+    // after drawing has finished (in the draw function).
     void drawComplete();
 
     // Indicates whether the box needs a redraw

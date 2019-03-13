@@ -40,7 +40,7 @@ LoadStoryScreen::LoadStoryScreen() : GameSlice()
 
   _backgroundColour = sf::Color::Black;
   _changeSlice = false;
-  requestDraw();
+  redraw();
 }
 
 LoadStoryScreen::~LoadStoryScreen()
@@ -94,6 +94,7 @@ void LoadStoryScreen::draw(sf::RenderWindow& renderWindow)
   {
     renderWindow.draw(text);
   }
+  drawComplete();
 }
 
 

@@ -43,7 +43,7 @@ SelectStory::SelectStory() : GameSlice()
 
   _backgroundColour = sf::Color::Black;
   _changeSlice = false;
-  requestDraw();
+  redraw();
 }
 
 SelectStory::~SelectStory()
@@ -98,6 +98,8 @@ void SelectStory::draw(sf::RenderWindow& renderWindow)
   {
     renderWindow.draw(text);
   }
+
+  drawComplete();
 }
 
 
