@@ -12,8 +12,9 @@
 #include "GameSlice.hpp"
 #include "GlobalSettings.hpp"
 #include "MenuScreen.hpp"
-#include "TextBox.hpp"
 #include "TextSegment.hpp"
+#include "TextBox.hpp"
+#include "ImageBox.hpp"
 #include "ChoiceBox.hpp"
 #include "StoryVerifier.hpp"
 #include "GameSaver.hpp"
@@ -30,7 +31,7 @@ class StoryHandler: public GameSlice
     // React to input
     virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow);
 
-    // Do a single frame update and return a pointer which is NULL if no change, else a pointer to a new slice
+    // Do a single frame update and return a pointer which is nullptr if no change, else a pointer to a new slice
     virtual GameSlice* update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow);
 
     // Draw the slice
@@ -79,6 +80,9 @@ class StoryHandler: public GameSlice
 
     // Choice box
     std::unique_ptr<ChoiceBox> _choiceBox;
+
+    // Image box
+    std::unique_ptr<ImageBox> _imageBox;
 
     sf::Sprite _windowBorder;
     sf::Texture _borderTexture;

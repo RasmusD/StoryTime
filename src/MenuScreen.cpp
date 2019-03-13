@@ -68,7 +68,7 @@ GameSlice* MenuScreen::update(sf::Time& elapsedTime, sf::RenderWindow& renderWin
     return new LoadStoryScreen();
   }
 
-  return NULL;
+  return nullptr;
 }
 
 void MenuScreen::draw(sf::RenderWindow& renderWindow)

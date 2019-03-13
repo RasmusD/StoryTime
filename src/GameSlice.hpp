@@ -20,7 +20,7 @@ class GameSlice
     virtual void takeInput(sf::Event& curEvent, sf::RenderWindow& renderWindow) {}
 
     // Do a single frame update and return a pointer which is NULL if no change, else a pointer to a new slice
-    virtual GameSlice* update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow) { return NULL; }
+    virtual GameSlice* update(sf::Time& elapsedTime, sf::RenderWindow& renderWindow) { return nullptr; }
 
     // Check whether the slice needs to be drawn
     bool needsDraw();

@@ -158,7 +158,7 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
   }
 
   //std::cout << "update end" << std::endl;
-  return NULL;
+  return nullptr;
 }
 
 void StoryHandler::_setNextSegment()
