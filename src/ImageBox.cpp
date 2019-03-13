@@ -27,6 +27,7 @@ void ImageBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& ch
 void ImageBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
 {
   renderWindow.draw(*_image.get());
+  drawComplete();
 }
 
 // Change the image in the box
@@ -46,6 +47,8 @@ void ImageBox::setImage(const sf::Image* newImage)
   } else {
     _image.reset();
   }
+
+  redraw();
 }
 
 
