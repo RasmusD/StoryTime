@@ -29,8 +29,9 @@ class StoryResources
     // Get an image copy
     sf::Image getImageCopy(const std::string& imageName);
 
-    // Get an image reference
-    sf::Image& getImageRef(const std::string& imageName);
+    // Get an image ptr
+    // Will be nullptr if image does not exist
+    const sf::Image* getImagePtr(std::string imageName);
 
   private:
     std::unordered_map<std::string, sf::Image> _images;

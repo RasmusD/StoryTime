@@ -56,7 +56,27 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   }
   _segmentQueue.pop_front();
 
-  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(10, 10, GlobalSettings::WINDOWWIDTH - 20, GlobalSettings::WINDOWHEIGHT - 20)));
+  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                                                                                         GlobalSettings::WINDOWHEIGHT / 2,
+                                                                                         GlobalSettings::WINDOWWIDTH * 0.99,
+                                                                                         GlobalSettings::WINDOWHEIGHT / 4)));
+
+  // Set image box
+  if (_gameDefaults.displayImage == "")
+  {
+
+    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                         GlobalSettings::WINDOWHEIGHT * 0.01,
+                         GlobalSettings::WINDOWWIDTH * 0.99,
+                         GlobalSettings::WINDOWHEIGHT / 2),
+                        _resources.getImagePtr("testImage")));
+  } else {
+    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                         GlobalSettings::WINDOWHEIGHT * 0.01,
+                         GlobalSettings::WINDOWWIDTH * 0.99,
+                         GlobalSettings::WINDOWHEIGHT / 2),
+                        _resources.getImagePtr(_gameDefaults.displayImage)));
+  }
 
   // Set border
   std::filesystem::path borderPath = GlobalSettings::ROOTDIR;
@@ -152,7 +172,7 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
     }
   }
 
-  if (_gameText->needsDraw() || _currentChoice->needsDraw() )
+  if (_gameText->needsDraw() || _currentChoice->needsDraw() || _imageBox->needsDraw())
   {
     redraw();
   }
@@ -226,6 +246,7 @@ void StoryHandler::draw(sf::RenderWindow& renderWindow)
   renderWindow.draw(_windowBorder);
   //std::cout << "drawing" << std::endl;
   _gameText->draw(renderWindow, _choiceHistory);
+  _imageBox->draw(renderWindow, _choiceHistory);
   //std::cout << "drawing end" << std::endl;
   if (_choiceActive == true)
   {

@@ -13,19 +13,19 @@ StoryResources::StoryResources(const std::filesystem::path& storyDirectory,
     sf::Image img;
     if (img.loadFromFile(imgStrPth.string()))
     {
-      if (_images.find(imgStrPth.stem()) != _images.end())
+      if (_images.find(imgStrPth) != _images.end())
       {
         std::cout << "Duplicate image name " << imgNam << std::endl;
         throw;
       }
-      _images.insert({imgStrPth.stem(), img}); 
+      _images.insert({imgStrPth.filename(), img}); 
     } else if (img.loadFromFile(imgResPth.string())) {
-      if (_images.find(imgResPth.stem()) != _images.end())
+      if (_images.find(imgResPth) != _images.end())
       {
         std::cout << "Duplicate image name " << imgNam << std::endl;
         throw;
       }
-      _images.insert({imgResPth.stem(), img});
+      _images.insert({imgResPth.filename(), img});
     } else {
       std::cout << "Could not load image " << imgNam << std::endl;
       throw;
@@ -35,12 +35,28 @@ StoryResources::StoryResources(const std::filesystem::path& storyDirectory,
 
 sf::Image StoryResources::getImageCopy(const std::string& imageName)
 {
-  return _images[imageName];
+  if (_images.count(imageName) == 1)
+  {
+    return _images[imageName];
+  } else {
+    std::cout << "Requested image does nto exist. Returning empty image." << std::endl;
+    return sf::Image();
+  }
 }
 
-sf::Image& StoryResources::getImageRef(const std::string& imageName)
+const sf::Image* StoryResources::getImagePtr(std::string imageName)
 {
-  return std::ref(_images[imageName]);
+  if (_images.count(imageName) == 1)
+  {
+    return &_images[imageName];
+  } else {
+    std::cout << "Requested image (" << imageName << ") does not exist. Returning nullptr." << std::endl;
+    for (auto& img : _images)
+    {
+      std::cout << img.first << std::endl;
+    }
+    return nullptr;
+  }
 }
 
 } // End namespace StoryTime

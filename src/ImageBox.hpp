@@ -4,6 +4,8 @@
 #ifndef __ImageBox_H_INCLUDED__
 #define __ImageBox_H_INCLUDED__
 
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include "Box.hpp"

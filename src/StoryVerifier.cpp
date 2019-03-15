@@ -153,6 +153,17 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
     }
   }
 
+  // Add resource from settings
+  if (storyData.count("[settings]") == 1)
+  {
+    Markup settingsMarkup;
+    TextParser::parseSettings(settingsMarkup, storyData["[settings]"]);
+    if (settingsMarkup.displayImage != "")
+    {
+      images.insert(settingsMarkup.displayImage);
+    }
+  }
+
   if (print)
   {
     std::cout << "Path pairs:" << std::endl;
@@ -176,7 +187,7 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
   bool resourcesValid;
   try
   {
-    resources = StoryResources(storyPath, images);
+    resources = StoryResources(storyPath.parent_path(), images);
     if (print)
     {
       std::cout << "Resources are valid!" << std::endl; 
