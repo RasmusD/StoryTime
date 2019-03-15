@@ -43,11 +43,12 @@ void ImageBox::setImage(const sf::Texture* newImage)
       this->_image = std::unique_ptr<sf::Sprite>(new sf::Sprite());
     }
     this->_image->setTexture(*newImage);
-    this->_image->setPosition(this->_baseRect.left, this->_baseRect.top);
     sf::Vector2u imageSize = newImage->getSize();
-    sf::Vector2f spriteScale = {this->_baseRect.width / (float)imageSize.x,
-                                this->_baseRect.height / (float)imageSize.y};
+    float scale = std::min((float)this->_baseRect.width / (float)imageSize.x,
+                      (float)this->_baseRect.height / (float)imageSize.y);
+    sf::Vector2f spriteScale = {scale, scale};
     this->_image->setScale(spriteScale);
+    this->_image->setPosition(this->_baseRect.width / 2 - imageSize.x * scale / 2, this->_baseRect.top);
   } else {
     this->_image.reset();
   }
