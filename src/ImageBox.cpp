@@ -4,7 +4,7 @@ namespace StoryTime {
 
 // Constructor
 ImageBox::ImageBox(sf::IntRect boxRect,
-                  const sf::Image* image)
+                  const sf::Texture* image)
                   : Box(boxRect)
 {
   _baseRect = boxRect;
@@ -34,7 +34,7 @@ void ImageBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::stri
 }
 
 // Change the image in the box
-void ImageBox::setImage(const sf::Image* newImage)
+void ImageBox::setImage(const sf::Texture* newImage)
 {
   if (newImage != nullptr)
   {
@@ -42,9 +42,7 @@ void ImageBox::setImage(const sf::Image* newImage)
     {
       this->_image = std::unique_ptr<sf::Sprite>(new sf::Sprite());
     }
-    sf::Texture texture;
-    texture.loadFromImage(*newImage);
-    this->_image->setTexture(texture);
+    this->_image->setTexture(*newImage);
     this->_image->setPosition(this->_baseRect.left, this->_baseRect.top);
     sf::Vector2u imageSize = newImage->getSize();
     sf::Vector2f spriteScale = {this->_baseRect.width / (float)imageSize.x,

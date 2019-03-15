@@ -16,7 +16,7 @@ class ImageBox : public Box
 {
   public:
     // Constructor
-    ImageBox(sf::IntRect boxRect, const sf::Image* image);
+    ImageBox(sf::IntRect boxRect, const sf::Texture* image);
 
     // Destructor
     ~ImageBox() {};
@@ -32,7 +32,7 @@ class ImageBox : public Box
     void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
 
     // Update the image in the box
-    void setImage(const sf::Image* newImage);
+    void setImage(const sf::Texture* newImage);
 
     // Inherited methods
     // Set position of the box relative to the top left corner

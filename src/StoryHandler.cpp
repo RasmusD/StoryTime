@@ -58,7 +58,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
 
   _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
                                                                                          GlobalSettings::WINDOWHEIGHT / 2,
-                                                                                         GlobalSettings::WINDOWWIDTH * 0.99,
+                                                                                         GlobalSettings::WINDOWWIDTH * 0.98,
                                                                                          GlobalSettings::WINDOWHEIGHT / 4)));
 
   // Set image box
@@ -67,14 +67,14 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
 
     _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
                          GlobalSettings::WINDOWHEIGHT * 0.01,
-                         GlobalSettings::WINDOWWIDTH * 0.99,
-                         GlobalSettings::WINDOWHEIGHT / 2),
+                         GlobalSettings::WINDOWWIDTH * 0.98,
+                         GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
                         _resources.getImagePtr("testImage")));
   } else {
     _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
                          GlobalSettings::WINDOWHEIGHT * 0.01,
-                         GlobalSettings::WINDOWWIDTH * 0.99,
-                         GlobalSettings::WINDOWHEIGHT / 2),
+                         GlobalSettings::WINDOWWIDTH * 0.98,
+                         GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
                         _resources.getImagePtr(_gameDefaults.displayImage)));
   }
 

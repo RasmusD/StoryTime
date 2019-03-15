@@ -10,7 +10,7 @@ StoryResources::StoryResources(const std::filesystem::path& storyDirectory,
   {
     std::filesystem::path imgStrPth = storyDirectory / "images" / imgNam;
     std::filesystem::path imgResPth = std::filesystem::current_path() / "resources" / "images" / imgNam;
-    sf::Image img;
+    sf::Texture img;
     if (img.loadFromFile(imgStrPth.string()))
     {
       if (_images.find(imgStrPth) != _images.end())
@@ -33,18 +33,18 @@ StoryResources::StoryResources(const std::filesystem::path& storyDirectory,
   }
 }
 
-sf::Image StoryResources::getImageCopy(const std::string& imageName)
+sf::Texture StoryResources::getImageCopy(const std::string& imageName)
 {
   if (_images.count(imageName) == 1)
   {
     return _images[imageName];
   } else {
-    std::cout << "Requested image does nto exist. Returning empty image." << std::endl;
-    return sf::Image();
+    std::cout << "Requested image does not exist. Returning empty image." << std::endl;
+    return sf::Texture();
   }
 }
 
-const sf::Image* StoryResources::getImagePtr(std::string imageName)
+const sf::Texture* StoryResources::getImagePtr(std::string imageName)
 {
   if (_images.count(imageName) == 1)
   {
