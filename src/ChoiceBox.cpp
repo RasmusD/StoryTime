@@ -18,7 +18,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   // Create choice strings
   _choices.reserve(choices.size());
   _choiceNums.reserve(choices.size());
-  for (int i = 0; i < choices.size(); i++)
+  for (size_t i = 0; i < choices.size(); i++)
   {
     _choices.push_back(choices[i]);
     TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", settings);
@@ -42,7 +42,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& 
   // If no choice has been made - check if one is made now
   if (_choice.id == "")
   {
-    for (int i = 0; i < _choices.size(); i++)
+    for (size_t i = 0; i < _choices.size(); i++)
     {
       if (_choices[i].prereq != "")
       {
@@ -68,7 +68,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& 
 
 void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
 {
-  for (int i = 0; i < _choices.size(); i++)
+  for (size_t i = 0; i < _choices.size(); i++)
   {
     if (_choices[i].prereq != "")
     {

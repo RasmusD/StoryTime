@@ -116,7 +116,7 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
   std::string type;
   //std::cout << "Trying to close " << possibleMarkup << std::endl;
   // We skip the initial </ so start at 2
-  for (int i = 2; i < possibleMarkup.size(); i++)
+  for (size_t i = 2; i < possibleMarkup.size(); i++)
   {
     char cChar = possibleMarkup.at(i);
     if (cChar == '>')
@@ -125,7 +125,7 @@ bool TextParser::closeMarkup(std::string possibleMarkup,
       {
         // Iterate from the back of the activeMarkup and try and find the type
         // TODO make reverse_iterator
-        for (int i = activeMarkup.activeMarkup.size() - 1; i >= 0; i--)
+        for (size_t i = activeMarkup.activeMarkup.size() - 1; i >= 0; i--)
         {
           std::tuple<std::string, std::string, std::string> cMarkup = activeMarkup.activeMarkup.at(i);
           /*std::cout << type << std::endl;
@@ -207,7 +207,7 @@ bool TextParser::openMarkup(std::string possibleMarkup,
   std::string value;
   std::string chunk;
   // We skip the initial < so start at 1
-  for (int i = 1; i < possibleMarkup.size(); i++)
+  for (size_t i = 1; i < possibleMarkup.size(); i++)
   {
     char cChar = possibleMarkup.at(i);
     if (foundType == false)
