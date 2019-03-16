@@ -146,9 +146,14 @@ void TextSegment::_changeText(std::string& text)
   redraw();
 }
 
-sf::Color& TextSegment::getBackgroundColour()
+const sf::Color& TextSegment::getBackgroundColour()
 {
   return _settings.backgroundColour;
+}
+
+const std::string& TextSegment::getDisplayImage()
+{
+  return _settings.displayImage;
 }
 
 Markup TextSegment::getSettings()

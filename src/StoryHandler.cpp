@@ -34,6 +34,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   {
     TextParser::parseSettings(_gameDefaults, _storyData["[settings]"]);
   }
+
   // Setup choicehistory and start segment
   _choiceHistory = choiceHistory;
   _currentSegmentId = startSegment;
@@ -56,13 +57,13 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   }
   _segmentQueue.pop_front();
 
-  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, _gameDefaults, sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                                                                                         GlobalSettings::WINDOWHEIGHT / 2,
-                                                                                         GlobalSettings::WINDOWWIDTH * 0.98,
-                                                                                         GlobalSettings::WINDOWHEIGHT / 4)));
+  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                                                                         GlobalSettings::WINDOWHEIGHT / 2,
+                                                                         GlobalSettings::WINDOWWIDTH * 0.98,
+                                                                         GlobalSettings::WINDOWHEIGHT / 4)));
 
   // Set image box
-  if (_gameDefaults.displayImage == "")
+  if (_gameText->getDisplayImage() == "")
   {
     if (_resources.addImage(storyPath.parent_path(), "testImage.jpg") == false)
     {
@@ -78,7 +79,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
                          GlobalSettings::WINDOWHEIGHT * 0.01,
                          GlobalSettings::WINDOWWIDTH * 0.98,
                          GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
-                        _resources.getImagePtr(_gameDefaults.displayImage)));
+                        _resources.getImagePtr(_gameText->getDisplayImage())));
   }
 
   // Set border
@@ -210,6 +211,7 @@ void StoryHandler::_setTextNext()
 {
   _gameText->addTextSegment(_segmentQueue.front().text);
   _segmentQueue.pop_front();
+  _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
   //std::cout << "push" << std::endl;
 }
 
@@ -223,6 +225,7 @@ void StoryHandler::_setChoiceNext()
   sf::Vector2f nPos = _gameText->bottomLeftCornerPos();
   nPos.y += GlobalSettings::getLineSpacing();
   _currentChoice->setPosition(nPos);
+  _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
 }
 
 void StoryHandler::_addBranch(std::string& id)
@@ -239,7 +242,7 @@ void StoryHandler::_addBranch(std::string& id)
   }
 }
 
-sf::Color& StoryHandler::getBackgroundColour()
+const sf::Color& StoryHandler::getBackgroundColour()
 {
   return _gameText->getBackgroundColour();
 }

@@ -4,12 +4,9 @@ namespace StoryTime {
 
 // Constructor
 TextBox::TextBox(std::unique_ptr<TextSegment>& initialText,
-                Markup& defaultMarkup,
                 sf::IntRect boxRect)
               : Box(boxRect)
 {
-  _defaultMarkup = defaultMarkup;
-
   _baseRect = boxRect;
 
   _screenText.push_back(std::move(initialText));
@@ -74,10 +71,14 @@ void TextBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& ch
   // Nothing
 }
 
-
-sf::Color& TextBox::getBackgroundColour()
+const sf::Color& TextBox::getBackgroundColour()
 {
   return _screenText.back()->getBackgroundColour();
+}
+
+const std::string& TextBox::getDisplayImage()
+{
+  return _screenText.back()->getDisplayImage();
 }
 
 sf::Vector2f TextBox::bottomLeftCornerPos()

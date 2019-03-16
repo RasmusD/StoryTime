@@ -183,10 +183,15 @@ std::unique_ptr<TextSegment> ChoiceBox::getChoiceText()
   }
 }
 
-sf::Color& ChoiceBox::getBackgroundColour()
+const sf::Color& ChoiceBox::getBackgroundColour()
 {
   // All choices always have the same background colour
   return _choices[0].text.getBackgroundColour();
+}
+
+const std::string& ChoiceBox::getDisplayImage()
+{
+  return _choices[0].text.getDisplayImage();
 }
 
 ChoiceType ChoiceBox::getChoiceType()

@@ -42,7 +42,10 @@ class TextSegment
 
     // Get the background colour for this segment
     // Note this is the background for the full screen
-    sf::Color& getBackgroundColour();
+    const sf::Color& getBackgroundColour();
+
+    // Get the image to be displayed with the text segment
+    const std::string& getDisplayImage();
 
     // Returns the local bounds of the text once the full target text has been rendered
     sf::FloatRect getLocalBounds();

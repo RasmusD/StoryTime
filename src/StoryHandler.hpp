@@ -38,7 +38,7 @@ class StoryHandler: public GameSlice
     virtual void draw(sf::RenderWindow& renderWindow);
 
     // Get the background colour
-    virtual sf::Color& getBackgroundColour();
+    virtual const sf::Color& getBackgroundColour();
 
     // This ensures something something about pointers so a memory thing
     virtual ~StoryHandler();

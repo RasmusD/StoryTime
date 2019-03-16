@@ -26,7 +26,6 @@ class TextBox : public Box
   public:
     // Constructor
     TextBox(std::unique_ptr<TextSegment>& initialText,
-            Markup& defaultMarkup,
             sf::IntRect boxRect);
 
     // Destuctor
@@ -48,7 +47,10 @@ class TextBox : public Box
     void addTextSegment(std::unique_ptr<TextSegment>& segment);
 
     // Get the background colour of the current segment
-    sf::Color& getBackgroundColour();
+    const sf::Color& getBackgroundColour();
+
+    // Get the image to be displayed with the current text segment
+    const std::string& getDisplayImage();
 
     // Get the lower left corner of the box
     sf::Vector2f bottomLeftCornerPos();

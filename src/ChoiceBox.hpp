@@ -52,7 +52,10 @@ class ChoiceBox : public Box
     void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
 
     // Get the background color of the choice
-    sf::Color& getBackgroundColour();
+    const sf::Color& getBackgroundColour();
+
+    // Get the display image of the choice
+    const std::string& getDisplayImage();
 
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f newPos) override;

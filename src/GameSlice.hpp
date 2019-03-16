@@ -37,7 +37,7 @@ class GameSlice
     virtual void draw(sf::RenderWindow& renderWindow) {}
 
     // Get the background colour of the slice
-    virtual sf::Color& getBackgroundColour() {return _backgroundColour;}
+    virtual const sf::Color& getBackgroundColour() {return _backgroundColour;}
 
     // This ensures something something about pointers so a memory thing
     virtual ~GameSlice() {}
