@@ -36,6 +36,7 @@ Nice Things With No Current Release Version
 - Timed text, cna be used anywhere but specifically for showing that a game has been saved
 
 Features With No Current Release Version
+- Screen tiles (currently fixed to 3 boxes, should be changeable)
 - Rumble effect (vary pos for draw)
 - Colour effect
 - Ability to change background

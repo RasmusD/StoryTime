@@ -26,6 +26,10 @@ class StoryResources
     // Destructor
     ~StoryResources() {};
 
+    // Add an image resource
+    bool addImage(const std::filesystem::path& storyDirectory,
+                  const std::string& imageName);
+
     // Get an image copy
     sf::Texture getImageCopy(const std::string& imageName);
 

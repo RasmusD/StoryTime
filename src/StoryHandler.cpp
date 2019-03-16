@@ -64,12 +64,15 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   // Set image box
   if (_gameDefaults.displayImage == "")
   {
-
+    if (_resources.addImage(storyPath.parent_path(), "testImage.jpg") == false)
+    {
+      throw std::runtime_error("Cannot load default image.");
+    }
     _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
                          GlobalSettings::WINDOWHEIGHT * 0.01,
                          GlobalSettings::WINDOWWIDTH * 0.98,
                          GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
-                        _resources.getImagePtr("testImage")));
+                        _resources.getImagePtr("testImage.jpg")));
   } else {
     _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
                          GlobalSettings::WINDOWHEIGHT * 0.01,

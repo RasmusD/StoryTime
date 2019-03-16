@@ -8,29 +8,38 @@ StoryResources::StoryResources(const std::filesystem::path& storyDirectory,
   // Load images
   for (auto& imgNam : imageNames)
   {
-    std::filesystem::path imgStrPth = storyDirectory / "images" / imgNam;
-    std::filesystem::path imgResPth = std::filesystem::current_path() / "resources" / "images" / imgNam;
-    sf::Texture img;
-    if (img.loadFromFile(imgStrPth.string()))
+    if (addImage(storyDirectory, imgNam) == false)
     {
-      if (_images.find(imgStrPth) != _images.end())
-      {
-        std::cout << "Duplicate image name " << imgNam << std::endl;
-        throw;
-      }
-      _images.insert({imgStrPth.filename(), img}); 
-    } else if (img.loadFromFile(imgResPth.string())) {
-      if (_images.find(imgResPth) != _images.end())
-      {
-        std::cout << "Duplicate image name " << imgNam << std::endl;
-        throw;
-      }
-      _images.insert({imgResPth.filename(), img});
-    } else {
-      std::cout << "Could not load image " << imgNam << std::endl;
       throw;
     }
   }
+}
+
+bool StoryResources::addImage(const std::filesystem::path& storyDirectory,
+                              const std::string& imageName)
+{
+  sf::Texture img;
+  std::filesystem::path imgStrPth = storyDirectory / "images" / imageName;
+  std::filesystem::path imgResPth = std::filesystem::current_path() / "resources" / "images" / imageName;
+
+  if (_images.find(imgStrPth.filename()) != _images.end())
+  {
+    std::cout << "Duplicate image name - already loaded - " << imgStrPth.filename() << std::endl;
+    return true;
+  }
+
+  if (img.loadFromFile(imgStrPth.string()))
+  {
+    _images.insert({imgStrPth.filename(), img}); 
+  } else if (img.loadFromFile(imgResPth.string()))
+  {
+    _images.insert({imgResPth.filename(), img}); 
+  } else {
+    std::cout << "Could not load image " << imgStrPth.filename() << std::endl;
+    return false;
+  }
+
+  return true;
 }
 
 sf::Texture StoryResources::getImageCopy(const std::string& imageName)
