@@ -34,7 +34,7 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
     bounds = _screenText.back()->getText().getGlobalBounds();
   }
   // Check if lines should move up
-  if (bounds.top + bounds.height >= GlobalSettings::WINDOWHEIGHT)
+  if (bounds.top + bounds.height >= _baseRect.top + _baseRect.height)
   {
     moveTextLineUp(bounds);
   }
@@ -94,14 +94,14 @@ void TextBox::moveTextLineUp(sf::FloatRect& bounds)
   {
     pos = seg->getText().getPosition();
     seg->getText().setPosition(pos.x, pos.y - GlobalSettings::getLineSpacing());
-    redraw();
   }
   // Get rid of all the obsolete elements
   // We assume height is valid
-  while (_screenText.front()->getText().getGlobalBounds().top + bounds.height <= 0)
+  while (_screenText.front()->getText().getGlobalBounds().top + bounds.height <= _baseRect.top)
   {
     _screenText.pop_front();
   }
+  redraw();
 }
 
 void TextBox::addTextSegment(std::unique_ptr<TextSegment>& segment)
