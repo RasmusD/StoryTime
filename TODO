@@ -1,11 +1,10 @@
 Top Things/Currently Working On
 
-- Ability to add images to story (markup)
+- A bug fix round
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
-- A bug fix round
 
 Things Targeted For 2.0 Release:
 
@@ -24,6 +23,7 @@ Known Bugs
 - Text can go across the border of the window - this seems to be for non-choice choices' text
 - Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
 - At a choice loop an extra line loop seems to be added
+- Text in text box sometimes briefly goes above text box top.
 - When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 
 Nice Things With No Current Release Version
@@ -55,3 +55,4 @@ Questions
 
 - Is there any benefit to the string/double definition of markup types?
 - Is there a benefit to just-in-time parsing and having the parser own optional stuff depending on previous choices?
+- Should boxes draw to their own texture and then draw that texture on the screen?
