@@ -16,6 +16,12 @@ void Box::setPosition(sf::Vector2f newPos)
   redraw();
 }
 
+void Box::setBoxRect(sf::IntRect newRect)
+{
+  _baseRect = newRect;
+  redraw();
+}
+
 void Box::redraw() { _needsDraw = true; }
 
 void Box::drawComplete() { _needsDraw = false; }

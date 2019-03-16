@@ -49,8 +49,10 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
-    sf::Vector2f pos(10, 10);
-    _currentChoice->setPosition(pos);
+    _currentChoice->setBoxRect(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                                           GlobalSettings::WINDOWHEIGHT * 0.75,
+                                           GlobalSettings::WINDOWWIDTH * 0.98,
+                                           GlobalSettings::WINDOWHEIGHT));
     _choiceActive = true;
   } else {
     throw std::runtime_error("Segment does not have choice or text. What to do?");
@@ -221,10 +223,11 @@ void StoryHandler::_setChoiceNext()
   _currentChoice = std::move(_segmentQueue.front().choice);
   _segmentQueue.pop_front();
 
-  // Place the next choice
-  sf::Vector2f nPos = _gameText->bottomLeftCornerPos();
-  nPos.y += GlobalSettings::getLineSpacing();
-  _currentChoice->setPosition(nPos);
+  // Place the choice - have to do this every time unfortunately
+  _currentChoice->setBoxRect(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
+                                         GlobalSettings::WINDOWHEIGHT * 0.75,
+                                         GlobalSettings::WINDOWWIDTH * 0.98,
+                                         GlobalSettings::WINDOWHEIGHT));
   _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
 }
 

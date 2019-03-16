@@ -22,6 +22,9 @@ class Box
     // Set position of the box relative to the top left corner
     virtual void setPosition(sf::Vector2f newPos);
 
+    // Set the base box rectangle
+    virtual void setBoxRect(sf::IntRect newRect);
+
     // React to input
     virtual void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) = 0;
 

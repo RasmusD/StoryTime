@@ -60,6 +60,9 @@ class ChoiceBox : public Box
     // Set position of the box relative to the top left corner
     void setPosition(sf::Vector2f newPos) override;
 
+    // Set the choice box rectangle
+    void setBoxRect(sf::IntRect newRect) override;
+
     // Returns the identifier of the next text segment if a choice has been made
     // Returns "<continue>" if not a branching choice
     // Returns "" if no choice has been made

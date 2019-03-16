@@ -147,6 +147,12 @@ void ChoiceBox::setPosition(sf::Vector2f newPos)
   redraw();
 }
 
+void ChoiceBox::setBoxRect(sf::IntRect newRect)
+{
+  _baseRect = newRect;
+  setPosition(sf::Vector2f(newRect.left, newRect.top));
+}
+
 // If the choice is made this is either
 // <continue> for a non-branching choice
 // "" if no choice has been made
