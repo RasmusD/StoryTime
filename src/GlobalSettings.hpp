@@ -25,7 +25,7 @@ typedef struct _Markup
   sf::Color backgroundColour = sf::Color::Black;
 
   // Current text speed
-  float speed = 0.01;
+  float speed = 0.01f;
 
   // Current display image
   // TMP - see TODO
@@ -38,9 +38,9 @@ class GlobalSettings
     // Set defaults
     static void initialise();
     // Width of the game window
-    static unsigned int WINDOWWIDTH;
+    static size_t WINDOWWIDTH;
     // Height of the game window
-    static unsigned int WINDOWHEIGHT;
+    static size_t WINDOWHEIGHT;
     // Default settings
     static Markup currentSettings;
     // The default font
@@ -50,13 +50,13 @@ class GlobalSettings
     // The saved game default directory
     static std::filesystem::path SAVEDIR;
     // Change CHARSIZE
-    static void setCharSize(unsigned int newSize);
+    static void setCharSize(size_t newSize);
     // Change LINESPACE
-    static void setLineSpacing(unsigned int newSize);
+    static void setLineSpacing(size_t newSize);
     // Get CHARSIZE
-    static int getCharSize();
+    static size_t getCharSize();
     // Get LINESPACE
-    static int getLineSpacing();
+    static size_t getLineSpacing();
     // See if something is initialised
     static bool isInitialised();
     // Print out the current settings that can be easily printed (for debug)
@@ -64,9 +64,9 @@ class GlobalSettings
   private:
     static bool INITIALISED;
     // The character size relative to the game window
-    static unsigned int CHARSIZE;
+    static size_t CHARSIZE;
     // The line spacing relative to the charsize
-    static unsigned int LINESPACE;
+    static size_t LINESPACE;
 
 };
 

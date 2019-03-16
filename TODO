@@ -1,5 +1,7 @@
 Top Things/Currently Working On
 
+- Text in text box sometimes briefly goes above text box top.
+- Text can go across the border of the window - this seems to be for non-choice choices' text
 - A bug fix round
 
 Things Targeted For 1.0 Release:
@@ -20,15 +22,14 @@ Things Targeted For 2.0 Release:
 
 Known Bugs
 
-- Text can go across the border of the window - this seems to be for non-choice choices' text
 - Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
 - At a choice loop an extra line loop seems to be added
-- Text in text box sometimes briefly goes above text box top.
 - When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 
 Nice Things With No Current Release Version
 
 - Scroll bar to look at previous text
+- Borders for boxes
 - It might be worthwhile redoing the markup format and not do a single forward pass type thing but rather use getLine format.
 - Unify addBranch and addValue
 - Proper text box asking user if should overwrite saved game

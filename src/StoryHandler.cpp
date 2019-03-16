@@ -49,20 +49,20 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
     _choiceActive = false;
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
-    _currentChoice->setBoxRect(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                                           GlobalSettings::WINDOWHEIGHT * 0.75,
-                                           GlobalSettings::WINDOWWIDTH * 0.98,
-                                           GlobalSettings::WINDOWHEIGHT));
+    _currentChoice->setBoxRect(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
+                                           static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.75f),
+                                           static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
+                                           static_cast<int>(GlobalSettings::WINDOWHEIGHT)));
     _choiceActive = true;
   } else {
     throw std::runtime_error("Segment does not have choice or text. What to do?");
   }
   _segmentQueue.pop_front();
 
-  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                                                                         GlobalSettings::WINDOWHEIGHT / 2,
-                                                                         GlobalSettings::WINDOWWIDTH * 0.98,
-                                                                         GlobalSettings::WINDOWHEIGHT / 4)));
+  _gameText = std::unique_ptr<TextBox>(new TextBox(startText, sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 2.f),
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 4.f))));
 
   // Set image box
   if (_gameText->getDisplayImage() == "")
@@ -71,16 +71,16 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
     {
       throw std::runtime_error("Cannot load default image.");
     }
-    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                         GlobalSettings::WINDOWHEIGHT * 0.01,
-                         GlobalSettings::WINDOWWIDTH * 0.98,
-                         GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
+    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.01f),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 2.f * 0.99f)),
                         _resources.getImagePtr("testImage.jpg")));
   } else {
-    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                         GlobalSettings::WINDOWHEIGHT * 0.01,
-                         GlobalSettings::WINDOWWIDTH * 0.98,
-                         GlobalSettings::WINDOWHEIGHT / 2 * 0.99),
+    _imageBox = std::unique_ptr<ImageBox>(new ImageBox(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.01f),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
+                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 2.f * 0.99f)),
                         _resources.getImagePtr(_gameText->getDisplayImage())));
   }
 
@@ -93,8 +93,8 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   }
   _windowBorder = sf::Sprite(_borderTexture);
   _windowBorder.setPosition(0, 0);
-  sf::Vector2f orgSize = (sf::Vector2f)_borderTexture.getSize();
-  _windowBorder.setScale(GlobalSettings::WINDOWWIDTH / orgSize.x, GlobalSettings::WINDOWHEIGHT / orgSize.y);
+  sf::Vector2f orgSize = static_cast<sf::Vector2f>(_borderTexture.getSize());
+  _windowBorder.setScale(static_cast<float>(GlobalSettings::WINDOWWIDTH) / orgSize.x, static_cast<float>(GlobalSettings::WINDOWHEIGHT) / orgSize.y);
   redraw();
 }
 
@@ -224,10 +224,10 @@ void StoryHandler::_setChoiceNext()
   _segmentQueue.pop_front();
 
   // Place the choice - have to do this every time unfortunately
-  _currentChoice->setBoxRect(sf::IntRect(GlobalSettings::WINDOWWIDTH * 0.01,
-                                         GlobalSettings::WINDOWHEIGHT * 0.75,
-                                         GlobalSettings::WINDOWWIDTH * 0.98,
-                                         GlobalSettings::WINDOWHEIGHT));
+  _currentChoice->setBoxRect(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
+                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.75f),
+                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
+                                         static_cast<int>(GlobalSettings::WINDOWHEIGHT)));
   _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
 }
 

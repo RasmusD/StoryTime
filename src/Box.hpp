@@ -20,7 +20,7 @@ class Box
     virtual ~Box() {};
 
     // Set position of the box relative to the top left corner
-    virtual void setPosition(sf::Vector2f newPos);
+    virtual void setPosition(sf::Vector2i newPos);
 
     // Set the base box rectangle
     virtual void setBoxRect(sf::IntRect newRect);

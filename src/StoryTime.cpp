@@ -10,7 +10,7 @@ namespace StoryTime {
 struct Game
 {
   // Create game window
-  sf::RenderWindow window{{GlobalSettings::WINDOWWIDTH, GlobalSettings::WINDOWHEIGHT}, "StoryTime"};
+  sf::RenderWindow window{{static_cast<uint>(GlobalSettings::WINDOWWIDTH), static_cast<uint>(GlobalSettings::WINDOWHEIGHT)}, "StoryTime"};
 
   bool running{false};
 

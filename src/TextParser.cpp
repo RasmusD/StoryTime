@@ -679,7 +679,7 @@ sf::Color TextParser::getColourFromString(std::string& rgbaString)
   pos = rgbaString.find(',');
   try
   {
-    red = std::stoul(rgbaString.substr(0, pos));
+    red = static_cast<uint8_t>(std::stoul(rgbaString.substr(0, pos)));
   } catch (...) {
     std::cerr << "Warning! Couldn't identify red in rgbaString. Setting to 0." << std::endl;
     red = 0;
@@ -688,7 +688,7 @@ sf::Color TextParser::getColourFromString(std::string& rgbaString)
   pos = rgbaString.find(',');
   try
   {
-    green = std::stoul(rgbaString.substr(0, pos));
+    green = static_cast<uint8_t>(std::stoul(rgbaString.substr(0, pos)));
   } catch (...) {
     std::cerr << "Warning! Couldn't identify green in rgbaString. Setting to 0." << std::endl;
     green = 0;
@@ -697,7 +697,7 @@ sf::Color TextParser::getColourFromString(std::string& rgbaString)
   pos = rgbaString.find(',');
   try
   {
-    blue = std::stoul(rgbaString.substr(0, pos));
+    blue = static_cast<uint8_t>(std::stoul(rgbaString.substr(0, pos)));
   } catch (...) {
     std::cerr << "Warning! Couldn't identify blue in rgbaString. Setting to 0." << std::endl;
     blue = 0;
@@ -706,7 +706,7 @@ sf::Color TextParser::getColourFromString(std::string& rgbaString)
   pos = rgbaString.find(',');
   try
   {
-    alpha = std::stoul(rgbaString.substr(0, pos));
+    alpha = static_cast<uint8_t>(std::stoul(rgbaString.substr(0, pos)));
   } catch (...) {
     std::cerr << "Warning! Couldn't identify alpha in rgbaString. Setting to 0." << std::endl;
     alpha = 0;

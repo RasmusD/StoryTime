@@ -27,7 +27,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   // Set choice type
   _type = type;
   // Set position of choices and box
-  setPosition(sf::Vector2f(boxRect.left, boxRect.top));
+  setPosition(sf::Vector2i(boxRect.left, boxRect.top));
   // If there is only one choice - mark it as already chosen
   if (choices.size() == 1)
   {
@@ -54,7 +54,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& 
       }
       if (curEvent.type == sf::Event::KeyPressed)
       {
-        if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(i+1)))
+        if (sf::Keyboard::isKeyPressed(Utils::getKeyByNumber(static_cast<int>(i)+1)))
         {
           //std::cout << "Key pressed " << i+1 << std::endl;
           _choice = _choices[i];
@@ -118,28 +118,28 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::str
   drawComplete();
 }
 
-void ChoiceBox::setPosition(sf::Vector2f newPos)
+void ChoiceBox::setPosition(sf::Vector2i newPos)
 {
   _baseRect.left = newPos.x;
   _baseRect.top = newPos.y;
-  float tHeight = _choiceNums.front().getLocalBounds().height * 1.5;
+  int tHeight = static_cast<int>(_choiceNums.front().getLocalBounds().height * 1.5);
   // Set the numbers
   for (TextSegment& number : _choiceNums)
   {
     // Set the choice's position
-    number.getText().setPosition(newPos);
+    number.getText().setPosition(sf::Vector2f(newPos));
     // Update the height of the next choice
     newPos.y += tHeight;
   }
   // Set the text
-  newPos.y -= tHeight * _choiceNums.size();
+  newPos.y -= static_cast<int>(tHeight * _choiceNums.size());
   // Add whitespace
-  newPos.x += 2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance;
+  newPos.x += static_cast<int>(2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance);
   for (Choice& choice : _choices)
   {
     //TODO: Check text does not exceed boundaries
     // Set the choice's position
-    choice.text.getText().setPosition(newPos);
+    choice.text.getText().setPosition(sf::Vector2f(newPos));
     // Update the height of the next choice
     newPos.y += tHeight;
   }
@@ -150,7 +150,7 @@ void ChoiceBox::setPosition(sf::Vector2f newPos)
 void ChoiceBox::setBoxRect(sf::IntRect newRect)
 {
   _baseRect = newRect;
-  setPosition(sf::Vector2f(newRect.left, newRect.top));
+  setPosition(sf::Vector2i(newRect.left, newRect.top));
 }
 
 // If the choice is made this is either
@@ -172,7 +172,7 @@ std::vector<Choice> ChoiceBox::getChoices()
   return _choices;
 }
 
-int ChoiceBox::getNumChoices()
+size_t ChoiceBox::getNumChoices()
 {
   return _choices.size();
 }

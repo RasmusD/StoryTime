@@ -48,7 +48,8 @@ void ImageBox::setImage(const sf::Texture* newImage)
                       (float)this->_baseRect.height / (float)imageSize.y);
     sf::Vector2f spriteScale = {scale, scale};
     this->_image->setScale(spriteScale);
-    this->_image->setPosition(this->_baseRect.width / 2 - imageSize.x * scale / 2, this->_baseRect.top);
+    this->_image->setPosition(static_cast<float>(this->_baseRect.width) / 2 - static_cast<float>(imageSize.x) * scale / 2,
+                              static_cast<float>(this->_baseRect.top));
   } else {
     this->_image.reset();
   }

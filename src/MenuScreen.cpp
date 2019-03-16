@@ -11,30 +11,30 @@ MenuScreen::MenuScreen() : GameSlice()
 
   _titleText.setFont(_titleFont);
   _titleText.setString("Main Menu");
-  _titleText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
+  _titleText.setCharacterSize(static_cast<uint>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / static_cast<float>(GlobalSettings::getCharSize()) * 3.f));
   _titleText.setFillColor(sf::Color::White);
   _titleText.setStyle(sf::Text::Bold | sf::Text::Underlined);
   _textRect = _titleText.getLocalBounds();
   _titleText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
-  _titleText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 4.0f));
+  _titleText.setPosition(sf::Vector2f(static_cast<float>(GlobalSettings::WINDOWWIDTH) / 2.0f, static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 4.0f));
 
   _newGameText.setFont(_titleFont);
   _newGameText.setString("Play Game");
-  _newGameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
+  _newGameText.setCharacterSize(static_cast<uint>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / static_cast<float>(GlobalSettings::getCharSize()) * 3));
   _newGameText.setFillColor(sf::Color::White);
   _newGameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
   _textRect = _newGameText.getLocalBounds();
   _newGameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
-  _newGameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 2.f));
+  _newGameText.setPosition(sf::Vector2f(static_cast<float>(GlobalSettings::WINDOWWIDTH) / 2.0f, static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 2.f));
 
   _loadGameText.setFont(_titleFont);
   _loadGameText.setString("Load Game");
-  _loadGameText.setCharacterSize(GlobalSettings::WINDOWHEIGHT / GlobalSettings::getCharSize() * 3);
+  _loadGameText.setCharacterSize(static_cast<uint>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / static_cast<float>(GlobalSettings::getCharSize()) * 3));
   _loadGameText.setFillColor(sf::Color::White);
   _loadGameText.setStyle(sf::Text::Bold | sf::Text::Underlined);
   _textRect = _loadGameText.getLocalBounds();
   _loadGameText.setOrigin(_textRect.left + _textRect.width / 2.0f, _textRect.top + _textRect.height / 2.0f);
-  _loadGameText.setPosition(sf::Vector2f(GlobalSettings::WINDOWWIDTH / 2.0f, GlobalSettings::WINDOWHEIGHT / 1.25f));
+  _loadGameText.setPosition(sf::Vector2f(static_cast<float>(GlobalSettings::WINDOWWIDTH) / 2.f, static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 1.25f));
 
   _backgroundColour = sf::Color::Black;
   redraw();

@@ -60,7 +60,7 @@ class TextBox : public Box
 
   private:
     // Move screen text one line up
-    void moveTextLineUp(sf::FloatRect& bounds);
+    void _moveTextLineUp();
 
     // Variables
     // The text to currently be displayed

@@ -58,7 +58,7 @@ class ChoiceBox : public Box
     const std::string& getDisplayImage();
 
     // Set position of the box relative to the top left corner
-    void setPosition(sf::Vector2f newPos) override;
+    void setPosition(sf::Vector2i newPos) override;
 
     // Set the choice box rectangle
     void setBoxRect(sf::IntRect newRect) override;
@@ -72,7 +72,7 @@ class ChoiceBox : public Box
     std::vector<Choice> getChoices();
 
     // Returns the number of possible choices
-    int getNumChoices();
+    size_t getNumChoices();
 
     // Returns the chosen textsegment
     std::unique_ptr<TextSegment> getChoiceText();

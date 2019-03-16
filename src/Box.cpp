@@ -9,7 +9,7 @@ Box::Box(sf::IntRect boxRect) :
 {
 }
 
-void Box::setPosition(sf::Vector2f newPos)
+void Box::setPosition(sf::Vector2i newPos)
 {
   _baseRect.left = newPos.x;
   _baseRect.top = newPos.y;
