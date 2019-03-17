@@ -1,5 +1,7 @@
 #include "GlobalSettings.hpp"
 
+#include <SFML/Window.hpp>
+
 namespace StoryTime {
 
 size_t GlobalSettings::WINDOWWIDTH = 10;
@@ -29,8 +31,9 @@ void GlobalSettings::initialise()
   currentSettings = Markup();
 
   // Set the game window size
-  WINDOWWIDTH = 1600;
-  WINDOWHEIGHT = 1000;
+  sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+  WINDOWWIDTH = desktop.width;
+  WINDOWHEIGHT = desktop.height;
   CHARSIZE = 30;
   // We start with 1.5*charsize
   LINESPACE = CHARSIZE * 2;
