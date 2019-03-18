@@ -50,7 +50,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   } else if (_segmentQueue.front().choice) {
     _currentChoice = std::move(_segmentQueue.front().choice);
     _currentChoice->setBoxRect(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
-                                           static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.75f),
+                                           static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.80f),
                                            static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
                                            static_cast<int>(GlobalSettings::WINDOWHEIGHT)));
     _choiceActive = true;
@@ -60,9 +60,9 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   _segmentQueue.pop_front();
 
   _gameText = std::unique_ptr<TextBox>(new TextBox(startText, sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
-                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 2.f),
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.5f),
                                                                          static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
-                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) / 4.f))));
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.8f))));
 
   // Set image box
   if (_gameText->getDisplayImage() == "")
@@ -225,7 +225,7 @@ void StoryHandler::_setChoiceNext()
 
   // Place the choice - have to do this every time unfortunately
   _currentChoice->setBoxRect(sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
-                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.75f),
+                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.80f),
                                          static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
                                          static_cast<int>(GlobalSettings::WINDOWHEIGHT)));
   _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));

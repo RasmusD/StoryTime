@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- Text in text box sometimes briefly goes above text box top.
+- Text can go acroos the end of the text box when text box size does not neatly line up with box size.
 - Text can go across the border of the window - this seems to be for non-choice choices' text
 - A bug fix round
 

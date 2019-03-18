@@ -33,8 +33,9 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
     // Update bounds
     bounds = _screenText.back()->getText().getGlobalBounds();
   }
+
   // Check if lines should move up
-  if (bounds.top + bounds.height >= (float)_baseRect.top + (float)_baseRect.height)
+  if (bounds.top + static_cast<float>(GlobalSettings::getCharSize()) > static_cast<float>(_baseRect.top + _baseRect.height))
   {
     _moveTextLineUp();
   }
@@ -58,6 +59,8 @@ void TextBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::strin
     //std::cout << "Drwaing seg..." << std::endl;
     //segment->printTargetText();
     //segment->printVisibleText();
+    //std::cout << segment->getText().getPosition().x << " " << segment->getText().getPosition().y << std::endl;
+    //std::cout << _baseRect.top << std::endl;
     segment->draw(renderWindow);
     //std::cout << "Done." << std::endl;
   }
@@ -95,9 +98,10 @@ void TextBox::_moveTextLineUp()
     pos = seg->getText().getPosition();
     seg->getText().setPosition(pos.x, pos.y - static_cast<float>(GlobalSettings::getLineSpacing()));
   }
+
   // Get rid of all the obsolete elements
   sf::FloatRect bounds = _screenText.front()->getText().getGlobalBounds();
-  while (bounds.top + bounds.height <= static_cast<float>(_baseRect.top))
+  while (bounds.top <= static_cast<float>(_baseRect.top))
   {
     _screenText.pop_front();
     bounds = _screenText.front()->getText().getGlobalBounds();

@@ -125,12 +125,12 @@ sf::FloatRect TextSegment::getLocalBounds()
 
 void TextSegment::printTargetText()
 {
-  //std::cout << _targetText << std::endl;
+  std::cout << _targetText << std::endl;
 }
 
 void TextSegment::printVisibleText()
 {
-  //std::cout << (std::string)_text.getString() << std::endl;
+  std::cout << (std::string)_text.getString() << std::endl;
 }
 
 void TextSegment::addText(std::string& toAdd)
