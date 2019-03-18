@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- Text can go across the border of the window - this seems to be for non-choice choices' text
+- At a choice loop an extra line loop seems to be added
 - A bug fix round
 
 Things Targeted For 1.0 Release:
@@ -22,8 +22,8 @@ Things Targeted For 2.0 Release:
 Known Bugs
 
 - Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
-- At a choice loop an extra line loop seems to be added
 - When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
+- There's issues around random whitespace around markup not being correct.
 
 Nice Things With No Current Release Version
 
@@ -56,3 +56,4 @@ Questions
 - Is there any benefit to the string/double definition of markup types?
 - Is there a benefit to just-in-time parsing and having the parser own optional stuff depending on previous choices?
 - Should boxes draw to their own texture and then draw that texture on the screen?
+- Should strings long enough to go beyond text borders on their own wrap or just go past end as is now?

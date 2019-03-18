@@ -66,7 +66,7 @@ class TextSegment
     void addText(std::string& toAdd);
 
     // Get the remaining text not currently shown
-    std::unique_ptr<TextSegment> getRemainingTextSegment();
+    std::unique_ptr<TextSegment> getRemainingTextSegment(int xLimit);
 
     // Reset the visible text
     void resetText();

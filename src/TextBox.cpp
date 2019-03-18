@@ -22,11 +22,12 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
   // Check if the current segment is beyond the screen and a new line made
   sf::FloatRect bounds = _screenText.back()->getText().getGlobalBounds();
   //std::cout << GlobalSettings::WINDOWWIDTH << " bounds: " << bounds.left + bounds.width << std::endl;
-  if (bounds.left + bounds.width >= static_cast<float>(_baseRect.width))
+  //std::cout << "_baseRect: " << _baseRect.left + _baseRect.width << std::endl;
+  if (bounds.left + bounds.width >= static_cast<float>(_baseRect.left + _baseRect.width))
   {
     // If it is
     // Create a new segment. One line down
-    _screenText.push_back(_screenText.back()->getRemainingTextSegment());
+    _screenText.push_back(_screenText.back()->getRemainingTextSegment(_baseRect.left + _baseRect.width));
     _screenText.back()->getText().setPosition(static_cast<float>(_baseRect.left), _screenText.back()->getText().getPosition().y + static_cast<float>(GlobalSettings::getLineSpacing()));
     redraw();
 

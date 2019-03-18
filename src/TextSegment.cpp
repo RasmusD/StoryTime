@@ -40,13 +40,30 @@ void TextSegment::resetText()
   redraw();
 }
 
-std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment()
+std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment(int xLimit)
 {
-  // Find position of last " "
-  int spacePos = static_cast<int>(static_cast<std::string>(_text.getString()).find_last_of(" ")) + 1;
-  std::unique_ptr<TextSegment> remainder = std::unique_ptr<TextSegment>(new TextSegment(*_text.getFont(), _targetText.substr(spacePos, std::string::npos), _settings));
+  sf::FloatRect bounds = _text.getGlobalBounds();
+  std::unique_ptr<TextSegment> remainder;
+  while (static_cast<int>(bounds.left + bounds.width) >= xLimit)
+  {
+    // Find position of last " "
+    size_t spacePos = static_cast<std::string>(_text.getString()).find_last_of(" ");
+    if (spacePos == std::string::npos)
+    {
+      // If no whitespace exist that doesn't go across border
+      // Just break and let it go across
+      break;
+    }
+
+    // Save current and remainder
+    remainder = std::unique_ptr<TextSegment>(new TextSegment(*_text.getFont(), _targetText.substr(spacePos + 1, std::string::npos), _settings));
+    _targetText = _targetText.substr(0, spacePos);
+    // Check the current does not go beyond border by simulating current being there
+    _text.setString(_targetText);
+    bounds = _text.getGlobalBounds();
+  }
+  // We are now the right place
   remainder->getText().setPosition(_text.getPosition());
-  _targetText = _targetText.substr(0, spacePos);
   _text.setString(_targetText);
   atEnd = true;
   redraw();
