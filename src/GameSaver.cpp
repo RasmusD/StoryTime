@@ -87,7 +87,7 @@ bool GameSaver::loadGame(std::filesystem::path& filepath,
           }
         } else {
           // StoryPath
-          storyPath = std::filesystem::path(line.substr(3));
+          storyPath = std::filesystem::path(line.substr(4));
         }
       } else {
         // Version information

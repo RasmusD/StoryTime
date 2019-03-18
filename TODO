@@ -35,6 +35,7 @@ Nice Things With No Current Release Version
 - Proper text box asking user if should overwrite saved game
 - Loading a game should check if choice history is valid
 - Timed text, cna be used anywhere but specifically for showing that a game has been saved
+- Loading of resources not in story outputs an error which should be ignored. Suppress.
 
 Features With No Current Release Version
 - Screen tiles (currently fixed to 3 boxes, should be changeable)
