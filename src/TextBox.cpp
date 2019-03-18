@@ -35,6 +35,8 @@ void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& cho
   }
 
   // Check if lines should move up
+  //std::cout << "b " << bounds.top + static_cast<float>(GlobalSettings::getCharSize()) << std::endl;
+  //std::cout << "r " << static_cast<float>(_baseRect.top + _baseRect.height) << std::endl;
   if (bounds.top + static_cast<float>(GlobalSettings::getCharSize()) > static_cast<float>(_baseRect.top + _baseRect.height))
   {
     _moveTextLineUp();

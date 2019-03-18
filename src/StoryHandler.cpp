@@ -62,7 +62,7 @@ StoryHandler::StoryHandler(std::filesystem::path& storyPath, bool storyIsSave)
   _gameText = std::unique_ptr<TextBox>(new TextBox(startText, sf::IntRect(static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.01f),
                                                                          static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.5f),
                                                                          static_cast<int>(static_cast<float>(GlobalSettings::WINDOWWIDTH) * 0.98f),
-                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.8f))));
+                                                                         static_cast<int>(static_cast<float>(GlobalSettings::WINDOWHEIGHT) * 0.3f))));
 
   // Set image box
   if (_gameText->getDisplayImage() == "")
