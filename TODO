@@ -16,9 +16,10 @@ Things Targeted For 2.0 Release:
 - Logging
 - Screen resolution scaleability (settings menu in general)
 - Background image markup should allow setting an actual image and not just change colour.
-- Font markup should also have a type to change font size and colour.
+- Font markup should also have a type to change font size and colour and font itself.
 - Load fonts as resources for each story
 - Press button to speed up text
+- Resources should also load borders to allow for changing bordes (including a setting)
 
 Known Bugs
 
