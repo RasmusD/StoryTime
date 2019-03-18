@@ -1,6 +1,6 @@
 Top Things/Currently Working On
 
-- At a choice loop an extra line loop seems to be added
+- When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 - A bug fix round
 
 Things Targeted For 1.0 Release:
@@ -18,11 +18,11 @@ Things Targeted For 2.0 Release:
 - Background image markup should allow setting an actual image and not just change colour.
 - Font markup should also have a type to change font size and colour.
 - Load fonts as resources for each story
+- Press button to speed up text
 
 Known Bugs
 
 - Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
-- When loading a game we go to the start of a segment even if the save was in the middle, after choices in the segment. We should start after the last choice made.
 - There's issues around random whitespace around markup not being correct.
 
 Nice Things With No Current Release Version

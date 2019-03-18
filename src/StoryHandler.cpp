@@ -237,8 +237,11 @@ void StoryHandler::_addBranch(std::string& id)
   auto it = _storyData.find(id);
   if (it != _storyData.end())
   {
-    // Add a new line
-    it->second = '\n' + it->second;
+    // Add a new line if necessary
+    if (it->second.front() != '\n')
+    {
+      it->second = '\n' + it->second;
+    }
     TextParser::parseText(it->second, _segmentQueue, _gameDefaults);
   } else {
     throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
