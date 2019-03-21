@@ -2,7 +2,7 @@
 
 namespace StoryTime {
 
-void TextParser::parseText(std::string& text,
+void TextParser::parseText(const std::string& text,
                           std::deque<Utils::SegChoice>& segments,
                           Markup& activeMarkup)
 {

@@ -27,7 +27,7 @@ class TextParser
     ~TextParser() {};
 
     // Parse a story segment
-    static void parseText(std::string& text, std::deque<Utils::SegChoice>& segments, Markup& activeMarkup);
+    static void parseText(const std::string& text, std::deque<Utils::SegChoice>& segments, Markup& activeMarkup);
 
     // Parse a settings string
     static void parseSettings(Markup& currentSettings, std::string& settingsString);

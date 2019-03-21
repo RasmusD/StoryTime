@@ -19,9 +19,10 @@ class GameSaver
 {
   public:
     // Save a game to load later
+    // choiceHistory is copy passed as it might be changed
     static bool saveGame(std::filesystem::path& savepath,
                         const std::filesystem::path& storyPath,
-                        const std::unordered_set<std::string>& choiceHistory,
+                        std::unordered_set<std::string> choiceHistory,
                         const std::unordered_map<std::string, std::string>& storyData,
                         const std::string& currentSegment,
                         const bool overwrite);

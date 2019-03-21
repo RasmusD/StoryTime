@@ -164,7 +164,6 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
         std::string cId = _currentChoice->getChoiceId();
         _addBranch(cId);
         _setNextSegment();
-        _currentSegmentId = cId;
       }
     }
   } else {
@@ -189,6 +188,11 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
 
 void StoryHandler::_setNextSegment()
 {
+  // If this marks the beginning of a new segment, remember
+  if (_segmentQueue.size() > 0 and _segmentQueue.front().newId != "")
+  {
+    _currentSegmentId = _segmentQueue.front().newId;
+  }
   if (_segmentQueue.size() == 0)
   {
     // If we are done
@@ -231,18 +235,21 @@ void StoryHandler::_setChoiceNext()
   _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
 }
 
-void StoryHandler::_addBranch(std::string& id)
+void StoryHandler::_addBranch(const std::string& id)
 {
   // Check id exists
   auto it = _storyData.find(id);
   if (it != _storyData.end())
   {
+    size_t segs = _segmentQueue.size();
     // Add a new line if necessary
     if (it->second.front() != '\n')
     {
       it->second = '\n' + it->second;
     }
     TextParser::parseText(it->second, _segmentQueue, _gameDefaults);
+    // Mark the first added segment as changing id
+    _segmentQueue[segs].newId = id;
   } else {
     throw std::runtime_error("Branch not found! Check id - " + id + " - for existence!");
   }

@@ -49,7 +49,7 @@ class StoryHandler: public GameSlice
     void _setChoiceNext();
 
     // Add a new branch
-    void _addBranch(std::string& id);
+    void _addBranch(const std::string& id);
 
     // A set of resources used in this story
     StoryResources _resources;

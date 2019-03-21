@@ -44,6 +44,7 @@ class Utils
       };
       std::unique_ptr<TextSegment> text;
       std::unique_ptr<ChoiceBox> choice;
+      std::string newId = "";
     };
 
     // Gets an sf::Keyboard::Key enum by number 0 - 9

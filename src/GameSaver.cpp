@@ -6,7 +6,7 @@ const std::string GameSaver::_version = "StoryTime Save File v0.1";
 
 bool GameSaver::saveGame(std::filesystem::path& savepath,
                         const std::filesystem::path& storyPath,
-                        const std::unordered_set<std::string>& choiceHistory,
+                        std::unordered_set<std::string> choiceHistory,
                         const std::unordered_map<std::string, std::string>& storyData,
                         const std::string& currentSegment,
                         const bool overwrite)
@@ -30,6 +30,26 @@ bool GameSaver::saveGame(std::filesystem::path& savepath,
   out << "!! " << storyPath << std::endl;
 
   // Save choice history
+  // Ignoring choices already made in segment
+  std::deque<Utils::SegChoice> segments;
+  Markup markup;
+  //std::cout << currentSegment << std::endl;
+  //std::cout << storyData.at(currentSegment) << std::endl;
+  TextParser::parseText(storyData.at(currentSegment), segments, markup);
+  for (auto& segment : segments)
+  {
+    if (segment.choice != nullptr)
+    {
+      for (auto& choice: segment.choice->getChoices())
+      {
+        //std::cout << choice.id << std::endl;
+        if (choiceHistory.count(choice.id) == 1)
+        {
+          choiceHistory.erase(choice.id);
+        }
+      }
+    }
+  }
   out << "!!!";
   for (auto& choice : choiceHistory)
   {
