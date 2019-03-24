@@ -32,8 +32,8 @@ void GlobalSettings::initialise()
 
   // Set the game window size
   sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-  WINDOWWIDTH = desktop.width;
-  WINDOWHEIGHT = desktop.height;
+  WINDOWWIDTH =  static_cast<size_t>(0.95*static_cast<double>(desktop.width));
+  WINDOWHEIGHT = static_cast<size_t>(0.95*static_cast<double>(desktop.height));
   CHARSIZE = 30;
   // We start with 1.5*charsize
   LINESPACE = CHARSIZE * 2;
