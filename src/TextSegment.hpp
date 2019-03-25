@@ -26,7 +26,10 @@ class TextSegment
     ~TextSegment() {};
 
     // Update the text
-    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory);
+    void update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory);
+
+    // Basic updates which can safely be done outside of general update loop
+    void updateBasics(const std::unordered_set<std::string>& choiceHistory);
 
     // See if the text segment requires a draw
     bool needsDraw();
@@ -60,7 +63,10 @@ class TextSegment
     void printVisibleText();
 
     // Access to the currently visible text
-    sf::Text& getText();
+    sf::Text& getVisibleText();
+
+    // See the target text
+    const std::string& getTargetText();
 
     // Add more text to the final target text
     void addText(std::string& toAdd);

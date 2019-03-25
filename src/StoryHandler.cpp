@@ -154,7 +154,7 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
         _segmentQueue.front().text->resetText();
         // Add a whitespace at the end of this if necessary
         //std::cout << (std::string)_segmentQueue.back().text->getText().getString() << std::endl;
-        if (std::string(_segmentQueue.back().text->getText().getString()).back() != ' ')
+        if (_segmentQueue.back().text->getTargetText().back() != ' ')
         {
           std::string space(" ");
           _segmentQueue.back().text->addText(space);
@@ -215,7 +215,7 @@ void StoryHandler::_setNextSegment()
 
 void StoryHandler::_setTextNext()
 {
-  _gameText->addTextSegment(_segmentQueue.front().text);
+  _gameText->addTextSegment(_segmentQueue.front().text, _choiceHistory);
   _segmentQueue.pop_front();
   _imageBox->setImage(_resources.getImagePtr(_gameText->getDisplayImage()));
   //std::cout << "push" << std::endl;

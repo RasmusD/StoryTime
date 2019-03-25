@@ -44,7 +44,7 @@ class TextBox : public Box
     bool atEnd();
 
     // Add a segment of text to the text box
-    void addTextSegment(std::unique_ptr<TextSegment>& segment);
+    void addTextSegment(std::unique_ptr<TextSegment>& segment, const std::unordered_set<std::string>& choiceHistory);
 
     // Get the background colour of the current segment
     const sf::Color& getBackgroundColour();

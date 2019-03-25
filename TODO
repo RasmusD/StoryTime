@@ -6,6 +6,7 @@ Top Things/Currently Working On
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
+- Choicehistory passing should often be by const ref not just ref
 
 Things Targeted For 2.0 Release:
 

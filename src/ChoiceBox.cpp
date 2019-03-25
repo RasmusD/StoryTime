@@ -21,7 +21,7 @@ ChoiceBox::ChoiceBox(std::vector<Choice>& choices,
   for (size_t i = 0; i < choices.size(); i++)
   {
     _choices.push_back(choices[i]);
-    TextSegment choiceNum(*choices[i].text.getText().getFont(), std::to_string(i+1) + ".", settings);
+    TextSegment choiceNum(*choices[i].text.getVisibleText().getFont(), std::to_string(i+1) + ".", settings);
     _choiceNums.push_back(choiceNum);
   }
   // Set choice type
@@ -100,18 +100,13 @@ void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::str
         continue;
       }
     }
-    //std::cout << "here" << std::endl;
-    //std::cout << (std::string)choice.getText().getString() << std::endl;
     //choice.printTargetText();
-    renderWindow.draw(choice.text.getText());
+    renderWindow.draw(choice.text.getVisibleText());
     //choice.printTargetText();
   }
   for (TextSegment& number : _choiceNums)
   {
-    //std::cout << "here" << std::endl;
-    //std::cout << (std::string)choice.getText().getString() << std::endl;
-    //choice.printTargetText();
-    renderWindow.draw(number.getText());
+    renderWindow.draw(number.getVisibleText());
     //choice.printTargetText();
   }
 
@@ -127,19 +122,19 @@ void ChoiceBox::setPosition(sf::Vector2i newPos)
   for (TextSegment& number : _choiceNums)
   {
     // Set the choice's position
-    number.getText().setPosition(sf::Vector2f(newPos));
+    number.getVisibleText().setPosition(sf::Vector2f(newPos));
     // Update the height of the next choice
     newPos.y += tHeight;
   }
   // Set the text
   newPos.y -= static_cast<int>(tHeight * _choiceNums.size());
   // Add whitespace
-  newPos.x += static_cast<int>(2 * _choices.front().text.getText().getFont()->getGlyph('\u0009', _choices.front().text.getText().getCharacterSize(), false).advance);
+  newPos.x += static_cast<int>(2 * _choices.front().text.getVisibleText().getFont()->getGlyph('\u0009', _choices.front().text.getVisibleText().getCharacterSize(), false).advance);
   for (Choice& choice : _choices)
   {
     //TODO: Check text does not exceed boundaries
     // Set the choice's position
-    choice.text.getText().setPosition(sf::Vector2f(newPos));
+    choice.text.getVisibleText().setPosition(sf::Vector2f(newPos));
     // Update the height of the next choice
     newPos.y += tHeight;
   }

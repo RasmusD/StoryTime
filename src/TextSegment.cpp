@@ -28,9 +28,14 @@ TextSegment::TextSegment()
   // Do nothing
 }
 
-sf::Text& TextSegment::getText()
+sf::Text& TextSegment::getVisibleText()
 {
   return _text;
+}
+
+const std::string& TextSegment::getTargetText()
+{
+  return _targetText;
 }
 
 void TextSegment::resetText()
@@ -63,33 +68,18 @@ std::unique_ptr<TextSegment> TextSegment::getRemainingTextSegment(int xLimit)
     bounds = _text.getGlobalBounds();
   }
   // We are now the right place
-  remainder->getText().setPosition(_text.getPosition());
+  remainder->getVisibleText().setPosition(_text.getPosition());
   _text.setString(_targetText);
   atEnd = true;
   redraw();
   return remainder;
 }
 
-void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
+void TextSegment::update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory)
 {
-  // Check if we should switch what this segment shows
-  // Only do first time this is updated
-  if (_updated == false)
-  {
-    for (auto& variant : _alternatives)
-    {
-      if (choiceHistory.count(variant.second) > 0)
-      {
-        _changeText(variant.first);
-        break;
-      }
-    }
-    if (_targetText == "")
-    {
-      atEnd = true;
-    }
-    _updated = true;
-  }
+  // This will only happen if first time
+  updateBasics(choiceHistory);
+
   if (atEnd == false)
   {
     //std::cout << "Not at end" << std::endl;
@@ -114,6 +104,28 @@ void TextSegment::update(sf::Time& elapsedTime, std::unordered_set<std::string>&
       }
       _stringPos++;
     }
+  }
+}
+
+void TextSegment::updateBasics(const std::unordered_set<std::string>& choiceHistory)
+{
+  // Check if we should switch what this segment shows
+  // Only do first time this is updated
+  if (_updated == false)
+  {
+    for (auto& variant : _alternatives)
+    {
+      if (choiceHistory.count(variant.second) > 0)
+      {
+        _changeText(variant.first);
+        break;
+      }
+    }
+    if (_targetText == "")
+    {
+      atEnd = true;
+    }
+    _updated = true;
   }
 }
 
