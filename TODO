@@ -1,15 +1,15 @@
 Top Things/Currently Working On
 
-- There's issues around random whitespace around markup not being correct.
-- A bug fix round
+- Choicehistory passing should often be by const ref not just ref
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
-- Choicehistory passing should often be by const ref not just ref
+- Test story demonstrating all features
 
 Things Targeted For 2.0 Release:
 
+- Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
 - Error messages
 - Setting text to be centered
 - Variable definitions (e.g. not choices but setting a variable that can be referred later - e.g. having an item in inventory or specific piece of knowledge). Ability to remove variables.
@@ -23,8 +23,6 @@ Things Targeted For 2.0 Release:
 - Resources should also load borders to allow for changing bordes (including a setting)
 
 Known Bugs
-
-- Text is not contained in Choicebox. Make shared box code for ensuring boundaries are respected and for proper drawing.
 
 Nice Things With No Current Release Version
 
