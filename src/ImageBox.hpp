@@ -26,10 +26,10 @@ class ImageBox : public Box
     void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) override;
 
     // Update the box
-    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory) override;
+    void update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory) override;
 
     // Draw the box
-    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
+    void draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory) override;
 
     // Update the image in the box
     void setImage(const sf::Texture* newImage);

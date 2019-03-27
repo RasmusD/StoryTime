@@ -66,7 +66,7 @@ void ChoiceBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& 
   }
 }
 
-void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
+void ChoiceBox::update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory)
 {
   for (size_t i = 0; i < _choices.size(); i++)
   {
@@ -88,7 +88,7 @@ void ChoiceBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& c
   }
 }
 
-void ChoiceBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
+void ChoiceBox::draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory)
 {
   for (Choice& choice : _choices)
   {

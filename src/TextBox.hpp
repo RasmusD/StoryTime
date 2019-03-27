@@ -32,10 +32,10 @@ class TextBox : public Box
     ~TextBox() {};
 
     // Update the text handler
-    void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory) override;
+    void update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory) override;
 
     // Draw the box
-    void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) override;
+    void draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory) override;
     
     // React to input
     void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) override;

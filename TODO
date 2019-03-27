@@ -1,11 +1,10 @@
 Top Things/Currently Working On
 
-- Choicehistory passing should often be by const ref not just ref
+- Test story demonstrating all features
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
-- Test story demonstrating all features
 
 Things Targeted For 2.0 Release:
 

@@ -18,13 +18,13 @@ void ImageBox::takeInput(sf::Event& curEvent, std::unordered_set<std::string>& c
 }
 
 // Update the box
-void ImageBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
+void ImageBox::update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory)
 {
 
 }
 
 // Draw the box
-void ImageBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
+void ImageBox::draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory)
 {
   if (_image.get() != nullptr)
   {

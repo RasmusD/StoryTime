@@ -29,10 +29,10 @@ class Box
     virtual void takeInput(sf::Event& curEvent, std::unordered_set<std::string>& choiceHistory) = 0;
 
     // Update the box
-    virtual void update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory) = 0;
+    virtual void update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory) = 0;
 
     // Draw the box
-    virtual void draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory) = 0;
+    virtual void draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory) = 0;
 
     // Request a redraw of the box. Subclasses should call this when the graphics change
     void redraw();

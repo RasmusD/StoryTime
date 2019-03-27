@@ -14,7 +14,7 @@ TextBox::TextBox(std::unique_ptr<TextSegment>& initialText,
   redraw();
 }
 
-void TextBox::update(sf::Time& elapsedTime, std::unordered_set<std::string>& choiceHistory)
+void TextBox::update(sf::Time& elapsedTime, const std::unordered_set<std::string>& choiceHistory)
 {
   //std::cout << "Updating text." << std::endl;
   // Update it
@@ -54,7 +54,7 @@ bool TextBox::atEnd()
   return _screenText.back()->atEnd;
 }
 
-void TextBox::draw(sf::RenderWindow& renderWindow, std::unordered_set<std::string>& choiceHistory)
+void TextBox::draw(sf::RenderWindow& renderWindow, const std::unordered_set<std::string>& choiceHistory)
 {
   //std::cout << "Drwaing..." << std::endl;
   for (auto& segment : _screenText)
