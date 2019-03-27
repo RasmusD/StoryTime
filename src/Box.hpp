@@ -49,7 +49,7 @@ class Box
     sf::IntRect _baseRect;
 
   private:
-    bool _needsDraw;
+    bool _needsDraw = true;
 };
 
 

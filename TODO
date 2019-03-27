@@ -1,10 +1,13 @@
 Top Things/Currently Working On
 
+- Setting text speed to 0.02 or 0.03 in new test story causes segfault. But not if it's 0.01.
 - Test story demonstrating all features
 
 Things Targeted For 1.0 Release:
 
 - Documentation/Tutorial
+- Text to write in story before choice is made and what text to show after depending on choice. Currently the choice text is just added to shown text.
+- Press enter to continue text box scrolling
 
 Things Targeted For 2.0 Release:
 
@@ -35,6 +38,7 @@ Nice Things With No Current Release Version
 - Loading of resources not in story outputs an error which should be ignored. Suppress.
 
 Features With No Current Release Version
+- Markup to stop text moving for a timed period.
 - Screen tiles (currently fixed to 3 boxes, should be changeable)
 - Rumble effect (vary pos for draw)
 - Colour effect
@@ -57,3 +61,4 @@ Questions
 - Should boxes draw to their own texture and then draw that texture on the screen?
 - Should strings long enough to go beyond text borders on their own wrap or just go past end as is now?
 - When saving a game we "reset" to the beginning of the segment by removing the choices we've already go in history from that segment. Should tha tbe different?
+- Can a loop be created if a story involves an optional choice which is the only one leading to the end?
