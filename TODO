@@ -25,6 +25,8 @@ Things Targeted For 2.0 Release:
 - Resources should also load borders to allow for changing bordes (including a setting)
 
 Known Bugs
+- Doing a story speed setting other than 0.01 causes a segfault
+- Segments that can't reach end are just reported as not found in storyverifier. Should be distinct.
 
 Nice Things With No Current Release Version
 
