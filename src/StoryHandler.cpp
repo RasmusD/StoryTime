@@ -177,7 +177,12 @@ GameSlice* StoryHandler::update(sf::Time& elapsedTime, sf::RenderWindow& renderW
     }
   }
 
-  if (_gameText->needsDraw() || _currentChoice->needsDraw() || _imageBox->needsDraw())
+  if (_gameText->needsDraw() or _imageBox->needsDraw())
+  {
+    redraw();
+  }
+
+  if (_choiceActive == true and _currentChoice->needsDraw())
   {
     redraw();
   }

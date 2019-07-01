@@ -42,14 +42,14 @@ class Box
     void drawComplete();
 
     // Indicates whether the box needs a redraw
-    bool needsDraw();
+    const bool needsDraw();
 
   protected:
     // The box rect
     sf::IntRect _baseRect;
 
   private:
-    bool _needsDraw = true;
+    bool _needsDraw = false;
 };
 
 

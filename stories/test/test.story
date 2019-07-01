@@ -1,4 +1,4 @@
-[settings] backgroundColour=black textColour=white textSpeed=0.01 displayImage=testImage.jpg
+[settings] backgroundColour=black textColour=white textSpeed=0.02 displayImage=testImage.jpg
 [notsettings] should not ignore but should not appear anywhere
 [begin] This is a test story to demonstrate all the various features of the StoryTime story writing framework.
 By Rasmus Dall
