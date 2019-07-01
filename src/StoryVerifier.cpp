@@ -120,6 +120,7 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
     // A bool to check if a branching choice has already been found in segment
     bool branchFound = false;
     // Find the branching choice of this segment
+    paths[segment.first] = {};
     for (auto& segChoice : segmentQueue)
     {
       Markup segmentMarkup;
@@ -127,7 +128,6 @@ bool StoryVerifier::verifyStory(std::unordered_map<std::string, std::string>& st
       {
         if (segChoice.choice->getChoiceType() == ChoiceType::BRANCH)
         {
-          paths[segment.first] = {};
           paths[segment.first].reserve(segChoice.choice->getNumChoices());
           for (auto& choice : segChoice.choice->getChoices())
           {
@@ -255,6 +255,13 @@ bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std:
                                 const bool& print)
 {
   history.insert(startKey);
+
+  if (paths[startKey].size() == 0)
+  {
+    std::cout << "StoryVerifier: Branch (" + startKey + ") has no exit path!";
+    return false;
+  }
+
   for (auto& pathEnds : paths[startKey])
   {
     pathsTouched.insert(pathEnds);
@@ -263,7 +270,7 @@ bool StoryVerifier::verifyPaths(std::unordered_map<std::string, std::vector<std:
       continue;
     } else if (paths.count(pathEnds) == 0)
     {
-      std::cout << "StoryVerifier: Branch (" + pathEnds + ") not found!" << std::endl;
+      std::cout << "StoryVerifier: Branch (" + pathEnds + ") doesn't exist!";
       return false;
     } else
     {
